@@ -1,0 +1,3 @@
+[submodule "lib/SGE"]
+	path = lib/SGE
+	url = https://github.com/paolettiandrea/SGE.git
