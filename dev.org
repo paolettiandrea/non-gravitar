@@ -1,0 +1,15 @@
+# Dev Journal
+
+* FEATURES
+** DEBUG
+*** DONE Hierarchy view
+*** DONE Profiler
+*** TODO Shortcut remainders
+*** TODO General info
+- Gameobject number
+- Component numbers
+- Fps
+
+* FIXES
+*** TODO Colliders for planetoid walls leave a gap between the first and the last point
+*** TODO PlayerEngine thrust gets stuck on (probably a problem of engine state management)

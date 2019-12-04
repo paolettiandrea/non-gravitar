@@ -1,0 +1,5 @@
+add_subdirectory(player)
+add_subdirectory(camera)
+add_subdirectory(noise-generation)
+add_subdirectory(map-generation)
+add_subdirectory(shooting)

@@ -1,2 +1,8 @@
 # Build folders
 cmake-build-debug
+cmake-build-release
+out
+
+# Files
+*.smesh
+*.spath

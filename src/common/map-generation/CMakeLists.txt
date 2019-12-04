@@ -1,0 +1,3 @@
+add_subdirectory(gradients)
+add_subdirectory(planetoid)
+add_subdirectory(generator)
