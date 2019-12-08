@@ -1,31 +1,19 @@
-#include <enemies/breakable/BreakTrigger.hpp>
-#include <enemies/breakable/BreakGenerator.hpp>
+#include <BreakTrigger.hpp>
+#include <BreakGenerator.hpp>
 #include "EnemyPart.hpp"
 
 
-EnemyPart::EnemyPart(const std::string &mesh_file_path, const std::string &collider_file_path) {
-    this->mesh_file_path = mesh_file_path;
-    this->collider_file_path = collider_file_path;
-}
-
 void EnemyPart::on_start() {
-    Logic::on_start();
+    PhysicsObject::on_start();
+    gameobject()->logichub()->attach_logic(break_generator_l);
+    gameobject()->logichub()->attach_logic(break_trigger_l);
+}
 
-    m_collider = gameobject()->add_component<sge::cmp::Collider>("Collider");
-    m_collider->load_spath(collider_file_path);
-
-    m_vertarray = gameobject()->add_component<sge::cmp::VertArray>("VertArray");
-    m_vertarray->import_smesh(mesh_file_path);
-
-    gameobject()->logichub()->attach_logic(new BreakGenerator(3));
-    gameobject()->logichub()->attach_logic(new BreakTrigger(10));
+EnemyPart::EnemyPart(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
+: PhysicsObject(my_breakable_geom_data){
+    this->whole_data = whole_data;
+    break_generator_l = new BreakGenerator(my_breakable_geom_data.get_max_stuck_pieces_on_break());
+    break_trigger_l =new BreakTrigger(10);
 }
 
 
-utils::Handle<sge::cmp::Collider> EnemyPart::get_collider() {
-    return m_collider;
-}
-
-utils::Handle<sge::cmp::VertArray> EnemyPart::get_vertarray() {
-    return m_vertarray;
-}

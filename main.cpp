@@ -11,9 +11,16 @@ int main() {
     // Render layers setup
     engine_cd.window.layers.emplace_back("planetoid-secondary");
     engine_cd.window.layers.emplace_back("planetoid-walls");
-    engine_cd.window.layers.emplace_back("enemy0");
-    engine_cd.window.layers.emplace_back("enemy1");
-    engine_cd.window.layers.emplace_back("enemy2");
+    engine_cd.window.layers.emplace_back("enemy_head");
+    engine_cd.window.layers.emplace_back("enemy_base");
+    engine_cd.window.layers.emplace_back("enemy_cannon");
+    engine_cd.window.layers.emplace_back("bullet");
+
+    engine_cd.physics.collision_layer_ids.emplace_back("Default");
+    engine_cd.physics.collision_layer_ids.emplace_back("Player");
+    engine_cd.physics.collision_layer_ids.emplace_back("Enemy");
+    engine_cd.physics.collision_layer_ids.emplace_back("Static Wall");
+
 
     sge::Engine engine(engine_cd);
 

@@ -10,6 +10,11 @@
 - Component numbers
 - Fps
 
+** CONTENT
+*** TODO Pulling ray
+*** TODO Multi-shot enemy
+*** TODO Sniper enemy
+** IMPROVEMENTS
 * FIXES
 *** TODO Colliders for planetoid walls leave a gap between the first and the last point
 *** TODO PlayerEngine thrust gets stuck on (probably a problem of engine state management)

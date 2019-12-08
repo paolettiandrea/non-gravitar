@@ -7,12 +7,9 @@
 
 class EnemyBase : public EnemyPart {
 public:
-    EnemyBase(const std::string &mesh_file_path, const std::string &collider_file_path);
+    EnemyBase(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
 
     std::string get_logic_id() override;
-
-    void on_start() override;
-
 
 };
 

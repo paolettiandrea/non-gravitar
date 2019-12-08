@@ -7,6 +7,7 @@
 #include <SGE/components/graphics/ui/blocks/UIBar.hpp>
 
 #include "MapGenerator.hpp"
+#include "PlayerCannon.hpp"
 
 
 std::string Player::get_logic_id() {
@@ -25,7 +26,7 @@ void Player::on_start() {
     m_body = new PlayerBody();
     player_body_go->logichub()->attach_logic(m_body);
 
-    auto m_collider = gameobject()->add_component<sge::cmp::Collider>("Collider");
+    m_collider = gameobject()->add_component<sge::cmp::Collider>("Collider");
     m_collider->set_as_circle(0.5);
 
 
@@ -35,7 +36,7 @@ void Player::on_start() {
     auto cannon_go = scene()->spawn_gameobject("Cannon");
     cannon_go->transform()->set_parent(player_body_go->transform());
     cannon_go->transform()->set_local_position(0, 1);
-    cannon_go->logichub()->attach_logic(new Cannon(30, 5));
+    cannon_go->logichub()->attach_logic(new PlayerCannon(30, m_rigidbody));
 
 }
 

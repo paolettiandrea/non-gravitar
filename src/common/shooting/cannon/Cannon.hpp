@@ -9,29 +9,16 @@
 
 class Cannon : public sge::Logic {
 public:
-    explicit Cannon (float shooting_velocity, float shooting_frequency);
+    explicit Cannon (float shooting_velocity, utils::Handle<sge::cmp::Rigidbody> shooter_rigidbody);
 
     std::string get_logic_id() override;
-
-    void on_fixed_update() override;
 
     void shoot(Bullet* bullet_logic);
 
 
-    void on_start() override;
 private:
-
     float m_shooting_vel;
-    float m_shooting_period;
-
-    std::chrono::time_point<std::chrono::steady_clock> m_last_shot_time;
-
-    int bullet_counter = 0;
-
-
-
-
-
+    utils::Handle<sge::cmp::Rigidbody> m_shooter_rigidbody;
 };
 
 

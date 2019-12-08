@@ -1,6 +1,5 @@
 #include <SGE/components/graphics/VertArray.hpp>
 #include <BasicEnemyBuildData.hpp>
-#include <BigEnemyBuildData.hpp>
 #include "PlanetoidManager.hpp"
 #include "SGE/components/physics/Collider.hpp"
 #include "Planetoid.hpp"
@@ -27,14 +26,12 @@ void PlanetoidManager::generate_planetoids() {
 
     for (int i = 0; i < NON_GRAVITAR_GENERATED_PLANETOIDS; ++i) {
 
-        map_gen_info_array[i].size = 50  + 50*i;
+        map_gen_info_array[i].size = 200  + 50*i;
 
 
-        for (int j = 0; j < 1; ++j) {
+        for (int j = 0; j < 10; ++j) {
             map_gen_info_array[i].enemies_to_spawn.push_back(new BasicEnemyBuildData());
         }
-
-
 
 
 

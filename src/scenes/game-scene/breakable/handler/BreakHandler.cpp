@@ -5,6 +5,7 @@
 #include "Fragment.hpp"
 #include "TriangleOverlap.hpp"
 #include <SGE/components/physics/Collider.hpp>
+#include <Fading.hpp>
 
 unsigned int BreakHandler::break_event_counter = 0;
 
@@ -12,15 +13,17 @@ std::string BreakHandler::get_logic_id() {
     return std::string("BreakHandler");
 }
 
-BreakHandler::BreakHandler(bool is_child_dependent) {
+BreakHandler::BreakHandler(bool is_child_dependent, bool fade_on_break) {
     m_child_dependent_flag = is_child_dependent;
+    m_fade_on_break_flag = fade_on_break;
 }
 
 bool BreakHandler::is_child_dependent() const {
     return m_child_dependent_flag;
 }
 
-void BreakHandler::break_pulse() {
+void BreakHandler::break_pulse(b2Vec2 linear_vel_at_break) {
+    this->linear_vel_at_break = linear_vel_at_break;
     if (collected_fragment_info.empty()) {
         recursive_info_collection(collected_fragment_info, gameobject());
         break_event_id = ++break_event_counter;
@@ -37,17 +40,23 @@ void BreakHandler::break_pulse() {
 
 void BreakHandler::on_update() {
     if (!collected_fragment_info.empty()) {
+
         std::vector<Fragment*> spawned_fragments;
         // Vector where at a given index is stored the index of the container to which the corresponding spawned fragment
         // was assigned, -1 if not assigned yet
-        std::vector<int> container_indexes;
+
+        // Count total fragments
+        int total_fragment_infos = 0;
+        for (int l1 = 0; l1 < collected_fragment_info.size(); ++l1) {
+            total_fragment_infos += collected_fragment_info[l1].size();
+        }
+        int container_indexes[total_fragment_infos];
+        for (int i1 = 0; i1 < total_fragment_infos; ++i1) {
+            container_indexes[i1] = -1;
+        }
         std::vector<utils::Handle<sge::GameObject>> spawned_containers;
 
-        // Shuffle this layer of information (in order to avoid same models braking always the same way)
-        for (auto info : collected_fragment_info) {
-            container_indexes.push_back(-1);
-        }
-
+        int already_spawned_total = 0;
         for (int layer = 0; layer < collected_fragment_info.size(); ++layer) {
             // Scroll this layer's info, when pointing to a given info check if adjacent to previously spawned fragments
             // if it is spawn it as child of the previously created container, if not spawn it in a new container
@@ -61,19 +70,17 @@ void BreakHandler::on_update() {
             for (int pointed = 0; pointed < collected_fragment_info[layer].size(); ++pointed) {
 
                 auto target_info = collected_fragment_info[layer][pointed];
-                utils::Handle<sge::GameObject> target_container;
+                unsigned int pointed_shallow_index = (already_spawned_total-already_spawned_this_layer) + pointed;
 
                 // Check if this fragment would overlap with fragments from the previous layers
                 bool found_overlap = false;
                 for (int j = 0; j < spawned_fragments.size()-already_spawned_this_layer; ++j) {
-                    auto fragment_to_check = spawned_fragments[j];
 
                     // Check if the container of the fragment to check has enough space for this fragment, if not there's no point in checking overlaps
                     if (prev_containers_count[container_indexes[j]] < target_info.max_triangles) {
-                        TriPoint* its_triangle = fragment_to_check->get_info().world_positions;
                         auto my_triangle = target_info.world_positions;
-                        if (TriTri2D(its_triangle, my_triangle, 0.01, true, false)) {
-                            target_container = spawned_containers[container_indexes[j]];
+                        if (TriTri2D(spawned_fragments[j]->get_info().world_positions, my_triangle, 0.000001, true, false)) {
+                            container_indexes[pointed_shallow_index] = container_indexes[j];
                             prev_containers_count[container_indexes[j]]++;
                             found_overlap = true;
                             break;
@@ -82,41 +89,45 @@ void BreakHandler::on_update() {
                 }
                 // If so adds it to the corresponding container (if not already too big)
                 // If not already placed in a container, check if adjacent with another already spawned fragment from the same layer
-                // Adds it to the corresponding container if not already too big, alse create a new container
+                // Adds it to the corresponding container if not already too big, else create a new container
 
                 if (!found_overlap) {
                     bool found_adjacency = false;
                     for (int i = pointed-1; i >= 0; --i) {
+                        unsigned int i_shallow_index = (already_spawned_total-already_spawned_this_layer) + i;
                         if (target_info.shares_border(collected_fragment_info[layer][i])) {
-                            target_container = spawned_containers[container_indexes[i]];
-                            if (target_container->transform()->get_children().size()>=target_info.max_triangles){
+                            if (spawned_containers[container_indexes[i_shallow_index]]->transform()->get_children().size() >= target_info.max_triangles){
                                 continue;
                             }  else {
                                 found_adjacency = true;
-                                container_indexes[pointed] = container_indexes[i];
+                                container_indexes[pointed_shallow_index] = container_indexes[i_shallow_index];
                                 break;
                             }
                         }
                     }
+                    // No feasible container can accept this fragment, create a new one
                     if (!found_adjacency) {
-                        container_indexes[pointed] = spawned_containers.size();
-                        target_container = scene()->spawn_gameobject("Fragment Container");
-                        target_container->transform()->set_local_position(target_info.world_center);
-                        auto container_rb = target_container->add_component<sge::cmp::Rigidbody>("Rigidbody");
-                        spawned_containers.push_back(target_container);
+                        utils::Handle<sge::GameObject> recipient_container;
+                        container_indexes[pointed_shallow_index] = spawned_containers.size();
+                        recipient_container = scene()->spawn_gameobject("Fragment Container");
+                        recipient_container->transform()->set_local_position(target_info.world_center);
+                        auto container_rb = recipient_container->add_component<sge::cmp::Rigidbody>("Rigidbody");
+                        spawned_containers.push_back(recipient_container);
                     }
                 }
 
 
                 // Now that we have a container ready to accept the new fragment we can spawn it
                 auto fragment = scene()->spawn_gameobject("Fragment");
-                fragment->transform()->set_local_position(target_info.world_center - target_container->transform()->get_world_position());
-                fragment->transform()->set_parent(target_container->transform());
+                auto recipient_container = spawned_containers[container_indexes[pointed_shallow_index]];
+                fragment->transform()->set_local_position(target_info.world_center - recipient_container->transform()->get_world_position());
+                fragment->transform()->set_parent(recipient_container->transform());
                 auto fragment_logic = new Fragment(target_info, break_event_id);
                 fragment->logichub()->attach_logic(fragment_logic);
                 spawned_fragments.push_back(fragment_logic);
 
                 already_spawned_this_layer++;
+                already_spawned_total++;
             }
         }
 
@@ -137,11 +148,16 @@ void BreakHandler::on_update() {
 
             auto distance_vec = this_container_center - gameobject()->transform()->local_to_world_point(explosion_origin_local_position);
 
-            auto impulse_vec = distance_vec;
-            impulse_vec.set_magnitude(1/(1+distance_vec.get_magnitude()));
-            container_rb->apply_linear_impulse(impulse_vec, this_container_center, true);
-        }
+            // Make the fragments'velocity the same as the original object
+//          // TODO maybe the break could absorb some of the kinetic energy
+            container_rb->get_b2_body()->SetLinearVelocity(linear_vel_at_break);
 
+
+            // Add some Fading logic if the fade_on_break flag is on
+            if (m_fade_on_break_flag) {
+                spawned_containers[l]->logichub()->attach_logic(new Fading());
+            }
+        }
         collected_fragment_info.clear();
     }
 }

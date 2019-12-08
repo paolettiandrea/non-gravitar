@@ -1,12 +1,6 @@
 target_sources(non_gravitar PRIVATE
-        Enemy.cpp
-        Enemy.hpp
-
         BasicEnemy.cpp
         BasicEnemy.hpp
-
-        BigEnemy.hpp
-        BigEnemy.cpp
 
         parts/EnemyBase.cpp
         parts/EnemyBase.hpp
@@ -17,13 +11,11 @@ target_sources(non_gravitar PRIVATE
         parts/EnemyPart.cpp
         parts/EnemyPart.hpp
 
-        parts/EnemyEye.cpp
-        parts/EnemyEye.hpp
+        parts/EnemyCannon.cpp
+        parts/EnemyCannon.hpp
 
         parts/Trigger.cpp
         parts/Trigger.hpp
         )
 
 target_include_directories(non_gravitar PRIVATE .)
-
-add_subdirectory(breakable)

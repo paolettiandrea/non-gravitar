@@ -1,3 +1,4 @@
+#include <enemies/BasicEnemy.hpp>
 #include "Planetoid.hpp"
 
 
@@ -30,6 +31,7 @@ void Planetoid::on_start() {
         wall_go->transform()->set_parent(main_body->transform());
         auto wall_collider = wall_go->add_component<sge::cmp::Collider>("Collider");
         wall_collider->set_as_chain(planetoid_data->main_fill_square_grid->get_paths()[i]);
+        wall_collider->set_collision_category("Static Wall");
     }
 
 
@@ -37,7 +39,7 @@ void Planetoid::on_start() {
         auto new_enemy = scene()->spawn_gameobject("Enemy");
         new_enemy->transform()->set_local_position(enemy_to_spawn->anchor_position);
         new_enemy->transform()->set_local_rotation(enemy_to_spawn->angle+M_PI_2);
-        new_enemy->logichub()->attach_logic(enemy_to_spawn->get_entry_logic());
+        new_enemy->logichub()->attach_logic(new BasicEnemy(enemy_to_spawn));
     }
  }
 

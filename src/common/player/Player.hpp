@@ -22,6 +22,7 @@ public:
 
 private:
     utils::Handle<sge::cmp::Rigidbody> m_rigidbody;
+    utils::Handle<sge::cmp::Collider> m_collider;
     PlayerBody* m_body;
 
 

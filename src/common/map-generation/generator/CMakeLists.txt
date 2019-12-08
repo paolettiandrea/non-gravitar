@@ -19,7 +19,6 @@ target_sources(non_gravitar PRIVATE
 
         EnemyBuildData.hpp
         BasicEnemyBuildData.hpp
-        BigEnemyBuildData.hpp
         )
 
 add_subdirectory(marching-squares)

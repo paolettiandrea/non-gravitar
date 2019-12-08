@@ -4,7 +4,7 @@
 #include <SGE/logic/Logic.hpp>
 #include <PlanetoidData.hpp>
 
-#define NON_GRAVITAR_GENERATED_PLANETOIDS 1
+#define NON_GRAVITAR_GENERATED_PLANETOIDS 2
 
 /*!
  * \brief Generates and manages the Planetoids raw data

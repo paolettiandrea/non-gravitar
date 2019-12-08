@@ -7,19 +7,21 @@
 
 class BreakHandler : public sge::Logic {
 public:
-    explicit BreakHandler(bool is_child_dependent);
+    explicit BreakHandler(bool is_child_dependent, bool fade_on_break = false);
 
     std::string get_logic_id() override;
 
     bool is_child_dependent() const;
 
-    void break_pulse();
+    void break_pulse(b2Vec2 linear_vel_at_break);
 
     void on_update() override;
 
 private:
     static unsigned int break_event_counter;
     bool m_child_dependent_flag;
+    bool m_fade_on_break_flag;
+    b2Vec2 linear_vel_at_break;
 
     std::vector<std::vector<FragmentInfo>> collected_fragment_info;
     unsigned int break_event_id = 0;

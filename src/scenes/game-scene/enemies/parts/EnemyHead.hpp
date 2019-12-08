@@ -4,17 +4,20 @@
 
 #include <SGE/logic/Logic.hpp>
 #include "EnemyPart.hpp"
-#include "EnemyEye.hpp"
+#include "EnemyCannon.hpp"
 
 #define SGE_ENEMY_SHOT_PERIOD 1
 #define SGE_ENEMY_MIN_ANGLE -M_PI_4
 #define SGE_ENEMY_MAX_ANGLE M_PI_4
 
+#define SGE_ENEMY_BASIC_CANNON_COLOR sf::Color(72, 34, 31)
+
+
 class EnemyHead : public EnemyPart {
     std::string get_logic_id() override;
 
 public:
-    EnemyHead(const std::string &mesh_file_path, const std::string &collider_file_path);
+    EnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
 
     void on_start() override;
 
@@ -24,15 +27,11 @@ public:
     void on_update() override;
 
 private:
-    EnemyEye* m_eye;
 
     float m_shot_counter = 0;
 
-    utils::Handle<sge::GameObject> player_collider;
 
     sge::Animation head_rotation_animation;
-
-    utils::Handle<sge::GameObject> spinner_go;
 
     bool m_is_active = false;
 };
