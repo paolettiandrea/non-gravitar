@@ -21,8 +21,8 @@ public:
     void on_update() override;
 
 private:
-    utils::Handle<sge::cmp::Rigidbody> m_rigidbody;
-    utils::Handle<sge::cmp::Collider> m_collider;
+    Rigidbody_H m_rigidbody;
+    Collider_H m_collider;
     PlayerBody* m_body;
 
 

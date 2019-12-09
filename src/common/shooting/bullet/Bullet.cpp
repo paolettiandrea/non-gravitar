@@ -1,4 +1,3 @@
-#include <SGE/components/graphics/VertArray.hpp>
 #include <SGE/components/physics/Rigidbody.hpp>
 #include <SGE/components/physics/Collider.hpp>
 #include <breakable/handler/BreakHandler.hpp>
@@ -20,7 +19,7 @@ void Bullet::on_start() {
 
     gameobject()->logichub()->attach_logic(new BreakHandler(true, true));
     gameobject()->logichub()->attach_logic(break_trigger);
-    gameobject()->logichub()->attach_logic(new BreakGenerator(3));
+    gameobject()->logichub()->attach_logic(new BreakGenerator(2));
 }
 
 void Bullet::on_collision_begin(sge::CollisionInfo &collision_info) {
@@ -39,11 +38,11 @@ Bullet::Bullet(const PhysicsObject_ConstructionData& cd)
     break_trigger = new BreakTrigger(10);
 }
 
-utils::Handle<sge::cmp::Rigidbody> Bullet::get_ignored_body() const {
+Rigidbody_H Bullet::get_ignored_body() const {
     return m_ignore_body;
 }
 
-void Bullet::set_ignore_body(utils::Handle<sge::cmp::Rigidbody> ignore_body) {
+void Bullet::set_ignore_body(Rigidbody_H ignore_body) {
     m_ignore_body = ignore_body;
     break_trigger->set_ignored_rb(ignore_body);
 }

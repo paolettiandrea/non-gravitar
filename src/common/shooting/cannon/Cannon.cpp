@@ -21,7 +21,7 @@ void Cannon::shoot(Bullet* bullet_logic) {
     bullet_rb->get_b2_body()->SetBullet(true);
 }
 
-Cannon::Cannon(float shooting_velocity, utils::Handle<sge::cmp::Rigidbody> shooter_rigidbody) {
+Cannon::Cannon(float shooting_velocity, Rigidbody_H shooter_rigidbody) {
     m_shooting_vel = shooting_velocity;
     m_shooter_rigidbody = shooter_rigidbody;
 }

@@ -26,7 +26,7 @@ private:
     std::vector<std::vector<FragmentInfo>> collected_fragment_info;
     unsigned int break_event_id = 0;
 
-    static void recursive_info_collection(std::vector<std::vector<FragmentInfo>>& container, utils::Handle<sge::GameObject> target);
+    static void recursive_info_collection(std::vector<std::vector<FragmentInfo>>& container, GameObject_H target);
 
 };
 

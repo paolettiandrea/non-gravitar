@@ -11,11 +11,11 @@ void PhysicsObject::on_start() {
     m_vertarray->import_smesh(physics_construction_data.get_mesh_path());
 }
 
-utils::Handle<sge::cmp::VertArray> PhysicsObject::vertarray() {
+VertArray_H PhysicsObject::vertarray() {
     return m_vertarray;
 }
 
-utils::Handle<sge::cmp::Collider> PhysicsObject::collider() {
+Collider_H PhysicsObject::collider() {
     return m_collider;
 }
 

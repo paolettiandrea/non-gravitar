@@ -20,7 +20,7 @@ public:
 private:
     sge::Animation fade_animation;
 
-    void set_vert_array_alpha_recursive(utils::Handle<sge::GameObject> target_go, float alpha);
+    void set_vert_array_alpha_recursive(GameObject_H target_go, float alpha);
 };
 
 

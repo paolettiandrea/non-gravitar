@@ -21,8 +21,8 @@ public:
     void on_fixed_update() override;
 
 private:
-    utils::Handle<sge::cmp::VertArray> m_vert_array;
-    utils::Handle<sge::cmp::Collider> m_collider;
+    VertArray_H m_vert_array;
+    Collider_H m_collider;
 };
 
 

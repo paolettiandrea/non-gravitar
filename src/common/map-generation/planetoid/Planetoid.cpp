@@ -47,7 +47,7 @@ std::string Planetoid::get_logic_id() {
         return std::string("Planetoid");
 }
 
-void Planetoid::assemble_vert_array(utils::Handle<sge::cmp::VertArray> recipient, const MarchingMap &marching_map) {
+void Planetoid::assemble_vert_array(VertArray_H recipient, const MarchingMap &marching_map) {
     recipient->set_primitive(sf::PrimitiveType::Triangles);
     for (int k = 0; k < marching_map.width; ++k) {
         for (int i = 0; i < marching_map.height; ++i) {

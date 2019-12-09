@@ -17,7 +17,7 @@ public:
 private:
     const PlanetoidData* planetoid_data;
 
-    static void assemble_vert_array(utils::Handle<sge::cmp::VertArray> recipient, const MarchingMap& marching_map);
+    static void assemble_vert_array(VertArray_H recipient, const MarchingMap& marching_map);
 
 };
 

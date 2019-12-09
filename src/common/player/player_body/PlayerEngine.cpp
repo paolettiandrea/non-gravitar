@@ -5,7 +5,7 @@ std::string PlayerEngine::get_logic_id() {
     return std::string("PlayerEngine");
 }
 
-PlayerEngine::PlayerEngine(utils::Handle<sge::cmp::Rigidbody> rigidbody) {
+PlayerEngine::PlayerEngine(Rigidbody_H rigidbody) {
     controlled_rigidbody = rigidbody;
 }
 

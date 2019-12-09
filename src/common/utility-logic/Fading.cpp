@@ -13,7 +13,7 @@ Fading::Fading()  : fade_animation(new LinearInterpolator, 255, 0, NG_FADING_ANI
 
 }
 
-void Fading::set_vert_array_alpha_recursive(utils::Handle<sge::GameObject> target_go, float alpha) {
+void Fading::set_vert_array_alpha_recursive(GameObject_H target_go, float alpha) {
     auto vert_array = target_go->get_component<sge::cmp::VertArray>("VertArray");
     if (vert_array.is_valid()) {
         vert_array->set_alpha(alpha);

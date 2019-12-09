@@ -19,11 +19,11 @@ public:
     void on_start() override;
 
 protected:
-    utils::Handle<sge::cmp::Rigidbody> m_rigidbody;
+    Rigidbody_H m_rigidbody;
 
-    utils::Handle<sge::GameObject> m_head_gameobject;
-    utils::Handle<sge::GameObject> m_base_gameobject;
-    utils::Handle<sge::GameObject> m_view_gameobject;
+    GameObject_H m_head_gameobject;
+    GameObject_H m_base_gameobject;
+    GameObject_H m_view_gameobject;
 
      EnemyBuildData* build_data;
 };

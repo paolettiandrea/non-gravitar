@@ -55,14 +55,14 @@ public:
 
     void on_start() override;
 
-    utils::Handle<sge::cmp::VertArray> vertarray();
-    utils::Handle<sge::cmp::Collider> collider();
+    VertArray_H vertarray();
+    Collider_H collider();
 
 private:
     PhysicsObject_ConstructionData physics_construction_data;
 
-    utils::Handle<sge::cmp::Collider> m_collider;
-    utils::Handle<sge::cmp::VertArray> m_vertarray;
+    Collider_H m_collider;
+    VertArray_H m_vertarray;
 };
 
 

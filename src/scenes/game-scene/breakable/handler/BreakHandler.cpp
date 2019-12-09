@@ -54,7 +54,7 @@ void BreakHandler::on_update() {
         for (int i1 = 0; i1 < total_fragment_infos; ++i1) {
             container_indexes[i1] = -1;
         }
-        std::vector<utils::Handle<sge::GameObject>> spawned_containers;
+        std::vector<GameObject_H> spawned_containers;
 
         int already_spawned_total = 0;
         for (int layer = 0; layer < collected_fragment_info.size(); ++layer) {
@@ -107,7 +107,7 @@ void BreakHandler::on_update() {
                     }
                     // No feasible container can accept this fragment, create a new one
                     if (!found_adjacency) {
-                        utils::Handle<sge::GameObject> recipient_container;
+                        GameObject_H recipient_container;
                         container_indexes[pointed_shallow_index] = spawned_containers.size();
                         recipient_container = scene()->spawn_gameobject("Fragment Container");
                         recipient_container->transform()->set_local_position(target_info.world_center);
@@ -163,7 +163,7 @@ void BreakHandler::on_update() {
 }
 
 void BreakHandler::recursive_info_collection(std::vector<std::vector<FragmentInfo>> &container,
-                                             utils::Handle<sge::GameObject> target) {
+                                             GameObject_H target) {
     auto break_generator_logic = target->logichub()->get_logic_by_id<BreakGenerator>("BreakGenerator");
     if (break_generator_logic != nullptr) {
         container.emplace_back();

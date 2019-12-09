@@ -17,12 +17,12 @@ public:
 
     void pre_solve(b2Contact *contact, const b2Manifold *oldManifold, const sge::CollisionInfo &info) override;
 
-    [[nodiscard]] utils::Handle<sge::cmp::Rigidbody> get_ignored_body() const;
+    [[nodiscard]] Rigidbody_H get_ignored_body() const;
 
-    void set_ignore_body(utils::Handle<sge::cmp::Rigidbody> m_ignore_body);
+    void set_ignore_body(Rigidbody_H m_ignore_body);
 
 private:
-    utils::Handle<sge::cmp::Rigidbody> m_ignore_body;
+    Rigidbody_H m_ignore_body;
 
     BreakTrigger *break_trigger;
 

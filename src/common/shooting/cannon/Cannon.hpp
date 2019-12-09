@@ -9,7 +9,7 @@
 
 class Cannon : public sge::Logic {
 public:
-    explicit Cannon (float shooting_velocity, utils::Handle<sge::cmp::Rigidbody> shooter_rigidbody);
+    explicit Cannon (float shooting_velocity, Rigidbody_H shooter_rigidbody);
 
     std::string get_logic_id() override;
 
@@ -18,7 +18,7 @@ public:
 
 private:
     float m_shooting_vel;
-    utils::Handle<sge::cmp::Rigidbody> m_shooter_rigidbody;
+    Rigidbody_H m_shooter_rigidbody;
 };
 
 

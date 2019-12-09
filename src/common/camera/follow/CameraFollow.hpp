@@ -7,14 +7,14 @@
 
 class CameraFollow : public sge::Logic {
 public:
-    CameraFollow(utils::Handle<sge::GameObject> target);
+    CameraFollow(GameObject_H target);
 
     std::string get_logic_id() override;
 
     void on_update() override;
 
 private:
-    utils::Handle<sge::GameObject> m_target;
+    GameObject_H m_target;
 
 };
 

@@ -9,7 +9,7 @@
 class FragmentInfo {
 public:
 
-    FragmentInfo(utils::Handle<sge::cmp::VertArray> vert_array, int i, int max_triangles) {
+    FragmentInfo(VertArray_H vert_array, int i, int max_triangles) {
         auto sum = vert_array->get_vert_array()[i].position + vert_array->get_vert_array()[i+1].position + vert_array->get_vert_array()[i+2].position;
         world_center = sge::Vec2<float>(sum.x / 3, -sum.y / 3);
 

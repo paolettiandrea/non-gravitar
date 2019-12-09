@@ -1,7 +1,7 @@
 #include <SGE/components/graphics/ui/UI.hpp>
 #include "PlayerCannon.hpp"
 
-PlayerCannon::PlayerCannon(float shooting_velocity, const utils::Handle<sge::cmp::Rigidbody> &shooter_rigidbody)
+PlayerCannon::PlayerCannon(float shooting_velocity, const Rigidbody_H &shooter_rigidbody)
         : Cannon(shooting_velocity, shooter_rigidbody) {}
 
 void PlayerCannon::on_fixed_update() {

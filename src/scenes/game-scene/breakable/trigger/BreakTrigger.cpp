@@ -16,7 +16,7 @@ void BreakTrigger::on_collision_begin(sge::CollisionInfo &collision_info) {
 
     if (break_triggered) {
         // On break visit upstream the hierarchy and call the break pulse on the last child dependent BreakHandler
-        utils::Handle<sge::GameObject> pointed_go = gameobject();
+        GameObject_H pointed_go = gameobject();
         BreakHandler* found_handler = nullptr;
 
         while (pointed_go.is_valid()) {
@@ -43,11 +43,11 @@ void BreakTrigger::pre_solve(b2Contact *contact, const b2Manifold *oldManifold, 
     }
 }
 
-BreakTrigger::BreakTrigger(float trigger_impact_vel, utils::Handle<sge::cmp::Rigidbody> ignored_rb) {
+BreakTrigger::BreakTrigger(float trigger_impact_vel, Rigidbody_H ignored_rb) {
     m_trigger_impact_vel = trigger_impact_vel;
     ignored_rigidbody = ignored_rb;
 }
 
-void BreakTrigger::set_ignored_rb(utils::Handle<sge::cmp::Rigidbody> rb) {
+void BreakTrigger::set_ignored_rb(Rigidbody_H rb) {
     ignored_rigidbody = rb;
 }

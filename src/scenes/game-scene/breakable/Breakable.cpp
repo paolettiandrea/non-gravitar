@@ -30,7 +30,7 @@ void Breakable::on_update() {
         // Vector where at a given index is stored the index of the container to which the corresponding spawned fragment
         // was assigned, -1 if not assigned yet
         std::vector<int> container_indexes;
-        std::vector<utils::Handle<sge::GameObject>> spawned_containers;
+        std::vector<GameObject_H> spawned_containers;
 
         // Shuffle this layer of information (in order to avoid same models braking always the same way)
         std::shuffle(collected_fragment_info.begin(), collected_fragment_info.end(), std::default_random_engine(random()));
@@ -43,7 +43,7 @@ void Breakable::on_update() {
         // if it is spawn it as child of the previously created container, if not spawn it in a new container
         for (int pointed = 0; pointed < collected_fragment_info.size(); ++pointed) {
 
-            utils::Handle<sge::GameObject> target_container;
+            GameObject_H target_container;
             bool found_adjacency = false;
             for (int i = pointed-1; i >= 0; --i) {
                 if (collected_fragment_info[pointed].shares_border(collected_fragment_info[i])) {

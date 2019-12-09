@@ -12,14 +12,14 @@
 
 class PlayerCannon : public Cannon {
 public:
-    PlayerCannon(float shooting_velocity, const utils::Handle<sge::cmp::Rigidbody> &shooter_rigidbody);
+    PlayerCannon(float shooting_velocity, const Rigidbody_H &shooter_rigidbody);
 
     void on_start() override;
 
     void on_fixed_update() override;
 
 private:
-    utils::Handle<sge::cmp::UI> m_ui_component;
+    UI_H m_ui_component;
     sge::UIBar *stamina_bar;
 
     float max_stamina = NG_PLAYER_CANNON_DEFAULT_STAMINA;

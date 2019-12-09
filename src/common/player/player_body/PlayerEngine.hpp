@@ -9,7 +9,7 @@
 
 class PlayerEngine : public sge::Logic {
 public:
-    explicit PlayerEngine(utils::Handle<sge::cmp::Rigidbody> rigidbody);
+    explicit PlayerEngine(Rigidbody_H rigidbody);
 
     std::string get_logic_id() override;
 
@@ -23,8 +23,8 @@ private:
 
     enum ThrustStatus {Increasing, Stabilizing, Stable,  Decreasing, Zero};
 
-    utils::Handle<sge::cmp::Rigidbody> controlled_rigidbody;
-    utils::Handle<sge::cmp::VertArray> engine_trail;
+    Rigidbody_H controlled_rigidbody;
+    VertArray_H engine_trail;
 
     const sf::Keyboard::Key thrust_key = sf::Keyboard::W;
     // The time in seconds needed to reach maximum thrust force

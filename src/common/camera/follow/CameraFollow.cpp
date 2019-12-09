@@ -4,7 +4,7 @@ std::string CameraFollow::get_logic_id() {
     return std::string("CameraFollow");
 }
 
-CameraFollow::CameraFollow(utils::Handle<sge::GameObject> target) {
+CameraFollow::CameraFollow(GameObject_H target) {
     m_target = target;
 }
 
