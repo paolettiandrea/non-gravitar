@@ -50,6 +50,12 @@ public:
     void apply_threshold(float threshold_val, float above_val, float below_val);
     void save_as_image(const std::string& name, float expected_min, float expected_max);
 
+    /*!
+     * @param starting_point The point in which to start flooding the map
+     * @param target_val The noise value considered floodable, any other value is considered as a wall
+     */
+    static void flood_fill(NoiseMap& input_map, NoiseMap& out_map, sge::Vec2<int> starting_point, float target_val);
+
 protected:
     float** m_noise_map;
 };

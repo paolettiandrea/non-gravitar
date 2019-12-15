@@ -5,19 +5,23 @@
 #include "SGE/components/physics/Rigidbody.hpp"
 #include "SGE/components/physics/Collider.hpp"
 #include "SGE/logic/Logic.hpp"
-#include "PlanetoidData.hpp"
+#include "PlanetoidPersistentData.hpp"
 
 class Planetoid : public sge::Logic {
 public:
-    explicit Planetoid(const PlanetoidData& planetoid_data) { this->planetoid_data = &planetoid_data; }
+    explicit Planetoid(const PlanetoidPersistentData& planetoid_data) { this->planetoid_data = &planetoid_data; }
     std::string get_logic_id() override;
 
     void on_start() override;
 
+    static void assemble_vert_array(VertArray_H recipient, const MarchingMap& marching_map, sf::Color = sf::Color::White);
+    static void assemble_vert_array(sf::VertexArray& recipient, const MarchingMap &marching_map, sf::Color = sf::Color::White);
 private:
-    const PlanetoidData* planetoid_data;
 
-    static void assemble_vert_array(VertArray_H recipient, const MarchingMap& marching_map);
+    const PlanetoidPersistentData* planetoid_data;
+public:
+    const PlanetoidPersistentData *get_planetoid_persistent_data() const;
+
 
 };
 

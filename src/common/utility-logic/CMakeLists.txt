@@ -6,4 +6,7 @@ target_sources(non_gravitar PRIVATE
 
         Fading.cpp
         Fading.hpp
+
+        CollisionTrigger.cpp
+        CollisionTrigger.hpp
         )

@@ -4,7 +4,9 @@
 
 #include <SFML/Graphics/Color.hpp>
 #include <vector>
-#include "EnemyBuildData.hpp"
+#include <utility-classes/ColorPalette.hpp>
+#include "EnemyPersistentData.hpp"
+#include "COLORS.hpp"
 
 class MapGenInfo {
 public:
@@ -12,10 +14,10 @@ public:
     unsigned int min_cave_volume = 100;
     unsigned int min_filled_region_volume = 2;
 
-    sf::Color primary_color = sf::Color::White;
-    sf::Color secondary_color = sf::Color::Green;
 
-    std::vector<EnemyBuildData*> enemies_to_spawn;
+    ColorPalette palette = ColorPalette(NG_COLORS_EASY_PLANETOID);
+
+    std::vector<EnemyPersistentData*> enemies_build_data;
 };
 
 

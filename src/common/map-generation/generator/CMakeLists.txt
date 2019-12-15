@@ -17,7 +17,7 @@ target_sources(non_gravitar PRIVATE
         RegionDistanceData.hpp
         RegionDistanceData.cpp
 
-        EnemyBuildData.hpp
+        EnemyPersistentData.hpp
         BasicEnemyBuildData.hpp
         )
 

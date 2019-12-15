@@ -29,8 +29,8 @@ void PlayerCannon::on_start() {
     last_shot_time = std::chrono::steady_clock::now();
 
     m_ui_component = gameobject()->add_component<sge::cmp::UI>("UI");
-    m_ui_component->set_anchor_alignment(sge::cmp::UI::HotizontalAlignment::MIDDLE, sge::cmp::UI::VerticalAlignment::BOTTOM);
-    m_ui_component->set_origin_alignment(sge::cmp::UI::HotizontalAlignment::MIDDLE, sge::cmp::UI::VerticalAlignment::BOTTOM);
+    m_ui_component->set_anchor_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
+    m_ui_component->set_origin_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
 
 
     stamina_bar = new sge::UIBar(300, 20);

@@ -15,9 +15,6 @@ std::string Player::get_logic_id() {
 }
 
 void Player::on_start() {
-
-    gameobject()->transform()->set_local_position(10,0);
-
     m_rigidbody = gameobject()->add_component<sge::cmp::Rigidbody>("Rigidbody");
     m_rigidbody->set_fixed_rotation(true);
 
@@ -43,4 +40,21 @@ void Player::on_start() {
 void Player::on_update() {
 
 
+}
+
+GameObject_H  Player::get_body_gameobject() const {
+    return m_body->gameobject();
+}
+
+sge::Vec2<float> Player::get_position_relative_to_planetoid() {
+    return gameobject()->transform()->get_world_position();
+}
+
+std::vector<sf::Vertex> Player::get_minimap_model_vertices() {
+    sf::Color color(200, 200, 200);
+    float size = 2;
+    return {sf::Vertex(sf::Vector2f(size,size), color),
+            sf::Vertex(sf::Vector2f(-size,size), color),
+            sf::Vertex(sf::Vector2f(-size,-size), color),
+            sf::Vertex(sf::Vector2f(size,-size), color)};
 }

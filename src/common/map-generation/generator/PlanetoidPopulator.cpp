@@ -7,6 +7,7 @@
 PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const MarchingMap &planetoid_square_grid, sge::Vec2<int> starting_point) {
 
     NoiseMap enemy_heat_map(planetoid_square_grid.width, planetoid_square_grid.height, 0);
+
     std::queue<sge::Vec2<int>> evaluation_queue;
     std::vector<sge::Vec2<int>> edge_coords;
     evaluation_queue.push(starting_point);
@@ -69,8 +70,8 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
 
     // Get every different enemy size
     std::vector<float> enemy_sizes;
-    for (int j = 0; j < map_gen_info.enemies_to_spawn.size(); ++j) {
-        float space_needed = map_gen_info.enemies_to_spawn[j]->space_needed_on_edge();
+    for (int j = 0; j < map_gen_info.enemies_build_data.size(); ++j) {
+        float space_needed = map_gen_info.enemies_build_data[j]->space_needed_on_edge();
         bool found = false;
         for (float enemy_size : enemy_sizes) {
             if (space_needed == enemy_size) {
@@ -88,10 +89,10 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
     // For every enemy size create a vector of build data and do a spawn session
     for (int k = 0; k < enemy_sizes.size(); ++k) {
         float target_size = enemy_sizes[k];
-        std::vector<EnemyBuildData*> this_pass_data_vector;
-        for (int i = 0; i < map_gen_info.enemies_to_spawn.size(); ++i) {
-            if (map_gen_info.enemies_to_spawn[i]->space_needed_on_edge()==target_size) {
-                this_pass_data_vector.push_back(map_gen_info.enemies_to_spawn[i]);
+        std::vector<EnemyPersistentData*> this_pass_data_vector;
+        for (int i = 0; i < map_gen_info.enemies_build_data.size(); ++i) {
+            if (map_gen_info.enemies_build_data[i]->space_needed_on_edge() == target_size) {
+                this_pass_data_vector.push_back(map_gen_info.enemies_build_data[i]);
             }
         }
         spawn_enemies(target_size, this_pass_data_vector, enemy_heat_map, edge_spacing_map, edge_coords, planetoid_square_grid);
@@ -118,7 +119,7 @@ sge::Vec2<int> PlanetoidPopulator::find_highest_edge_coord(NoiseMap& values_map,
     return best_coord;
 }
 
-void PlanetoidPopulator::spawn_enemies(float space_needed, std::vector<EnemyBuildData*> enemies_data, NoiseMap &affinity_map,
+void PlanetoidPopulator::spawn_enemies(float space_needed, std::vector<EnemyPersistentData*> enemies_data, NoiseMap &affinity_map,
                                        const NoiseMap &space_map, std::vector<coord>& edge_coords, const MarchingMap &planetoid_square_grid) {
 
     std::vector<coord> possible_coords;

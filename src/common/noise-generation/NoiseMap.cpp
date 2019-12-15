@@ -2,6 +2,7 @@
 #include <cmath>
 #include <limits>
 #include <iostream>
+#include <queue>
 #include "SFML/Graphics.hpp"
 
 
@@ -180,6 +181,36 @@ void NoiseMap::apply_noisemap_as_mask(const NoiseMap& other_map) {
         std::cout << "ERROR during apply_noisemap_as_mask, the two noisemaps need to have the same dimensions";
     }
 
+}
+
+void NoiseMap::flood_fill(NoiseMap& input_map, NoiseMap& out_map, sge::Vec2<int> starting_point, float target_val) {
+
+    NoiseMap check_map(input_map.width, input_map.height, 0);
+
+    std::queue<sge::Vec2<int>> evaluation_queue;
+    evaluation_queue.push(starting_point);
+    float distance = 1;
+    while (!evaluation_queue.empty()) {
+        auto size = evaluation_queue.size();
+        for (int i = 0; i < size; ++i) {
+            auto coords = evaluation_queue.front();
+            evaluation_queue.pop();
+            if (input_map[coords.x][coords.y] == target_val && check_map[coords.x][coords.y]==0) {
+                out_map[coords.x][coords.y] = distance;
+                check_map[coords.x][coords.y] = 1;
+
+                if (coords.x>0)
+                    evaluation_queue.emplace(coords.x-1, coords.y);
+                if (coords.y>0)
+                    evaluation_queue.emplace(coords.x, coords.y-1);
+                if (coords.x < input_map.width - 1)
+                    evaluation_queue.emplace(coords.x+1, coords.y);
+                if (coords.y < input_map.height - 1)
+                    evaluation_queue.emplace(coords.x, coords.y+1);
+            }
+        }
+        distance++;
+    }
 }
 
 

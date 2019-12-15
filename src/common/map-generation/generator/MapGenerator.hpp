@@ -12,14 +12,17 @@
 
 class MapGenerator : public utils::log::Loggable{
 public:
-explicit    MapGenerator(const MapGenInfo& map_gen_info) ;
+explicit MapGenerator(const MapGenInfo& map_gen_info) ;
 
+    NoiseMap surface_mask;
     NoiseMap combined_mask;
+    // NoiseMap flooded from the main entrance point, walls are 0, 1 is
+    // the entrance point and any other is the distance to the entrance itself in flood steps
+    NoiseMap flooded_map;
     NoiseMap secondary_fill_mask;
-    sge::Vec2<int> entry_coords;
+    sge::Vec2<int> entrance_coords;
 private:
     int m_size;
-    NoiseMap surface_mask;
     NoiseMap tunnel_noise;
     NoiseMap tunnel_mask;
 

@@ -2,10 +2,10 @@
 #define NON_GRAVITAR_BASICENEMYBUILDDATA_HPP
 
 #include <SGE/logic/Logic.hpp>
-#include <enemies/BasicEnemy.hpp>
-#include "EnemyBuildData.hpp"
+#include <enemies/Enemy.hpp>
+#include "EnemyPersistentData.hpp"
 
-class BasicEnemyBuildData : public EnemyBuildData {
+class BasicEnemyBuildData : public EnemyPersistentData {
     float space_needed_on_edge() override {
         return 0.6;
     }
@@ -26,6 +26,14 @@ public:
 
     BreakableObject_ConstructionData bullet_load_paths() override {
         return BreakableObject_ConstructionData("./res/models/enemies/basic_enemy__bullet", 3);
+    }
+
+    sf::Color get_minimap_pin_color() override {
+        return sf::Color(200, 30, 30);
+    }
+
+    float get_minimap_pin_size() override {
+        return 2;
     }
 
     sge::Vec2<float> head_offset() override {

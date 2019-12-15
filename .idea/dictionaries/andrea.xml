@@ -5,10 +5,13 @@
       <w>colliders</w>
       <w>fixedupdate</w>
       <w>gameobject</w>
+      <w>gravitar</w>
       <w>linestrip</w>
+      <w>minimap</w>
       <w>noisemap</w>
       <w>perlin</w>
       <w>planetoid</w>
+      <w>populator</w>
       <w>rigidbody</w>
       <w>smesh</w>
       <w>spath</w>

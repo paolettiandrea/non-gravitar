@@ -47,8 +47,8 @@ void Region::flood_fill(const NoiseMap& map, int _x, int _y, float target_val, M
 RegionDistanceData Region::pseudo_distance(Region& region1, Region& region2) {
     RegionDistanceData out_data;
     out_data.pseudo_distance = std::numeric_limits<float>::max();
-    for (int i1 = 0; i1 < region1.m_border_points.size(); ++i1) {
-        for (int i2 = 0; i2 < region2.m_border_points.size(); ++i2) {
+    for (int i1 = 0; i1 < region1.m_border_points.size(); i1 += 10) {
+        for (int i2 = 0; i2 < region2.m_border_points.size(); i2 += 10) {
             float distance = pow(region1.m_border_points[i1].x - region2.m_border_points[i2].x,2) +
                                    pow(region1.m_border_points[i1].y - region2.m_border_points[i2].y,2);
             if (distance < out_data.pseudo_distance) {

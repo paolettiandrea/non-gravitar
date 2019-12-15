@@ -1,1 +1,1 @@
-add_subdirectory(game-scene)
+add_subdirectory(galaxy-scene)

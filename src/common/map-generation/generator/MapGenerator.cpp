@@ -11,6 +11,7 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
         : Loggable("MapGenerator"), m_size(map_gen_info.size), surface_mask(map_gen_info.size,map_gen_info.size)
         , tunnel_noise(map_gen_info.size,map_gen_info.size), tunnel_mask(map_gen_info.size,map_gen_info.size)
         , combined_mask(map_gen_info.size, map_gen_info.size), secondary_fill_mask(map_gen_info.size, map_gen_info.size)
+        , flooded_map(map_gen_info.size, map_gen_info.size, 0)
 
 {
 
@@ -58,6 +59,10 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
     calculate_final_stats();
 
     find_entrances();
+
+    NoiseMap::flood_fill(combined_mask, flooded_map, entrance_coords, 0);
+
+
 }
 
 void MapGenerator::generate_surface_mask() {
@@ -140,6 +145,7 @@ void MapGenerator::link_caves(bool exclude_surface_points) {
     for (int k = 0; k < cave_regions.size(); ++k) {
         already_incorporated_region[k] = false;
     }
+
 
     // Check for the closest region which wasn't already incorporated in another one
     for (int i = 0; i < cave_regions.size(); ++i) {
@@ -254,13 +260,13 @@ void MapGenerator::find_entrances() {
     for (int j = 0; j < possible_entrances.size(); ++j) {
         auto focus = possible_entrances[j];
         if (best_distance > distance_from_center_map[focus.x][focus.y]) {
-            entry_coords = possible_entrances[j];
+            entrance_coords = possible_entrances[j];
             best_distance = distance_from_center_map[possible_entrances[j].x][possible_entrances[j].y];
         }
     }
 
 
-    out_map[entry_coords.x][entry_coords.y] = 0.7;
+    out_map[entrance_coords.x][entrance_coords.y] = 0.7;
     out_map.save_as_image("../out/border-analysis.bmp", 0,1);
 
 

@@ -4,6 +4,6 @@ target_sources(non_gravitar PRIVATE
         Planetoid.cpp
         Planetoid.hpp
 
-        PlanetoidData.cpp
-        PlanetoidData.hpp
+        PlanetoidPersistentData.cpp
+        PlanetoidPersistentData.hpp
         )

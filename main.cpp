@@ -1,7 +1,8 @@
 #include <iostream>
 
 #include "SGE/engine/Engine.hpp"
-#include "EntryLogic.hpp"
+#include "PlanetoidScene_EntryLogic.hpp"
+#include "GalaxyScene_EntryLogic.hpp"
 
 int main() {
 
@@ -27,7 +28,7 @@ int main() {
 
 
     // Initialize the engine with an entry scene
-    auto entry_logic = new EntryLogic;
+    auto entry_logic = new GalaxyScene_EntryLogic();
     sge::cd::SceneConstructionData scene_cd("Entry Scene", entry_logic);
     scene_cd.camera_vertical_zoom = 30;
     scene_cd.gravity = sge::Vec2<float>(0,0);

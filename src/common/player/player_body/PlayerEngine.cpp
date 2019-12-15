@@ -29,8 +29,8 @@ void PlayerEngine::on_start() {
     engine_trail->set_active(false);
 
     auto ui = gameobject()->add_component<sge::cmp::UI>("UI");
-    ui->set_anchor_alignment(sge::cmp::UI::HotizontalAlignment::MIDDLE, sge::cmp::UI::VerticalAlignment::BOTTOM);
-    ui->set_origin_alignment(sge::cmp::UI::HotizontalAlignment::MIDDLE, sge::cmp::UI::VerticalAlignment::BOTTOM);
+    ui->set_anchor_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
+    ui->set_origin_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
 
     fuel_bar = new sge::UIBar(400, 20);
     fuel_bar->set_offset(sf::Vector2f(0, 20));
