@@ -1,6 +1,6 @@
 target_sources(non_gravitar PRIVATE
-        PlayerSceneTransitionTrigger.cpp
-        PlayerSceneTransitionTrigger.hpp
+        PlanetoidSceneTransitionTrigger.cpp
+        PlanetoidSceneTransitionTrigger.hpp
 
         SceneTransitionHandler.cpp
         SceneTransitionHandler.hpp

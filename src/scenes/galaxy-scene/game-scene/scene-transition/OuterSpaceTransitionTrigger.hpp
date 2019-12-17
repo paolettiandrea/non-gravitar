@@ -3,22 +3,23 @@
 
 
 #include <SGE/logic/Logic.hpp>
+#include <scaled-planetoid/MiniaturePlanetoid.hpp>
 
 #define NG_TRIGGER_COLLIDER_THICKNESS 20
 
 
 class OuterSpaceTransitionTrigger : public sge::Logic {
 public:
-    explicit OuterSpaceTransitionTrigger(float radius);
+    explicit OuterSpaceTransitionTrigger(float radius, MiniaturePlanetoid* miniature_planetoid);
 
     void on_start() override;
-
-    void on_collision_begin(sge::CollisionInfo &collision_info) override;
 
     std::string get_logic_id() override;
 
 private:
     float radius;
+
+    MiniaturePlanetoid *base_planetoid;
 };
 
 

@@ -59,7 +59,6 @@ void Planetoid::assemble_vert_array(VertArray_H recipient, const MarchingMap &ma
 }
 
 void Planetoid::assemble_vert_array(sf::VertexArray& recipient, const MarchingMap &marching_map, sf::Color color) {
-    recipient.setPrimitiveType(sf::PrimitiveType::Triangles);
     for (int k = 0; k < marching_map.width; ++k) {
         for (int i = 0; i < marching_map.height; ++i) {
             for (auto point : marching_map.get_square(k,i).get_fill_triangles()){

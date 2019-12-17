@@ -35,7 +35,7 @@ void PlanetoidScene_EntryLogic::on_start() {
 
     auto transition_trigger = scene()->spawn_gameobject("TransitionTrigger");
     transition_trigger->transform()->set_local_position(center_pos);
-    transition_trigger->logichub()->attach_logic(new OuterSpaceTransitionTrigger(planetoid_persistent_data->size*2));
+    transition_trigger->logichub()->attach_logic(new OuterSpaceTransitionTrigger(planetoid_persistent_data->size*2, base_miniature));
 
     auto minimap_go = scene()->spawn_gameobject("Minimap");
     minimap_go->transform()->set_local_scale(0.5);

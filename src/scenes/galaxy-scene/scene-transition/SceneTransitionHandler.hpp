@@ -7,6 +7,8 @@
 #include <PlanetoidPersistentData.hpp>
 #include "MiniaturePlanetoid.hpp"
 
+#define NG_GALAXY_SCENE_TRANSITION_DRIFTING_VELOCITY 0.5
+
 class SceneTransitionHandler : public sge::Logic {
 public:
     explicit SceneTransitionHandler(Player *player_l);
