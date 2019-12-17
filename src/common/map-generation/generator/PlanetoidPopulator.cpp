@@ -84,7 +84,7 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
         }
     }
 
-    std::sort(enemy_sizes.begin(), enemy_sizes.end(), std::greater<>());
+    std::sort(enemy_sizes.begin(), enemy_sizes.end(), std::greater<float>());
 
     // For every enemy size create a vector of build data and do a spawn session
     for (int k = 0; k < enemy_sizes.size(); ++k) {
