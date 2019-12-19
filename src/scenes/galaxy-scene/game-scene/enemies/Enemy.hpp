@@ -4,6 +4,7 @@
 
 #include <scaled-planetoid/minimap/MinimapTraced_I.hpp>
 #include "EnemyPersistentData.hpp"
+#include "PlayerPersistentData.hpp"
 
 #define SGE_ENEMY_VIEW_RANGE 30
 
@@ -13,7 +14,7 @@
 
 class Enemy : public sge::Logic {
 public:
-    Enemy(EnemyPersistentData *build_data);
+    Enemy(EnemyPersistentData *build_data, PlayerPersistentData* player_persistent_data);
 
     std::string get_logic_id() override;
 
@@ -29,6 +30,7 @@ protected:
     GameObject_H m_view_gameobject;
 
      EnemyPersistentData* build_data;
+    PlayerPersistentData *player_persistent_data;
 };
 
 

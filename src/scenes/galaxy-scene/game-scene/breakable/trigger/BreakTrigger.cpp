@@ -15,22 +15,7 @@ void BreakTrigger::on_collision_begin(sge::CollisionInfo &collision_info) {
     Logic::on_collision_begin(collision_info);
 
     if (break_triggered) {
-        // On break visit upstream the hierarchy and call the break pulse on the last child dependent BreakHandler
-        GameObject_H pointed_go = gameobject();
-        BreakHandler* found_handler = nullptr;
-
-        while (pointed_go.is_valid()) {
-            auto pointed_handler_logic = pointed_go->logichub()->get_logic<BreakHandler>();
-            if (pointed_handler_logic != nullptr && pointed_handler_logic->is_child_dependent()) found_handler = pointed_handler_logic;
-            if (pointed_go->transform()->get_parent().is_valid()) pointed_go = pointed_go->transform()->get_parent()->gameobject();
-            else break;
-        }
-        if (found_handler!= nullptr) {
-            found_handler->break_pulse(impact_vel_recorded_on_break);
-        } else {
-            LOG_ERROR << "Couldn't find a BreakHandler up the hierarchy";
-            exit(1);
-        }
+        break_object();
     }
 }
 
@@ -50,4 +35,23 @@ BreakTrigger::BreakTrigger(float trigger_impact_vel, Rigidbody_H ignored_rb) {
 
 void BreakTrigger::set_ignored_rb(Rigidbody_H rb) {
     ignored_rigidbody = rb;
+}
+
+void BreakTrigger::break_object() {
+    // On break visit upstream the hierarchy and call the break pulse on the last child dependent BreakHandler
+    GameObject_H pointed_go = gameobject();
+    BreakHandler* found_handler = nullptr;
+
+    while (pointed_go.is_valid()) {
+        auto pointed_handler_logic = pointed_go->logichub()->get_logic<BreakHandler>();
+        if (pointed_handler_logic != nullptr && pointed_handler_logic->is_child_dependent()) found_handler = pointed_handler_logic;
+        if (pointed_go->transform()->get_parent().is_valid()) pointed_go = pointed_go->transform()->get_parent()->gameobject();
+        else break;
+    }
+    if (found_handler!= nullptr) {
+        found_handler->break_pulse(impact_vel_recorded_on_break);
+    } else {
+        LOG_ERROR << "Couldn't find a BreakHandler up the hierarchy";
+        exit(1);
+    }
 }

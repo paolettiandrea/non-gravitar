@@ -7,7 +7,7 @@
 
 class BreakHandler : public sge::Logic {
 public:
-    explicit BreakHandler(bool is_child_dependent, bool fade_on_break = false);
+    explicit BreakHandler(bool is_child_dependent, bool fade_on_break = false, const std::string& fragment_collision_layer = "Default");
 
     std::string get_logic_id() override;
 
@@ -21,6 +21,7 @@ private:
     static unsigned int break_event_counter;
     bool m_child_dependent_flag;
     bool m_fade_on_break_flag;
+    std::string fragment_collision_layer;
     b2Vec2 linear_vel_at_break;
 
     std::vector<std::vector<FragmentInfo>> collected_fragment_info;

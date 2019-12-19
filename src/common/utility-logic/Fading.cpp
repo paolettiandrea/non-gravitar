@@ -9,9 +9,6 @@ std::string Fading::get_logic_id() {
     return std::string("Fading");
 }
 
-Fading::Fading()  : fade_animation(new LinearInterpolator, 255, 0, NG_FADING_ANIMATION_DURATION) {
-
-}
 
 void Fading::set_vert_array_alpha_recursive(GameObject_H target_go, float alpha) {
     auto vert_array = target_go->get_component<sge::cmp::VertArray>("VertArray");
@@ -29,5 +26,8 @@ void Fading::on_update() {
     set_vert_array_alpha_recursive(gameobject(), alpha);
 
     if (alpha<=0) { gameobject()->doom(); }
+}
+
+Fading::Fading(float fade_duration) : fade_animation(new LinearInterpolator, 255, 0, fade_duration) {
 }
 

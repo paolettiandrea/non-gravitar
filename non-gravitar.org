@@ -1,0 +1,20 @@
+** Scenes
+*** Solar System
+*** Planetoid
+*** Death
+*** Main menu (optional)
+
+** Content
+*** Enemies
+**** Basic
+Shoots periodically vaguelly towards the player when it's close.
+**** Multi shot
+Has 3 cannons, and shoots periodically in a random direction.
+**** Sniper
+Shoots rarelly, calculating where the player will be when the bullet lands (with an acceptable appsoximation).
+It emits a laser to signal that it's going to shoot.
+
+*** Crates
+**** Fuel
+**** Max fuel
+**** Max stamina

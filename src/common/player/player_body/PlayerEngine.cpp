@@ -1,12 +1,20 @@
 #include <SGE/components/graphics/ui/UI.hpp>
+#include <player/PlayerPersistentData.hpp>
 #include "PlayerEngine.hpp"
 
 std::string PlayerEngine::get_logic_id() {
     return std::string("PlayerEngine");
 }
 
-PlayerEngine::PlayerEngine(Rigidbody_H rigidbody) {
+PlayerEngine::PlayerEngine(Rigidbody_H rigidbody, PlayerPersistentData* player_persistent_data) {
     controlled_rigidbody = rigidbody;
+    this->player_persistent_data = player_persistent_data;
+
+
+    fuel_amount_changed_ev_handler = [&]() {
+        update_fuel_bar_geometry();
+    };
+    player_persistent_data->fuel_amount.subscribe(fuel_amount_changed_ev_handler);
 }
 
 void PlayerEngine::on_start() {
@@ -36,6 +44,8 @@ void PlayerEngine::on_start() {
     fuel_bar->set_offset(sf::Vector2f(0, 20));
 
     ui->set_content(fuel_bar);
+
+    update_fuel_bar_geometry();
 }
 
 void PlayerEngine::on_fixed_update() {
@@ -91,22 +101,33 @@ void PlayerEngine::on_fixed_update() {
         auto transformed_dir = sge::Vec2<float>::rotate(sge::Vec2<float>(0,thrust), gameobject()->transform()->get_world_rotation());
         controlled_rigidbody->apply_force_center(transformed_dir, true);
 
-        m_fuel_amount -= thrust_this_fixedupdate / FUEL_EFFICIENCY_FACTOR;
+        player_persistent_data->fuel_amount.set(player_persistent_data->fuel_amount.value() - thrust_this_fixedupdate / FUEL_EFFICIENCY_FACTOR);
     }
     last_thrust_amount = thrust_this_fixedupdate;
 }
 
 void PlayerEngine::on_update() {
     update_engine_trail_lenght();
-
-    if (m_last_displayed_fuel_amount != m_fuel_amount) {
-        fuel_bar->set_bar(m_fuel_amount / FUEL_MAX);
-        m_last_displayed_fuel_amount = m_fuel_amount;
-    }
 }
 
 void PlayerEngine::update_engine_trail_lenght() {
     if (engine_trail->is_active()) {
         engine_trail->set_vertex_position(3, 0, -last_thrust_amount*TRAIL_LENGHT_MULTIPLIER);
     }
+}
+
+void PlayerEngine::update_fuel_bar_geometry() {
+    fuel_bar->set_bar(player_persistent_data->fuel_amount.value() / player_persistent_data->fuel_max.value());
+    m_last_displayed_fuel_amount = player_persistent_data->fuel_amount.value();
+}
+
+void PlayerEngine::on_destruction() {
+}
+
+void PlayerEngine::on_scene_resume() {
+    update_fuel_bar_geometry();
+}
+
+void PlayerEngine::on_scene_destruction() {
+    player_persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
 }

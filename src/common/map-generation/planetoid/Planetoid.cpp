@@ -1,4 +1,5 @@
 #include <enemies/Enemy.hpp>
+#include <game-scene/crates/Crate.hpp>
 #include "Planetoid.hpp"
 
 
@@ -35,11 +36,26 @@ void Planetoid::on_start() {
     }
 
     // Enemies
-    for(EnemyPersistentData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_build_data) {
-        auto new_enemy = scene()->spawn_gameobject("Enemy");
-        new_enemy->transform()->set_local_position(enemy_to_spawn->anchor_position);
-        new_enemy->transform()->set_local_rotation(enemy_to_spawn->angle+M_PI_2);
-        new_enemy->logichub()->attach_logic(new Enemy(enemy_to_spawn));
+    int enemy_counter = 1;
+    for(EnemyPersistentData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
+        if (!enemy_to_spawn->destroyed) {
+            auto new_enemy = scene()->spawn_gameobject("Enemy " + std::to_string(enemy_counter));
+            new_enemy->transform()->set_local_position(enemy_to_spawn->anchor_position);
+            new_enemy->transform()->set_local_rotation(enemy_to_spawn->angle+M_PI_2);
+            new_enemy->logichub()->attach_logic(new Enemy(enemy_to_spawn, player_persistent_data));
+            enemy_counter++;
+        }
+    }
+
+    // Crates
+    int crate_counter = 1;
+    for (CratePersistentData *crate_persistent_data : planetoid_data->map_gen_info.crates_persistent_data_vec) {
+        if (!crate_persistent_data->destroyed) {
+            auto new_crate_go = scene()->spawn_gameobject("Crate " + std::to_string(crate_counter));
+            new_crate_go->transform()->set_local_position(crate_persistent_data->position);
+            new_crate_go->logichub()->attach_logic(new Crate(crate_persistent_data));
+            crate_counter++;
+        }
     }
  }
 

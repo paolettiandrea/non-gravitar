@@ -14,6 +14,8 @@ public:
     BreakTrigger(float trigger_impact_vel, Rigidbody_H ignored_rb);
     std::string get_logic_id() override;
 
+    void break_object();
+
     void set_ignored_rb(Rigidbody_H rb);
 
     void pre_solve(b2Contact *contact, const b2Manifold *oldManifold, const sge::CollisionInfo &info) override;

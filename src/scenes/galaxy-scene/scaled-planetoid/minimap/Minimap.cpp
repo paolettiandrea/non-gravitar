@@ -34,7 +34,7 @@ Minimap::Minimap(MiniaturePlanetoid *base_miniature, Planetoid *planetoid, Playe
 
 void Minimap::refresh_geometry() {
     std::vector<MinimapTraced_I*> objects_to_trace;
-    auto enemies_build_data = planetoid->get_planetoid_persistent_data()->map_gen_info.enemies_build_data;
+    auto enemies_build_data = planetoid->get_planetoid_persistent_data()->map_gen_info.enemies_persistent_data_vec;
     for (int i = 0; i < enemies_build_data.size(); ++i) {
         auto* data = enemies_build_data[i];
         if (!data->destroyed) {

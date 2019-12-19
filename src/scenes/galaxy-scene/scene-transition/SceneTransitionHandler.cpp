@@ -7,7 +7,7 @@ SceneTransitionHandler::SceneTransitionHandler(Player *player_l) {
 
 void SceneTransitionHandler::launch_planetoid_scene(PlanetoidPersistentData *planetoid_persistent_data,
                                                     MiniaturePlanetoid *base_miniature) {
-    env()->book_new_scene_push("Planetoid Scene", new PlanetoidScene_EntryLogic(planetoid_persistent_data, base_miniature));
+    env()->book_new_scene_push("Planetoid Scene", new PlanetoidScene_EntryLogic(planetoid_persistent_data, base_miniature, player_logic->get_persistent_data()));
 
     auto planet_size_vec = sge::Vec2<float>(base_miniature->get_planetoid_persistent_data()->size,
                                             base_miniature->get_planetoid_persistent_data()->size);

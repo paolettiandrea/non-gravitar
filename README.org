@@ -1,3 +1,0 @@
-Non Gravitar is a 2D retro game heavily inspired on [[https://en.wikipedia.org/wiki/Gravitar][Gravitar]].
-
-They share similar aesthetics and mechanics, with the main exception being the absence of gravity.

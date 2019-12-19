@@ -19,6 +19,11 @@ target_sources(non_gravitar PRIVATE
 
         EnemyPersistentData.hpp
         BasicEnemyBuildData.hpp
+
+        CratePersistentData.hpp
+
+        FuelCratePersistentData.hpp
+        FuelCratePersistentData.cpp
         )
 
 add_subdirectory(marching-squares)

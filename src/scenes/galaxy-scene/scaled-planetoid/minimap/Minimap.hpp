@@ -4,7 +4,7 @@
 #include <SGE/logic/Logic.hpp>
 #include "Minimap_UIContent.hpp"
 #include <SGE/components/graphics/ui/UI.hpp>
-#include <player/Player.hpp>
+#include <Player.hpp>
 
 
 #define NG_MINIMAP_REFRESH_PERIOD 0.25

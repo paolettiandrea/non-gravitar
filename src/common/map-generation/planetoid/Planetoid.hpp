@@ -9,7 +9,11 @@
 
 class Planetoid : public sge::Logic {
 public:
-    explicit Planetoid(const PlanetoidPersistentData& planetoid_data) { this->planetoid_data = &planetoid_data; }
+    explicit Planetoid(const PlanetoidPersistentData& planetoid_data, PlayerPersistentData* player_persistent_data) {
+        this->planetoid_data = &planetoid_data;
+        this->player_persistent_data = player_persistent_data;
+    }
+
     std::string get_logic_id() override;
 
     void on_start() override;
@@ -19,6 +23,7 @@ public:
 private:
 
     const PlanetoidPersistentData* planetoid_data;
+    PlayerPersistentData *player_persistent_data;
 public:
     const PlanetoidPersistentData *get_planetoid_persistent_data() const;
 

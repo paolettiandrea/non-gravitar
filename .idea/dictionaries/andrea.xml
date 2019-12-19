@@ -4,10 +4,13 @@
       <w>collider</w>
       <w>colliders</w>
       <w>fixedupdate</w>
+      <w>gameloop</w>
+      <w>gameobj</w>
       <w>gameobject</w>
       <w>gravitar</w>
       <w>linestrip</w>
       <w>minimap</w>
+      <w>multishot</w>
       <w>noisemap</w>
       <w>perlin</w>
       <w>planetoid</w>

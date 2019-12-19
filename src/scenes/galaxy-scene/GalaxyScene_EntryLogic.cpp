@@ -22,7 +22,7 @@ void GalaxyScene_EntryLogic::on_start() {
     galaxy_construction_data.min_planetoid_size = 150;
     galaxy_construction_data.max_planetoid_size = 700;
 
-    auto player_l = new Player();
+    auto player_l = new Player(&player_persistent_data);
 
     GameObject_H scene_transition_handler = scene()->spawn_gameobject("Scene Transition Handler");
     SceneTransitionHandler* scene_transition_handler_l = new SceneTransitionHandler(player_l);

@@ -10,6 +10,8 @@ public:
     void on_start() override;
 
     std::string get_logic_id() override;
+
+    PlayerPersistentData player_persistent_data;
 };
 
 

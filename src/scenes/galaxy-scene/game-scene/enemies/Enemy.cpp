@@ -3,6 +3,7 @@
 #include <handler/BreakHandler.hpp>
 #include <enemies/parts/Trigger.hpp>
 #include <enemies/parts/EnemyBase.hpp>
+#include <player/PlayerPersistentData.hpp>
 #include "Enemy.hpp"
 
 
@@ -50,13 +51,16 @@ void Enemy::on_start() {
     gameobject()->logichub()->attach_logic(new BreakHandler(true));
 }
 
-Enemy::Enemy(EnemyPersistentData *build_data) {
+Enemy::Enemy(EnemyPersistentData *build_data, PlayerPersistentData* player_persistent_data) {
     this->build_data = build_data;
+    this->player_persistent_data = player_persistent_data;
 }
 
 
 void Enemy::on_destruction() {
     if (!scene()->is_doomed()) {
         build_data->destroyed = true;
+
+        player_persistent_data->score.set(player_persistent_data->score.value() + 50);
     }
 }

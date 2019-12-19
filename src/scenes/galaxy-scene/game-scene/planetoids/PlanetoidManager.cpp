@@ -1,5 +1,5 @@
-#include <SGE/components/graphics/VertArray.hpp>
 #include <BasicEnemyBuildData.hpp>
+#include <map-generation/generator/FuelCratePersistentData.hpp>
 #include "PlanetoidManager.hpp"
 #include "SGE/components/physics/Collider.hpp"
 #include "Planetoid.hpp"
@@ -32,7 +32,11 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
 
         // TODO enemy spawning based on size and difficulty scaling
         for (int j = 0; j < 10; ++j) {
-            map_gen_info.enemies_build_data.push_back(new BasicEnemyBuildData());
+            map_gen_info.enemies_persistent_data_vec.push_back(new BasicEnemyBuildData());
+        }
+
+        for (int j = 0; j < 30; ++j) {
+            map_gen_info.crates_persistent_data_vec.push_back(new FuelCratePersistentData());
         }
 
 

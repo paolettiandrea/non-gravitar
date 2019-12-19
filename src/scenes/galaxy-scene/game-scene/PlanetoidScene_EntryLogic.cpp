@@ -4,6 +4,7 @@
 #include "PlanetoidScene_EntryLogic.hpp"
 #include <SGE/components/graphics/ui/UI.hpp>
 #include <scaled-planetoid/minimap/Minimap.hpp>
+#include <player/TractorBeam.hpp>
 
 
 std::string PlanetoidScene_EntryLogic::get_logic_id() {
@@ -17,7 +18,7 @@ void PlanetoidScene_EntryLogic::on_start() {
 
     // Spawn the planetoid (and relative enemies and crates)
     auto planetoid_go = scene()->spawn_gameobject("Planetoid");
-    auto planetoid_l = new Planetoid(*planetoid_persistent_data);
+    auto planetoid_l = new Planetoid(*planetoid_persistent_data, player_persistent_data);
     planetoid_go->logichub()->attach_logic(planetoid_l);
 
     auto entrance_pos = sge::Vec2<float>(planetoid_persistent_data->map_generator.entrance_coords.x,
@@ -30,7 +31,7 @@ void PlanetoidScene_EntryLogic::on_start() {
     auto player_go = scene()->spawn_gameobject("Player");
     player_go->transform()->set_local_scale(0.5);
     player_go->transform()->set_local_position(spawn_point);
-    auto player_l = new Player();
+    auto player_l = new Player(player_persistent_data);
     player_go->logichub()->attach_logic(player_l);
 
     auto transition_trigger = scene()->spawn_gameobject("TransitionTrigger");
@@ -42,7 +43,8 @@ void PlanetoidScene_EntryLogic::on_start() {
     minimap_go->logichub()->attach_logic(new Minimap(base_miniature, planetoid_l, player_l));
 }
 
-PlanetoidScene_EntryLogic::PlanetoidScene_EntryLogic(PlanetoidPersistentData *planetoid_persistent_data, MiniaturePlanetoid* base_miniature) {
+PlanetoidScene_EntryLogic::PlanetoidScene_EntryLogic(PlanetoidPersistentData *planetoid_persistent_data, MiniaturePlanetoid* base_miniature, PlayerPersistentData* player_persistent_data) {
     this->planetoid_persistent_data = planetoid_persistent_data;
     this->base_miniature = base_miniature;
+    this->player_persistent_data = player_persistent_data;
 }

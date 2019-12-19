@@ -11,10 +11,12 @@
 #include <scaled-planetoid/minimap/MinimapTraced_I.hpp>
 
 #include "PlayerBody.hpp"
+#include "PlayerPersistentData.hpp"
 
 
 class Player : public sge::Logic, public MinimapTraced_I  {
 public:
+    explicit Player(PlayerPersistentData *persistent_data);
     std::string get_logic_id() override;
 
     void on_start() override;
@@ -29,6 +31,11 @@ private:
     Rigidbody_H m_rigidbody;
     Collider_H m_collider;
     PlayerBody* m_body;
+
+    PlayerPersistentData *persistent_data;
+public:
+    PlayerPersistentData *get_persistent_data();
+
 public:
     GameObject_H  get_body_gameobject() const;
 

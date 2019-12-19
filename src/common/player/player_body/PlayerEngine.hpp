@@ -6,10 +6,11 @@
 #include <SGE/components/graphics/ui/blocks/UIBar.hpp>
 #include "SGE/logic/Logic.hpp"
 #include "SGE/components/graphics/VertArray.hpp"
+#include "PlayerPersistentData.hpp"
 
 class PlayerEngine : public sge::Logic {
 public:
-    explicit PlayerEngine(Rigidbody_H rigidbody);
+    explicit PlayerEngine(Rigidbody_H rigidbody, PlayerPersistentData* player_persistent_data);
 
     std::string get_logic_id() override;
 
@@ -18,6 +19,12 @@ public:
     void on_update() override;
 
     void on_start() override;
+
+    void on_destruction() override;
+
+    void on_scene_destruction() override;
+
+    void on_scene_resume() override;
 
 private:
 
@@ -51,12 +58,15 @@ private:
 
     ThrustStatus thrust_status = Zero;
 
-    static constexpr float FUEL_MAX = 100;
     static constexpr float FUEL_EFFICIENCY_FACTOR = 600;
 
-    float m_fuel_amount = FUEL_MAX;
     float m_last_displayed_fuel_amount = 0;
     sge::UIBar* fuel_bar;
+
+    PlayerPersistentData* player_persistent_data;
+
+    void update_fuel_bar_geometry();
+    utils::event::EventHandler fuel_amount_changed_ev_handler;
 
 
 

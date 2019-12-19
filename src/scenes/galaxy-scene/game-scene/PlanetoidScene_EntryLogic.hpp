@@ -13,7 +13,7 @@
 
 class PlanetoidScene_EntryLogic : public sge::Logic {
 public:
-    PlanetoidScene_EntryLogic(PlanetoidPersistentData* planetoid_persistent_data, MiniaturePlanetoid* base_miniature);
+    PlanetoidScene_EntryLogic(PlanetoidPersistentData* planetoid_persistent_data, MiniaturePlanetoid* base_miniature, PlayerPersistentData* player_persistent_data);
     std::string get_logic_id() override;
 
     void on_start() override;
@@ -21,6 +21,8 @@ public:
 private:
     PlanetoidPersistentData *planetoid_persistent_data;
     MiniaturePlanetoid *base_miniature;
+    PlayerPersistentData *player_persistent_data;
+
 };
 
 

@@ -7,10 +7,12 @@
 #include <SGE/components/physics/Rigidbody.hpp>
 #include <SGE/components/physics/Collider.hpp>
 #include "PlayerEngine.hpp"
+#include "PlayerPersistentData.hpp"
 
 
 class PlayerBody : public sge::Logic {
 public:
+    PlayerBody(PlayerPersistentData *player_persistent_data);
     std::string get_logic_id() override;
 
 
@@ -23,6 +25,8 @@ public:
 private:
     VertArray_H m_vert_array;
     Collider_H m_collider;
+
+    PlayerPersistentData *player_persistent_data;
 };
 
 

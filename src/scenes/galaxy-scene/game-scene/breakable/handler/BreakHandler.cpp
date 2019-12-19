@@ -13,9 +13,10 @@ std::string BreakHandler::get_logic_id() {
     return std::string("BreakHandler");
 }
 
-BreakHandler::BreakHandler(bool is_child_dependent, bool fade_on_break) {
+BreakHandler::BreakHandler(bool is_child_dependent, bool fade_on_break, const std::string& fragment_collision_layer) {
     m_child_dependent_flag = is_child_dependent;
     m_fade_on_break_flag = fade_on_break;
+    this->fragment_collision_layer = fragment_collision_layer;
 }
 
 bool BreakHandler::is_child_dependent() const {
@@ -125,6 +126,7 @@ void BreakHandler::on_update() {
                 auto fragment_logic = new Fragment(target_info, break_event_id);
                 fragment->logichub()->attach_logic(fragment_logic);
                 spawned_fragments.push_back(fragment_logic);
+                //fragment->get_component<sge::cmp::Collider>("Collider")->set_collision_category(fragment_collision_layer);
 
                 already_spawned_this_layer++;
                 already_spawned_total++;
@@ -155,7 +157,7 @@ void BreakHandler::on_update() {
 
             // Add some Fading logic if the fade_on_break flag is on
             if (m_fade_on_break_flag) {
-                spawned_containers[l]->logichub()->attach_logic(new Fading());
+                spawned_containers[l]->logichub()->attach_logic(new Fading(0.3));
             }
         }
         collected_fragment_info.clear();
