@@ -12,6 +12,14 @@ std::string PlanetoidManager::get_logic_id() {
 
 PlanetoidManager::~PlanetoidManager() {
     for (int i = 0; i < planetoid_data_vec.size(); ++i) {
+
+        for (int j = 0; j < planetoid_data_vec[i]->map_gen_info.enemies_persistent_data_vec.size(); ++j) {
+            delete (planetoid_data_vec[i]->map_gen_info.enemies_persistent_data_vec[j]);
+        }
+
+        for (int j = 0; j < planetoid_data_vec[i]->map_gen_info.crates_persistent_data_vec.size(); ++j) {
+            delete (planetoid_data_vec[i]->map_gen_info.crates_persistent_data_vec[j]);
+        }
         delete (planetoid_data_vec[i]);
     }
 }

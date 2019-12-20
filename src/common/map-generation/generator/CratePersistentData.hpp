@@ -11,6 +11,10 @@ struct CratePersistentData {
 
     bool destroyed = false;
 
+    virtual ~CratePersistentData() {
+
+    }
+
     virtual BreakableObject_ConstructionData get_base_construction_data() {
         return BreakableObject_ConstructionData("./res/models/crates/crate__base", 1);
     }

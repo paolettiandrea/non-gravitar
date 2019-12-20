@@ -18,6 +18,8 @@ public:
 
     [[nodiscard]] const std::vector<PlanetoidPersistentData *> &get_planetoid_data_vec() const;
 
+
+
 private:
     std::vector<PlanetoidPersistentData*> planetoid_data_vec;
 };

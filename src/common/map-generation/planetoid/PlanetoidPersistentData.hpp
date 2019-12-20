@@ -14,6 +14,8 @@ class PlanetoidPersistentData {
 public:
     explicit PlanetoidPersistentData(const MapGenInfo& map_gen_info);
 
+    virtual ~PlanetoidPersistentData();
+
     MapGenInfo map_gen_info;
 
     const unsigned int size;

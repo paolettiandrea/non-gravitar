@@ -14,5 +14,4 @@ public:
     PlayerPersistentData player_persistent_data;
 };
 
-
 #endif //NON_GRAVITAR_GALAXYSCENE_ENTRYLOGIC_HPP

@@ -3,7 +3,7 @@
 
 MarchingMap::MarchingMap(const NoiseMap &map, float threshold, bool invert): width(map.width-1), height(map.height-1) {
     // Create ControlNode grid
-    ControlNode ***control_node_grid;
+
     control_node_grid = new ControlNode **[map.width];
     for (int k = 0; k < map.width; ++k) {
         control_node_grid[k] = new ControlNode *[map.height];
@@ -154,6 +154,16 @@ const int MarchingMap::recursive_stepper(coord point, coord exclude, float rot_t
     auto next = get_next_square_coords(point, exclude, rot_target);
     if (next==coord(-1,-1)) return counter;
     else return recursive_stepper(next, point, rot_target, counter+1);
+}
+
+MarchingMap::~MarchingMap() {
+    for (int k = 0; k < width+1; ++k) {
+        for (int i = 0; i < height+1; ++i) {
+            delete (control_node_grid[k][i]);
+        }
+        delete [] (control_node_grid[k]);
+    }
+    delete[] control_node_grid;
 }
 
 

@@ -14,6 +14,7 @@ class MarchingMap {
 public:
     MarchingMap(const NoiseMap &map, float threshold, bool invert);
 
+    virtual ~MarchingMap();
 
     const std::vector<sge::Path> &get_paths() const;
 
@@ -40,6 +41,8 @@ private:
     const coord get_next_square_coords(coord pointed_square, coord avoid_square, float target_rotation) const;
     const std::vector<coord> get_angle_matches(coord pointed_square, float target_rotation) const;
     const int recursive_stepper(coord point, coord exclude, float rot_target, int counter) const;
+
+    ControlNode ***control_node_grid;
 
 };
 

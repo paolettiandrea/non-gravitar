@@ -18,9 +18,9 @@ std::string GalaxyScene_EntryLogic::get_logic_id() {
 
 void GalaxyScene_EntryLogic::on_start() {
     Galaxy_ConstructionData galaxy_construction_data;
-    galaxy_construction_data.planetoid_number = 3;
-    galaxy_construction_data.min_planetoid_size = 150;
-    galaxy_construction_data.max_planetoid_size = 700;
+    galaxy_construction_data.planetoid_number = 2;
+    galaxy_construction_data.min_planetoid_size = 101;
+    galaxy_construction_data.max_planetoid_size =150;
 
     auto player_l = new Player(&player_persistent_data);
 
@@ -52,8 +52,7 @@ void GalaxyScene_EntryLogic::on_start() {
         LOG_INFO << "Target size" << target_size << ",\tGrid size: " << grid_size;
 
         GameObject_H new_scaled_planetoid = scene()->spawn_gameobject("Planetoid " + std::to_string(i));
-        new_scaled_planetoid->logichub()->attach_logic(
-                new MiniaturePlanetPortal(planetoid_data_vec[i], grid_size));
+        new_scaled_planetoid->logichub()->attach_logic(new MiniaturePlanetPortal(planetoid_data_vec[i], grid_size));
         new_scaled_planetoid->transform()->set_local_scale(1.0 / NG_GALAXY_MINIATURE_PLANET_DEFINITION);
         new_scaled_planetoid->transform()->set_local_position(temp_horizontal_anchor, 0);
         temp_horizontal_anchor+= 30;

@@ -12,6 +12,8 @@ public:
 
     std::string get_logic_id() override;
 
+    virtual ~MiniaturePlanetPortal() {}
+
 protected:
     Rigidbody_H m_rigidbody;
 };

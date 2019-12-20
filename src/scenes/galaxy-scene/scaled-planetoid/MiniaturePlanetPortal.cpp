@@ -16,3 +16,4 @@ std::string MiniaturePlanetPortal::get_logic_id() {
 
 MiniaturePlanetPortal::MiniaturePlanetPortal(PlanetoidPersistentData *data, float grid_size)
 : MiniaturePlanetoid(data, grid_size) {}
+
