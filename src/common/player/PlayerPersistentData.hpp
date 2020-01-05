@@ -26,8 +26,6 @@ private:
 };
 
 struct PlayerPersistentData {
-    static ColorPalette palette;
-
     WatchedVal<float> fuel_amount = WatchedVal<float>(NG_PLAYER_STARTING_MAX_FUEL);
     WatchedVal<float> fuel_max = WatchedVal<float>(NG_PLAYER_STARTING_MAX_FUEL);
     WatchedVal<float> stamina_max = WatchedVal<float>(NG_PLAYER_STARTING_MAX_STAMINA);

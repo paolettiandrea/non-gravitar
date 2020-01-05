@@ -4,6 +4,12 @@ target_sources(non_gravitar PRIVATE
 
         SceneTransitionHandler.cpp
         SceneTransitionHandler.hpp
+
+        SolarSystemTransitionHandler.cpp
+        SolarSystemTransitionHandler.hpp
+
+        PlanetoidTransitionHandler.cpp
+        PlanetoidTransitionHandler.hpp
         )
 
 target_include_directories(non_gravitar PRIVATE .)

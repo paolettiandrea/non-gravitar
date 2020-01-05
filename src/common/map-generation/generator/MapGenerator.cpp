@@ -14,53 +14,79 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
         , flooded_map(map_gen_info.size, map_gen_info.size, 0)
 
 {
+    bool save_debug_images = false;
+#ifdef DEBUG
+    save_debug_images = true;
+#endif
 
-    generate_surface_mask();
-    surface_mask.save_as_image("../out/1 surface mask.bmp",0,1);
+    bool malformed = true;
+    while (malformed) {
+        generate_surface_mask();
+        if (save_debug_images) surface_mask.save_as_image("../out/1 surface mask.bmp",0,1);
 
-    generate_tunnel_noise();
-    tunnel_noise.save_as_image("../out/2 tunnel noise.bmp",0,1);
+        generate_tunnel_noise();
+        if (save_debug_images) tunnel_noise.save_as_image("../out/2 tunnel noise.bmp",0,1);
 
-
-    update_combination_masks();
-    tunnel_mask.save_as_image("../out/3 tunnel mask.bmp",0,1);
-    combined_mask.save_as_image("../out/4 combined mask.bmp",0,1);
-    secondary_fill_mask.save_as_image("../out/4a-secondary-fill-mask.bmp", 0, 1);
-
-    define_regions();
-    discard_regions(map_gen_info.min_cave_volume, map_gen_info.min_filled_region_volume);
-
-    bool done = false;
-    int linking_iterations_counter = 0;
-    bool exclude_surface = true;
-
-    while (!done) {
-        LOG_INFO << "Starting planetoid generation iteration";
-        linking_iterations_counter++;
-
-        link_caves(exclude_surface);
-        tunnel_noise.save_as_image("../out/" + std::to_string(linking_iterations_counter*4) + " linking (iteration " + std::to_string(linking_iterations_counter) + ").bmp", 0, 1);
 
         update_combination_masks();
-        tunnel_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+1) + " linked tunnel mask.bmp", 0, 1);
-        combined_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+2) + " linked combined mask.bmp", 0, 1);
+        if (save_debug_images) tunnel_mask.save_as_image("../out/3 tunnel mask.bmp",0,1);
+        if (save_debug_images) combined_mask.save_as_image("../out/4 combined mask.bmp",0,1);
+        if (save_debug_images) secondary_fill_mask.save_as_image("../out/4a-secondary-fill-mask.bmp", 0, 1);
 
         define_regions();
         discard_regions(map_gen_info.min_cave_volume, map_gen_info.min_filled_region_volume);
 
-        combined_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+3) + " small regions excluded.bmp", 0, 1);
+        bool linking_done = false;
+        int linking_iterations_counter = 0;
+        bool exclude_surface = true;
 
-        if (cave_regions.size()<=2) {
-            if (!cave_regions[0].contains(sge::Vec2<int>(0,0))) exclude_surface = false;
-            if (cave_regions.size()==1) done = true;
+        NoiseMap prev_iteration_combined_mask(combined_mask);
+        while (!linking_done) {
+            LOG_DEBUG(1) << "Starting planetoid generation iteration.\nNumber of caves: " << cave_regions.size();
+            linking_iterations_counter++;
+
+
+            link_caves(exclude_surface);
+            if (save_debug_images) tunnel_noise.save_as_image("../out/" + std::to_string(linking_iterations_counter*4) + " linking (iteration " + std::to_string(linking_iterations_counter) + ").bmp", 0, 1);
+
+            update_combination_masks();
+            if (save_debug_images) tunnel_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+1) + " linked tunnel mask.bmp", 0, 1);
+            if (save_debug_images) combined_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+2) + " linked combined mask.bmp", 0, 1);
+
+            define_regions();
+            discard_regions(map_gen_info.min_cave_volume, map_gen_info.min_filled_region_volume);
+
+            if (save_debug_images) combined_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+3) + " small regions excluded.bmp", 0, 1);
+
+            if (cave_regions.size()<=2) {
+                if (!cave_regions[0].contains(sge::Vec2<int>(0,0))) exclude_surface = false;
+                if (cave_regions.size()==1) {
+                    linking_done = true;
+                    malformed = false;
+                }
+            }
+
+            if (linking_iterations_counter>3) {
+                if (linking_iterations_counter>15 || combined_mask == prev_iteration_combined_mask) {
+                    malformed = true;
+                    break;
+                }
+            }
+        }
+
+        if (!malformed) {
+            calculate_final_stats();
+
+            find_entrances();
+
+            NoiseMap::flood_fill(combined_mask, flooded_map, entrance_coords, 0);
+
+        }
+
+        if (malformed) {
+            LOG_DEBUG(1) << "The generated planetoid was found malformed";
         }
     }
-
-    calculate_final_stats();
-
-    find_entrances();
-
-    NoiseMap::flood_fill(combined_mask, flooded_map, entrance_coords, 0);
 
 
 }
@@ -84,7 +110,8 @@ void MapGenerator::generate_surface_mask() {
     // Calculate whole planetoid relevant info
     Region planetoid_region;
     Matrix2D<bool> temp_check_matrix (surface_mask.width,surface_mask.height);
-    planetoid_region.flood_fill(surface_mask, 0, 0, 0, temp_check_matrix);
+    NoiseMap check_map(surface_mask.width, surface_mask.height, 0.0);
+    planetoid_region.flood_fill(surface_mask, 0, 0, 0, check_map, 1.0);
 
     m_whole_planet_volume = m_size*m_size - planetoid_region.get_volume();
     auto border_points = planetoid_region.get_border_points();
@@ -106,42 +133,46 @@ void MapGenerator::update_combination_masks() {
 }
 
 void MapGenerator::define_regions() {
-    Matrix2D<bool> checked_flags_matrix(combined_mask.width,combined_mask.height);
-    for (int x = 0; x < combined_mask.width; ++x) {
-        for (int y = 0; y < combined_mask.height; ++y) {
-            checked_flags_matrix[x][y] = false;
-        }
-    }
+
+    NoiseMap checked_map(combined_mask.width, combined_mask.height, 0.0);
 
     cave_regions.clear();
     filled_regions.clear();
 
+    float cave_check_val = 1;
     // First of all the central and (often if not always) main cave at the first place
     cave_regions.emplace_back();
-    cave_regions[0].flood_fill(combined_mask,combined_mask.width/2,combined_mask.height/2, 0.f, checked_flags_matrix);
+    cave_regions[0].flood_fill(combined_mask,combined_mask.width/2,combined_mask.height/2, 0.f, checked_map, cave_check_val);
+    cave_check_val++;
 
     // Flood-fill all the other caves
     for (int x = 0; x < combined_mask.width; ++x) {
         for (int y = 0; y < combined_mask.height; ++y) {
-            if (combined_mask[x][y]==0.f && !checked_flags_matrix[x][y]) {
+            if (combined_mask[x][y]==0.f && checked_map[x][y]==0.0) {
                 cave_regions.emplace_back();
-                cave_regions.back().flood_fill(combined_mask, x, y, 0.f, checked_flags_matrix);
+                cave_regions.back().flood_fill(combined_mask, x, y, 0.f, checked_map, cave_check_val);
+                cave_check_val++;
             }
         }
     }
 
     for (int x = 0; x < combined_mask.width; ++x) {
         for (int y = 0; y < combined_mask.height; ++y) {
-            if (combined_mask[x][y]==1.f && !checked_flags_matrix[x][y]) {
+            if (combined_mask[x][y]==1.f && checked_map[x][y]==0.0) {
                 filled_regions.emplace_back();
-                filled_regions.back().flood_fill(combined_mask, x, y, 1.f, checked_flags_matrix);
+                filled_regions.back().flood_fill(combined_mask, x, y, 1.f, checked_map, -1.0);
             }
         }
     }
+
+#ifdef DEBUG
+    checked_map.normalize(0,1);
+    checked_map.save_as_image("../out/regions_checked.bmp", 0, 1);
+#endif 
 }
 
 void MapGenerator::link_caves(bool exclude_surface_points) {
-     bool already_incorporated_region[cave_regions.size()];
+    bool already_incorporated_region[cave_regions.size()];
     for (int k = 0; k < cave_regions.size(); ++k) {
         already_incorporated_region[k] = false;
     }
@@ -168,7 +199,7 @@ void MapGenerator::link_caves(bool exclude_surface_points) {
             cave_regions[best_index].set_connected(cave_regions[i]);
 
 
-            EllipticGradient gradient(0.5,1,new RootInterpolator(4), best.p1.x, best.p1.y, best.p2.x, best.p2.y,4);
+            EllipticGradient gradient(0.4,1,new LinearInterpolator(), best.p1.x, best.p1.y, best.p2.x, best.p2.y,4);
             tunnel_noise.apply_gradient_as_mask(gradient);
         }
     }

@@ -33,7 +33,7 @@ public:
     }
 
     float get_minimap_pin_size() override {
-        return 2;
+        return 1;
     }
 
     sge::Vec2<float> head_offset() override {

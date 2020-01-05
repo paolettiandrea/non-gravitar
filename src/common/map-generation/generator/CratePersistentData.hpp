@@ -4,8 +4,10 @@
 #include <SGE/Vec2.hpp>
 #include <utility-logic/PhysicsObject.hpp>
 #include "Player.hpp"
+#include "COLORS.hpp"
 
-struct CratePersistentData {
+
+struct CratePersistentData : public MinimapTraced_I {
 
     sge::Vec2<float> position;
 
@@ -20,6 +22,18 @@ struct CratePersistentData {
     }
 
     virtual void apply_effect_on_player(Player* player_logic) = 0;
+
+    sge::Vec2<float> get_position_relative_to_planetoid() override {
+        return position;
+    }
+
+    std::vector<sf::Vertex> get_minimap_model_vertices() override {
+        float size = NG_MINIMAP_DEFAULT_PIN_SIZE;
+        return {sf::Vertex(sf::Vector2f(size,size), NG_CRATE_PIN_COLOR),
+                sf::Vertex(sf::Vector2f(-size,size), NG_CRATE_PIN_COLOR),
+                sf::Vertex(sf::Vector2f(-size,-size), NG_CRATE_PIN_COLOR),
+                sf::Vertex(sf::Vector2f(size,-size), NG_CRATE_PIN_COLOR)};
+    }
 
 };
 

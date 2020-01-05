@@ -3,17 +3,17 @@
 
 
 #include <SGE/logic/Logic.hpp>
-#include "SceneTransitionHandler.hpp"
+#include "SolarSystemTransitionHandler.hpp"
 
 class PlanetoidSceneTransitionTrigger : public sge::Logic {
 public:
-    PlanetoidSceneTransitionTrigger(SceneTransitionHandler *transition_handler);
+    explicit PlanetoidSceneTransitionTrigger(SolarSystemTransitionHandler *transition_handler);
     std::string get_logic_id() override;
 
     void on_collision_begin(sge::CollisionInfo &collision_info) override;
 
 private:
-    SceneTransitionHandler* handler;
+    SolarSystemTransitionHandler* handler;
 };
 
 

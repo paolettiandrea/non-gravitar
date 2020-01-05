@@ -4,7 +4,7 @@
 #include <scene-transition/PlanetoidSceneTransitionTrigger.hpp>
 #include "GalaxyScene_EntryLogic.hpp"
 
-#define NG_GALAXY_MINIATURE_PLANET_MIN_SIZE 15
+#define NG_GALAXY_MINIATURE_PLANET_MIN_SIZE 10
 #define NG_GALAXY_MINIATURE_PLANET_MAX_SIZE 30
 
 // The definition of the planetoid, measured in grid_points per length unit
@@ -18,14 +18,14 @@ std::string GalaxyScene_EntryLogic::get_logic_id() {
 
 void GalaxyScene_EntryLogic::on_start() {
     Galaxy_ConstructionData galaxy_construction_data;
-    galaxy_construction_data.planetoid_number = 2;
-    galaxy_construction_data.min_planetoid_size = 101;
-    galaxy_construction_data.max_planetoid_size =150;
+    galaxy_construction_data.planetoid_number = 6;
+    galaxy_construction_data.min_planetoid_size = 200;
+    galaxy_construction_data.max_planetoid_size =700;
 
     auto player_l = new Player(&player_persistent_data);
 
     GameObject_H scene_transition_handler = scene()->spawn_gameobject("Scene Transition Handler");
-    SceneTransitionHandler* scene_transition_handler_l = new SceneTransitionHandler(player_l);
+    auto* scene_transition_handler_l = new SolarSystemTransitionHandler(player_l);
     scene_transition_handler->logichub()->attach_logic(scene_transition_handler_l);
 
     GameObject_H player = scene()->spawn_gameobject("Player");
@@ -33,7 +33,7 @@ void GalaxyScene_EntryLogic::on_start() {
     player_l->get_body_gameobject()->logichub()->attach_logic(new PlanetoidSceneTransitionTrigger(scene_transition_handler_l));
 
     GameObject_H planetoid_manager = scene()->spawn_gameobject("Planetoid Manager");
-    PlanetoidManager* planetoid_manager_l = new PlanetoidManager(galaxy_construction_data);
+    auto* planetoid_manager_l = new PlanetoidManager(galaxy_construction_data);
     planetoid_manager->logichub()->attach_logic(planetoid_manager_l);
 
     float temp_horizontal_anchor = 0;

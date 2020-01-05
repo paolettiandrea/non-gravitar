@@ -38,7 +38,6 @@ private:
 
     int m_whole_planet_volume = 0;
     std::vector<sge::Vec2<int>> m_whole_planet_surface_points;
-    std::vector<sge::Vec2<int>> entrances;
 
 
     void generate_surface_mask();

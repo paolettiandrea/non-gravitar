@@ -20,6 +20,19 @@ public:
 
     float* operator[] (const int index) const;
 
+    bool operator==(const NoiseMap& that) {
+        if (this->width == that.width && this->height == that.height) {
+            for (int x = 0; x < width; ++x) {
+                for (int y = 0; y < height; ++y) {
+                    if (m_noise_map[x][y]!=that[x][y]) return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     NoiseMap& operator=(const NoiseMap &that ) {
         if (width==that.width && height==that.height) {

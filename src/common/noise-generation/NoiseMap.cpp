@@ -87,9 +87,13 @@ void NoiseMap::normalize(float min, float max) {
 }
 
 void NoiseMap::apply_gradient_as_mask(const Gradient& gradient) {
+
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
-            m_noise_map[x][y] = m_noise_map[x][y] * gradient.get_val(x,y);
+            auto val = gradient.get_val(x, y);
+            if (val != 1.0) {
+                m_noise_map[x][y] = m_noise_map[x][y] * gradient.get_val(x,y);
+            }
         }
     }
 }

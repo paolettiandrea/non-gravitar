@@ -3,7 +3,7 @@
 
 int Region::unique_index_counter = 0;
 
-void Region::flood_fill(const NoiseMap& map, int _x, int _y, float target_val, Matrix2D<bool>& checked_flags_matrix) {
+void Region::flood_fill(const NoiseMap& map, int _x, int _y, float target_val, NoiseMap& checked_noisemap, float val) {
     using sge::Vec2;
     std::queue<Vec2<int>> to_evaluate_queue;
     to_evaluate_queue.emplace(_x,_y);
@@ -12,10 +12,10 @@ void Region::flood_fill(const NoiseMap& map, int _x, int _y, float target_val, M
         auto initial_queue_size = to_evaluate_queue.size();
         for (int i = 0; i < initial_queue_size; ++i) {
             auto coords = to_evaluate_queue.front();
-            if (!checked_flags_matrix[coords.x][coords.y] && map[coords.x][coords.y] == target_val) {
+            if (checked_noisemap[coords.x][coords.y]==0.0 && map[coords.x][coords.y] == target_val) {
                 // This point wasn't considered before and is empty, so it can be added to the region list
                 m_points.emplace_back(coords.x, coords.y);
-                checked_flags_matrix[coords.x][coords.y] = true;
+                checked_noisemap[coords.x][coords.y] = val;
                 m_volume++;
 
                 // Add the four adjacent points to be considered at the next loop

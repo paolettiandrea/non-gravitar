@@ -35,7 +35,7 @@ void Bullet::pre_solve(b2Contact *contact, const b2Manifold *oldManifold, const 
 
 Bullet::Bullet(const PhysicsObject_ConstructionData& cd)
     : PhysicsObject(cd) {
-    break_trigger = new BreakTrigger(10);
+    break_trigger = new BreakTrigger(2);
 }
 
 Rigidbody_H Bullet::get_ignored_body() const {

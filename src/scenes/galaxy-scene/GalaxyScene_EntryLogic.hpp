@@ -5,7 +5,7 @@
 #include <SGE/logic/Logic.hpp>
 
 
-class GalaxyScene_EntryLogic : public sge::Logic {
+class   GalaxyScene_EntryLogic : public sge::Logic {
 public:
     void on_start() override;
 

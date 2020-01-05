@@ -21,7 +21,7 @@ public:
         m_unique_index = unique_index_counter++;
     };
 
-    void flood_fill(const NoiseMap& map, int x, int y, float target_val, Matrix2D<bool>& checked_flags_matrix);
+    void flood_fill(const NoiseMap& map, int x, int y, float target_val, NoiseMap& checked_noisemap, float val);
 
     static RegionDistanceData pseudo_distance(Region& region1, Region& region2);
 

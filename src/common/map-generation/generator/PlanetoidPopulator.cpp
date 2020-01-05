@@ -39,8 +39,9 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
     }
     flooded_map.normalize(0.3,1);
 
+#ifdef DEBUG
     flooded_map.save_as_image("../out/enemy_heat_map_contours.bmp", 0,1);
-
+#endif
 
 
     // Generate initial enemy heat map
@@ -54,11 +55,9 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
             CircularGradient(planetoid_square_grid.height / 2, 0, planetoid_square_grid.height / 2,
                              planetoid_square_grid.width / 2, 1, 0.3, new LinearInterpolator()));
     enemy_noise.normalize(0,1);
-    enemy_noise.save_as_image("../out/enemy_noise.bmp", 0,1);
 
     enemy_heat_map*=enemy_noise;
 
-    enemy_heat_map.save_as_image("../out/enemy_heat_map.bmp", 0,1);
 
 
     NoiseMap edge_spacing_map(planetoid_square_grid.width, planetoid_square_grid.height, 0);
@@ -69,7 +68,13 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
         edge_spacing_map[edge_coord.x][edge_coord.y] = res;
     }
 
+
+#ifdef DEBUG
+    enemy_noise.save_as_image("../out/enemy_noise.bmp", 0,1);
+    enemy_heat_map.save_as_image("../out/enemy_heat_map.bmp", 0,1);
     edge_spacing_map.save_as_image("../out/border_space.bmp", 0, max_val);
+#endif
+
 
 
 
@@ -78,6 +83,8 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
     crate_heat_map.apply_gradient_as_mask(
             CircularGradient(crate_heat_map.height/2, crate_heat_map.height/2*0.5, crate_heat_map.height / 2,
                              crate_heat_map.height / 2, 1.0, 0.1, new LinearInterpolator));
+
+    float crate_heatmatp_inibition_radius = planetoid_square_grid.width/std::sqrt(map_gen_info.crates_persistent_data_vec.size());
     for (CratePersistentData *crate_persistent_data : map_gen_info.crates_persistent_data_vec) {
         // Find best pixel
         float best_found = 0;
@@ -93,13 +100,15 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
                 + sge::Vec2<float>::rotate(sge::Vec2<float>(-NG_CRATE_DISTANCE_FROM_EDGES,0), planetoid_square_grid[best_coords].get_edge_normal_rotations()[0]);
 
         // Apply gradients
-        crate_heat_map.apply_gradient_as_mask(CircularGradient(40, 5, best_coords.x, best_coords.y, 0, 0.9, new LinearInterpolator));
-        enemy_heat_map.apply_gradient_as_mask(
-                CircularGradient(40, 35, best_coords.x, best_coords.y, 1, 0.3, new LinearInterpolator));
-        enemy_heat_map.normalize(0, 1);
+        crate_heat_map.apply_gradient_as_mask(CircularGradient(crate_heatmatp_inibition_radius, 5, best_coords.x, best_coords.y, 0, 1.0, new LinearInterpolator));
+//        enemy_heat_map.apply_gradient_as_mask(
+//                CircularGradient(40, 35, best_coords.x, best_coords.y, 1, 0.3, new LinearInterpolator));
+//        enemy_heat_map.normalize(0, 1);
     }
 
+#ifdef DEBUG
     crate_heat_map.save_as_image("../out/crate_heat_map.bmp", 0,1);
+#endif
 
     // Get every different enemy size
     std::vector<float> enemy_sizes;
@@ -131,8 +140,9 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
         spawn_enemies(target_size, this_pass_data_vector, enemy_heat_map, edge_spacing_map, edge_coords, planetoid_square_grid);
     }
 
+#ifdef DEBUG
     enemy_heat_map.save_as_image("../out/enemy_heat_map_after_spawn.bmp", 0,1);
-
+#endif
 
 
     // CRATES

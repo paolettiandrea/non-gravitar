@@ -42,5 +42,14 @@ void Minimap::refresh_geometry() {
         }
     }
 
+    auto crates_build_data = planetoid->get_planetoid_persistent_data()->map_gen_info.crates_persistent_data_vec;
+
+    for (int i = 0; i < crates_build_data.size(); ++i) {
+        auto* data = crates_build_data[i];
+        if (!data->destroyed) {
+            objects_to_trace.push_back(data);
+        }
+    }
+
     minimap_ui_content->refresh_geometry(player, objects_to_trace);
 }

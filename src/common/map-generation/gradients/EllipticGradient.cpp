@@ -1,13 +1,11 @@
-//
-// Created by andrea on 6/7/19.
-//
-
+#include <iostream>
 #include "EllipticGradient.hpp"
+#include <limits>
 
 float EllipticGradient::get_val(float x, float y) const {
     float t;
     if ((x > m_bound_max_x || x < m_bound_min_x) || (y > m_bound_max_y || y < m_bound_min_y) ) {
-        t = 1.f;
+        return m_val_b;
     } else {
         float sum_dist = distance(x, y, m_x2, m_y2) + distance(m_x1, m_y1, x, y);
         t = (sum_dist - m_dist) / m_factor;
@@ -28,3 +26,4 @@ EllipticGradient::EllipticGradient(float valA, float valB, Interpolator* algorit
     m_bound_min_x = std::fmin(mX1,mX2) - margin;
     m_bound_min_y = std::fmin(mY1,mY2) - margin;
 }
+

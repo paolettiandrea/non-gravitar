@@ -3,9 +3,10 @@
 #include <CollisionTrigger.hpp>
 #include "OuterSpaceTransitionTrigger.hpp"
 
-OuterSpaceTransitionTrigger::OuterSpaceTransitionTrigger(float radius, MiniaturePlanetoid* miniature_planetoid) {
+OuterSpaceTransitionTrigger::OuterSpaceTransitionTrigger(float radius, MiniaturePlanetoid* miniature_planetoid, PlanetoidTransitionHandler* planetoid_transition_handler) {
     this->radius = radius;
     this->base_planetoid = miniature_planetoid;
+    this->planetoid_transition_handler = planetoid_transition_handler;
 }
 
 void OuterSpaceTransitionTrigger::on_start() {
@@ -14,7 +15,7 @@ void OuterSpaceTransitionTrigger::on_start() {
 
     auto callback = [&](const sge::CollisionInfo& collision_info) {
         if (collision_info.m_its_collider->get_rigidbody()->gameobject()->logichub()->has_logic("Player")) {
-            env()->doom_top_scene();
+            planetoid_transition_handler->pop_scene();
             base_planetoid->make_geometry_dirty();
         }
     };

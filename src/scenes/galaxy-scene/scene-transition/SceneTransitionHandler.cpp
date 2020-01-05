@@ -1,27 +1,28 @@
-#include <game-scene/PlanetoidScene_EntryLogic.hpp>
 #include "SceneTransitionHandler.hpp"
 
-SceneTransitionHandler::SceneTransitionHandler(Player *player_l) {
-    player_logic = player_l;
+
+void SceneTransitionHandler::start_transition_animation(utils::event::EventHandler* post_animation_callback) {
+    scene_transition_overlay_l->expand(post_animation_callback);
 }
 
-void SceneTransitionHandler::launch_planetoid_scene(PlanetoidPersistentData *planetoid_persistent_data,
-                                                    MiniaturePlanetoid *base_miniature) {
-    env()->book_new_scene_push("Planetoid Scene", new PlanetoidScene_EntryLogic(planetoid_persistent_data, base_miniature, player_logic->get_persistent_data()));
+void SceneTransitionHandler::on_start() {
+    Logic::on_start();
+    scene_transition_overlay_l = new SceneTransitionOverlay(new LinearInterpolator, 0.5);
 
-    auto planet_size_vec = sge::Vec2<float>(base_miniature->get_planetoid_persistent_data()->size,
-                                            base_miniature->get_planetoid_persistent_data()->size);
-    auto portal_center = base_miniature->gameobject()->transform()->get_world_position() + planet_size_vec/base_miniature->get_grid_size()*base_miniature->gameobject()->transform()->get_world_scale().x/2.0;
-    auto player_center = player_logic->gameobject()->transform()->get_world_position();
-    auto diff = (player_center - portal_center).normalize();
-    auto new_player_pos = player_center + (diff * 3.0);
+    gameobject()->logichub()->attach_logic(scene_transition_overlay_l);
 
-    auto player_rb = player_logic->gameobject()->get_component<sge::cmp::Rigidbody>("Rigidbody");
-    auto player_body = player_rb->get_b2_body();
-    player_body->SetTransform(b2Vec2(new_player_pos.x, new_player_pos.y), player_body->GetAngle());
-    player_body->SetLinearVelocity(b2Vec2(diff.x*NG_GALAXY_SCENE_TRANSITION_DRIFTING_VELOCITY, diff.y*NG_GALAXY_SCENE_TRANSITION_DRIFTING_VELOCITY));
+    pop_callback = [&](){
+        scene()->doom_scene();
+        if (parent_transition_handler) {
+            parent_transition_handler->scene_transition_overlay_l->collapse();
+        }
+    };
 }
 
-std::string SceneTransitionHandler::get_logic_id() {
-    return std::string("SceneTransitionHandler");
+SceneTransitionHandler::SceneTransitionHandler(SceneTransitionHandler *parent_transition_handler) {
+    this->parent_transition_handler = parent_transition_handler;
+}
+
+void SceneTransitionHandler::pop_scene() {
+    start_transition_animation(&pop_callback);
 }

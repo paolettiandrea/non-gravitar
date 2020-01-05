@@ -39,7 +39,7 @@ void TractorBeam::on_start() {
         vert_array->append_local_point(col_path[3 + j]);
     }
 
-    vert_array->set_color(PlayerPersistentData::palette.light);
+    vert_array->set_color(PLAYER_PALETTE.light);
     vert_array->set_alpha(7);
 
 }

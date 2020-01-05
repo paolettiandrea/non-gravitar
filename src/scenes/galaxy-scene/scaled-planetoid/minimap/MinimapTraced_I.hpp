@@ -4,6 +4,8 @@
 #include <SGE/Vec2.hpp>
 #include <SFML/Graphics.hpp>
 
+#define NG_MINIMAP_DEFAULT_PIN_SIZE 1
+
 class MinimapTraced_I {
 public:
     virtual sge::Vec2<float> get_position_relative_to_planetoid() = 0;

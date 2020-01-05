@@ -10,7 +10,7 @@ void PlayerBody::on_start() {
     m_vert_array = gameobject()->add_component<sge::cmp::VertArray>("VertArray");
     m_vert_array->import_smesh("./res/models/player/player_ship__body.smesh");
     m_vert_array->set_primitive(sf::PrimitiveType::Triangles);
-    m_vert_array->set_color(PlayerPersistentData::palette.primary);
+    m_vert_array->set_color(PLAYER_PALETTE.primary);
 
     // collider
     m_collider = gameobject()->add_component<sge::cmp::Collider>("Collider");
