@@ -8,11 +8,11 @@
 class BreakGenerator : public sge::Logic {
 public:
     explicit BreakGenerator(unsigned int max_triangles_per_piece);
-    void collect_fragment_info(std::vector<FragmentInfo>& container);
+    virtual void collect_fragment_info(std::vector<FragmentInfo>& container);
 
     std::string get_logic_id() override;
 
-private:
+protected:
     unsigned int m_max_triangles;
 };
 

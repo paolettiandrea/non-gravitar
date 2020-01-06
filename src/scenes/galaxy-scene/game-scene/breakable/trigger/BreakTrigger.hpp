@@ -10,7 +10,7 @@
  */
 class BreakTrigger : public sge::Logic {
 public:
-    BreakTrigger(float trigger_impact_vel);
+    explicit BreakTrigger(float trigger_impact_vel);
     BreakTrigger(float trigger_impact_vel, Rigidbody_H ignored_rb);
     std::string get_logic_id() override;
 

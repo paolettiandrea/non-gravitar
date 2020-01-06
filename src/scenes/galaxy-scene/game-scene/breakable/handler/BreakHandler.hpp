@@ -13,7 +13,7 @@ public:
 
     bool is_child_dependent() const;
 
-    void break_pulse(b2Vec2 linear_vel_at_break);
+    void break_pulse(b2Vec2 linear_vel_at_break, float trigger_val);
 
     void on_update() override;
 
@@ -23,6 +23,7 @@ private:
     bool m_fade_on_break_flag;
     std::string fragment_collision_layer;
     b2Vec2 linear_vel_at_break;
+    float trigger_val_at_break;
 
     std::vector<std::vector<FragmentInfo>> collected_fragment_info;
     unsigned int break_event_id = 0;

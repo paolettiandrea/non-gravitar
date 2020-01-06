@@ -22,8 +22,10 @@ void BreakTrigger::on_collision_begin(sge::CollisionInfo &collision_info) {
 void BreakTrigger::pre_solve(b2Contact *contact, const b2Manifold *oldManifold, const sge::CollisionInfo &info) {
     if (info.get_impact_velocity().get_magnitude() > m_trigger_impact_vel) {
         if (!info.m_its_collider->is_sensor() && ignored_rigidbody != info.m_its_collider->get_rigidbody()) {
-            break_triggered = true;
-            impact_vel_recorded_on_break = info.m_my_collider->get_rigidbody()->get_b2_body()->GetLinearVelocity();
+            if (!info.m_its_collider->get_rigidbody()->gameobject()->logichub()->has_logic("Fading")) {
+                break_triggered = true;
+                impact_vel_recorded_on_break = info.m_my_collider->get_rigidbody()->get_b2_body()->GetLinearVelocity();
+            }
         }
     }
 }
@@ -49,7 +51,7 @@ void BreakTrigger::break_object() {
         else break;
     }
     if (found_handler!= nullptr) {
-        found_handler->break_pulse(impact_vel_recorded_on_break);
+        found_handler->break_pulse(impact_vel_recorded_on_break, m_trigger_impact_vel);
     } else {
         LOG_ERROR << "Couldn't find a BreakHandler up the hierarchy";
         exit(1);

@@ -12,6 +12,8 @@ target_sources(non_gravitar PRIVATE
 
         generator/BreakGenerator.cpp
         generator/BreakGenerator.hpp
+        generator/FragmentedLayerGenerator.cpp
+        generator/FragmentedLayerGenerator.hpp
 
         TriangleOverlap.cpp
         TriangleOverlap.hpp
