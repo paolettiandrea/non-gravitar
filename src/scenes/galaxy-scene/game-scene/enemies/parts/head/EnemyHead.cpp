@@ -9,16 +9,11 @@ std::string EnemyHead::get_logic_id() {
 
 void EnemyHead::on_start() {
     EnemyPart::on_start();
-    auto cannon_go = scene()->spawn_gameobject("Cannon");
-    cannon_go->transform()->set_parent(gameobject()->transform());
-    auto cannon_logic = new EnemyCannon(whole_data, whole_data->cannon_load_paths());
-    cannon_go->logichub()->attach_logic(cannon_logic);
-    cannon_logic->vertarray()->set_color(SGE_ENEMY_BASIC_CANNON_COLOR);
-    auto cannon = new Cannon(5,  collider()->get_rigidbody());
-    cannon_go->logichub()->attach_logic(cannon);
 
-    head_rotation_animation.on_animation_ended += [=]() {
-        cannon->shoot(new Bullet( whole_data->bullet_load_paths()));
+    cannon_l = assemble_cannon(0);
+
+    head_rotation_animation.on_animation_ended += [&]() {
+        shoot();
     };
 }
 
@@ -50,5 +45,18 @@ void EnemyHead::deactivate() {
     head_rotation_animation.stop();
 }
 
-EnemyHead::EnemyHead(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
+EnemyHead::EnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
         : EnemyPart(whole_data, my_breakable_geom_data), head_rotation_animation(new LinearInterpolator(), 0, 0, 0.5) {}
+
+void EnemyHead::shoot() {
+    cannon_l->shoot(new Bullet(build_data->bullet_load_paths()));
+}
+
+EnemyCannon *EnemyHead::assemble_cannon(float rotation) {
+    auto cannon_go = scene()->spawn_gameobject("Cannon");
+    cannon_go->transform()->set_parent(gameobject()->transform());
+    cannon_go->transform()->set_local_rotation(rotation);
+    auto cannon_logic = new EnemyCannon(build_data, build_data->cannon_load_paths());
+    cannon_go->logichub()->attach_logic(cannon_logic);
+    return cannon_logic;
+}

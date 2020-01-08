@@ -7,7 +7,7 @@
 
 class EnemyBase : public EnemyPart {
 public:
-    EnemyBase(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
+    EnemyBase(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
 
     std::string get_logic_id() override;
 

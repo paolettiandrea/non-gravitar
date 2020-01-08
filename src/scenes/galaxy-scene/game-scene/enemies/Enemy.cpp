@@ -1,10 +1,10 @@
 #include <SGE/components/graphics/VertArray.hpp>
-#include <enemies/parts/EnemyHead.hpp>
 #include <handler/BreakHandler.hpp>
 #include <enemies/parts/Trigger.hpp>
 #include <enemies/parts/EnemyBase.hpp>
-#include <player/PlayerPersistentData.hpp>
 #include "Enemy.hpp"
+#include <EnemyHead.hpp>
+
 
 
 std::string Enemy::get_logic_id() {
@@ -19,7 +19,7 @@ void Enemy::on_start() {
     m_head_gameobject = scene()->spawn_gameobject("Head");
     m_head_gameobject->transform()->set_parent(gameobject()->transform());
     m_head_gameobject->transform()->set_local_position(build_data->head_offset());
-    auto head_logic = new EnemyHead(build_data, build_data->head_load_paths());
+    auto head_logic = build_data->new_head_logic(build_data, build_data->head_load_paths());
     m_head_gameobject->logichub()->attach_logic(head_logic);
     head_logic->vertarray()->set_color(SGE_ENEMY_BASIC_HEAD_COLOR);
     head_logic->vertarray()->set_layer("enemy_head");
@@ -48,10 +48,11 @@ void Enemy::on_start() {
         head_logic->deactivate();
     };
 
-    gameobject()->logichub()->attach_logic(new BreakHandler(true));
+
+    gameobject()->logichub()->attach_logic(new BreakHandler(build_data->get_explosion_info(), true));
 }
 
-Enemy::Enemy(EnemyPersistentData *build_data, PlayerPersistentData* player_persistent_data) {
+Enemy::Enemy(EnemyBuildData *build_data, PlayerPersistentData* player_persistent_data) {
     this->build_data = build_data;
     this->player_persistent_data = player_persistent_data;
 }

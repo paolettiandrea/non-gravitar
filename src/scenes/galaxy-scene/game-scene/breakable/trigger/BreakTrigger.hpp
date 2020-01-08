@@ -26,6 +26,7 @@ private:
     float m_trigger_impact_vel;
     Rigidbody_H ignored_rigidbody;
     b2Vec2 impact_vel_recorded_on_break;
+    sge::Vec2<float> explosion_pos_on_break;
     bool break_triggered = false;
 };
 

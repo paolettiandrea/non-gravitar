@@ -4,7 +4,7 @@
 #include <SGE/logic/Logic.hpp>
 #include <PlanetoidPersistentData.hpp>
 #include <Galaxy_ConstructionData.hpp>
-#include <thread>
+#include "EnemyBuildData.hpp"
 
 
 

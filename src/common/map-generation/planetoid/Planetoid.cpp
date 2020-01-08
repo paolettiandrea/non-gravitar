@@ -38,7 +38,7 @@ void Planetoid::on_start() {
 
     // Enemies
     int enemy_counter = 1;
-    for(EnemyPersistentData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
+    for(EnemyBuildData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
         if (!enemy_to_spawn->destroyed) {
             auto new_enemy = scene()->spawn_gameobject("Enemy " + std::to_string(enemy_counter));
             new_enemy->transform()->set_local_position(enemy_to_spawn->anchor_position);

@@ -3,7 +3,6 @@
 
 void BreakGenerator::collect_fragment_info(std::vector <FragmentInfo> &container) {
     auto vert_array = gameobject()->get_component<sge::cmp::VertArray>("VertArray");
-
     if (!vert_array.is_null() && vert_array->get_vert_array().getVertexCount() > 0) {
         if (vert_array->get_primitive_type() == sf::PrimitiveType::Triangles) {
             for (int i = 0; i < vert_array->get_vert_array().getVertexCount()/3; ++i) {

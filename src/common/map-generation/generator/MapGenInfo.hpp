@@ -5,9 +5,9 @@
 #include <SFML/Graphics/Color.hpp>
 #include <vector>
 #include <utility-classes/ColorPalette.hpp>
-#include "EnemyPersistentData.hpp"
 #include "COLORS.hpp"
 #include "CratePersistentData.hpp"
+#include "EnemyBuildData.hpp"
 
 class MapGenInfo {
 public:
@@ -18,7 +18,7 @@ public:
 
     ColorPalette palette = ColorPalette(NG_COLORS_EASY_PLANETOID);
 
-    std::vector<EnemyPersistentData*> enemies_persistent_data_vec;
+    std::vector<EnemyBuildData*> enemies_persistent_data_vec;
     std::vector<CratePersistentData*> crates_persistent_data_vec;
 };
 

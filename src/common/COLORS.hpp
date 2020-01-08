@@ -1,9 +1,22 @@
 #ifndef NON_GRAVITAR_COLORS_HPP
 #define NON_GRAVITAR_COLORS_HPP
 
-#include <utility-classes/ColorPalette.hpp>
+#include <ColorPalette.hpp>
 
-static ColorPalette PLAYER_PALETTE (sf::Color(40, 160, 40), sf::Color(40, 120, 40), sf::Color(45, 218, 45), sf::Color(0, 68, 0), sf::Color(136, 204, 136));
+static const ColorPalette PLAYER_PALETTE (
+        sf::Color(40, 160, 40),
+        sf::Color(40, 120, 40),
+        sf::Color(45, 218, 45),
+        sf::Color(0, 68, 0),
+        sf::Color(136, 204, 136));
+
+
+static const ColorPalette BASIC_ENEMY_PALETTE (
+        sf::Color(160, 100, 40),
+        sf::Color(140, 100, 40),
+        sf::Color(190, 100, 40),
+        sf::Color(70, 50, 0),
+        sf::Color(136, 204, 136));
 
 #define NG_COLORS_PLAYER sf::Color(40, 160, 40), sf::Color(40, 120, 40), sf::Color(45, 218, 45), sf::Color(0, 68, 0), sf::Color(136, 204, 136)
 #define NG_COLORS_FUEL

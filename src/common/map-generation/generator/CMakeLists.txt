@@ -17,9 +17,6 @@ target_sources(non_gravitar PRIVATE
         RegionDistanceData.hpp
         RegionDistanceData.cpp
 
-        EnemyPersistentData.hpp
-        BasicEnemyBuildData.hpp
-
         CratePersistentData.hpp
 
         FuelCratePersistentData.hpp

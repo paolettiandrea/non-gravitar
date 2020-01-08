@@ -1,13 +1,12 @@
-#include <SGE/components/physics/Rigidbody.hpp>
 #include <random>
+#include <SGE/components/physics/Rigidbody.hpp>
+#include <SGE/components/physics/Collider.hpp>
 #include "BreakHandler.hpp"
-#include "BreakGenerator.hpp"
 #include "Fragment.hpp"
 #include "TriangleOverlap.hpp"
-#include <SGE/components/physics/Collider.hpp>
-#include <Fading.hpp>
-#include <game-scene/breakable/trigger/BreakTrigger.hpp>
-#include <game-scene/breakable/generator/FragmentedLayerGenerator.hpp>
+#include "Fading.hpp"
+#include "BreakTrigger.hpp"
+#include "FragmentedLayerGenerator.hpp"
 
 #define LAYER_CONTAINER_ID "Fragmented Layer Container "
 
@@ -17,10 +16,15 @@ std::string BreakHandler::get_logic_id() {
     return std::string("BreakHandler");
 }
 
-BreakHandler::BreakHandler(bool is_child_dependent, bool fade_on_break, const std::string& fragment_collision_layer) {
+BreakHandler::BreakHandler(const ExplosionInfo& explosion_info, bool is_child_dependent, bool fade_on_break, const std::string& fragment_collision_layer) {
     m_child_dependent_flag = is_child_dependent;
     m_fade_on_break_flag = fade_on_break;
     this->fragment_collision_layer = fragment_collision_layer;
+    this->explosion_info = explosion_info;
+}
+
+BreakHandler::BreakHandler(bool is_child_dependent, bool fade_on_break, const string &fragment_collision_layer)
+        : BreakHandler(ExplosionInfo(), is_child_dependent, fade_on_break, fragment_collision_layer) {
 }
 
 bool BreakHandler::is_child_dependent() const {
@@ -30,6 +34,8 @@ bool BreakHandler::is_child_dependent() const {
 void BreakHandler::break_pulse(b2Vec2 linear_vel_at_break, float trigger_val) {
     this->linear_vel_at_break = linear_vel_at_break;
     this->trigger_val_at_break = trigger_val;
+    this->explosion_pos_at_break = gameobject()->transform()->get_world_position();
+
     if (collected_fragment_info.empty()) {
         recursive_info_collection(collected_fragment_info, gameobject());
         break_event_id = ++break_event_counter;
@@ -46,7 +52,6 @@ void BreakHandler::break_pulse(b2Vec2 linear_vel_at_break, float trigger_val) {
 
 void BreakHandler::on_update() {
     if (!collected_fragment_info.empty()) {
-
         std::vector<Fragment*> spawned_fragments;
         // Vector where at a given index is stored the index of the container to which the corresponding spawned fragment
         // was assigned, -1 if not assigned yet
@@ -146,33 +151,43 @@ void BreakHandler::on_update() {
             }
         }
 
+        auto explosion_center = sge::Vec2<float>();
         for (int n = 0; n < spawned_fragments.size(); ++n) {
             auto col = spawned_fragments[n]->gameobject()->get_component<sge::cmp::Collider>("Collider");
             col->force_clean_pass();
+            explosion_center = explosion_center + spawned_fragments[n]->gameobject()->transform()->get_world_position();
         }
+        explosion_center = explosion_center / spawned_fragments.size();
 
-        sge::Vec2<float> explosion_origin_local_position;
         for (int l = 0; l < spawned_containers.size(); ++l) {
             auto container_rb = spawned_containers[l]->get_component<sge::cmp::Rigidbody>("Rigidbody");
+            auto container_transform = spawned_containers[l]->transform();
 
-            b2MassData m;
-            container_rb->get_b2_body()->GetMassData(&m);
-
-            auto center = container_rb->get_b2_body()->GetWorldPoint(m.center);
-            auto this_container_center = sge::Vec2<float>(center.x, center.y);
-
-            auto distance_vec = this_container_center - gameobject()->transform()->local_to_world_point(explosion_origin_local_position);
 
             // Make the fragments'velocity the same as the original object
-            // TODO maybe the break could absorb some of the kinetic energy
-            container_rb->get_b2_body()->SetLinearVelocity(linear_vel_at_break);
+            auto linear_vel_at_break_absorbed = b2Vec2(linear_vel_at_break.x * NG_BREAK_ENERGY_ABSORPTION_FACTOR,
+                                         linear_vel_at_break.y * NG_BREAK_ENERGY_ABSORPTION_FACTOR);
+            container_rb->get_b2_body()->SetLinearVelocity(linear_vel_at_break_absorbed);
 
+            // Add a centripetal impulse to every fragment
+            for (auto layer_t : container_transform->get_children()) {
+                for (auto fragment_t : layer_t->get_children()) {
+                    auto diff = fragment_t->get_world_position() - explosion_center;
+                    auto distance = diff.get_magnitude();
+                    if (distance < explosion_info.explosion_radius) {
+                        auto dir = diff.normalize();
+                        LinearInterpolator interpolator;
+                        auto force = interpolator.interpolate(distance/explosion_info.explosion_radius, explosion_info.explosion_force, 0);
+                        container_rb->apply_linear_impulse(dir*force, fragment_t->get_world_position(), true);
+                    }
+                }
+            }
 
             // Add some Fading logic if the fade_on_break flag is on
             if (spawned_containers[l]->transform()->get_child_count(true) <= 2 || m_fade_on_break_flag) {
                 spawned_containers[l]->logichub()->attach_logic(new Fading(0.3));
             } else {
-                // Add breakable logic
+                // If the fragment container is not fading add breakable logic
                 spawned_containers[l]->logichub()->attach_logic(new BreakHandler(true, m_fade_on_break_flag, fragment_collision_layer));
                 for (auto layer : spawned_containers[l]->transform()->get_children()) {
                     layer->gameobject()->logichub()->attach_logic(new FragmentedLayerGenerator(collected_fragment_info[0][0].max_triangles-1));
@@ -186,6 +201,7 @@ void BreakHandler::on_update() {
     }
 }
 
+
 void BreakHandler::recursive_info_collection(std::vector<std::vector<FragmentInfo>> &container,
                                              GameObject_H target) {
     auto break_generator_logic = target->logichub()->get_logic<BreakGenerator>();
@@ -198,3 +214,9 @@ void BreakHandler::recursive_info_collection(std::vector<std::vector<FragmentInf
         recursive_info_collection(container, child->gameobject());
     }
 }
+
+sge::Vec2<float> BreakHandler::get_explosion_world_pos() {
+    return gameobject()->transform()->local_to_world_point(explosion_info.explosion_local_position);
+}
+
+
