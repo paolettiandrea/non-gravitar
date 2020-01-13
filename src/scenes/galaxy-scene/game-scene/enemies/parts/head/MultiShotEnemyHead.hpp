@@ -4,7 +4,7 @@
 
 #include "EnemyHead.hpp"
 
-#define NG_ENEMY_MULTISHOT_CANNON_ANGLE M_PI_4
+#define NG_ENEMY_MULTISHOT_CANNON_ANGLE 2*M_PI/7
 
 class MultiShotEnemyHead : public EnemyHead {
 public:

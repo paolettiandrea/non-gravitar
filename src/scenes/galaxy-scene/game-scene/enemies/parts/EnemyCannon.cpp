@@ -12,7 +12,7 @@ void EnemyCannon::on_start() {
     vertarray()->set_layer("enemy_cannon");
     vertarray()->set_color(build_data->get_enemy_palette()->darker);
     auto offset_go = scene()->spawn_gameobject("Shooting offset");
-    offset_go->transform()->set_local_position(build_data->get_shoot_offset());
+    offset_go->transform()->set_local_position(build_data->get_offsets().shooting_offset);
     offset_go->transform()->set_parent(gameobject()->transform());
 
     cannon_l = new Cannon(build_data->get_shooting_speed(), collider()->get_rigidbody());

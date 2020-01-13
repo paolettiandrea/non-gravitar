@@ -14,6 +14,7 @@ void Bullet::on_start() {
     PhysicsObject::on_start();
 
     vertarray()->set_layer("bullet");
+    collider()->set_collision_category("Bullet");
 
 
 

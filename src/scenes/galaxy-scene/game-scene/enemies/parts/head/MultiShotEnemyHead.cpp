@@ -2,10 +2,7 @@
 
 MultiShotEnemyHead::MultiShotEnemyHead(EnemyBuildData *whole_data,
                                        const BreakableObject_ConstructionData &my_breakable_geom_data) : EnemyHead(whole_data,
-                                                                                                         my_breakable_geom_data) {
-
-
-}
+                                                                                                         my_breakable_geom_data) {}
 
 string MultiShotEnemyHead::get_logic_id() {
     return std::string("MultiShotEnemyHead");
@@ -15,7 +12,6 @@ string MultiShotEnemyHead::get_logic_id() {
 
 void MultiShotEnemyHead::on_start() {
     EnemyHead::on_start();
-
     right_cannon = assemble_cannon(-NG_ENEMY_MULTISHOT_CANNON_ANGLE);
     left_cannon = assemble_cannon(NG_ENEMY_MULTISHOT_CANNON_ANGLE);
 }

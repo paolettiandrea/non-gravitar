@@ -4,6 +4,11 @@ target_sources(non_gravitar PRIVATE
 
         MultiShotEnemyHead.cpp
         MultiShotEnemyHead.hpp
+
+        SniperEnemyHead.cpp
+        SniperEnemyHead.hpp
         )
 
 target_include_directories(non_gravitar PRIVATE .)
+
+add_subdirectory(sniper)

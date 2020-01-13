@@ -18,8 +18,8 @@ void Enemy::on_start() {
     // Head - handles shooting
     m_head_gameobject = scene()->spawn_gameobject("Head");
     m_head_gameobject->transform()->set_parent(gameobject()->transform());
-    m_head_gameobject->transform()->set_local_position(build_data->head_offset());
-    auto head_logic = build_data->new_head_logic(build_data, build_data->head_load_paths());
+    m_head_gameobject->transform()->set_local_position(build_data->get_offsets().head_offset);
+    auto head_logic = build_data->new_head_logic();
     m_head_gameobject->logichub()->attach_logic(head_logic);
     head_logic->vertarray()->set_color(SGE_ENEMY_BASIC_HEAD_COLOR);
     head_logic->vertarray()->set_layer("enemy_head");

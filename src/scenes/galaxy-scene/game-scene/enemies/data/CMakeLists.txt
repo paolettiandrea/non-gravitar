@@ -4,6 +4,8 @@ target_sources(non_gravitar PRIVATE
         BasicEnemyBuildData.hpp
 
         MultiShotEnemyBuildData.hpp
+
+        SniperEnemyBuildData.hpp
         )
 
 target_include_directories(non_gravitar PRIVATE .)

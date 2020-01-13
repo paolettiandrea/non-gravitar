@@ -17,10 +17,12 @@ int main() {
     engine_cd.window.layers.emplace_back("enemy_base");
     engine_cd.window.layers.emplace_back("enemy_cannon");
     engine_cd.window.layers.emplace_back("bullet");
+    engine_cd.window.layers.emplace_back("laser");
 
     engine_cd.physics.collision_layer_ids.emplace_back("Default");
     engine_cd.physics.collision_layer_ids.emplace_back("Player");
     engine_cd.physics.collision_layer_ids.emplace_back("Enemy");
+    engine_cd.physics.collision_layer_ids.emplace_back("Bullet");
     engine_cd.physics.collision_layer_ids.emplace_back("Static Wall");
     engine_cd.physics.collision_layer_ids.emplace_back("Fading Fragment");
 

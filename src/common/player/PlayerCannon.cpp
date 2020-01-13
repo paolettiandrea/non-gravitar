@@ -14,7 +14,7 @@ void PlayerCannon::on_fixed_update() {
         auto passed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - last_shot_time).count()/1000.0;
 
         if (passed > NG_PLAYER_CANNON_MIN_SHOT_FREQUENCY) {
-            shoot(new Bullet(PhysicsObject_ConstructionData("./res/models/enemies/basic_enemy__bullet")));
+            shoot(new Bullet(PhysicsObject_ConstructionData("./res/models/enemies/basic/basic_cannon__bullet")));
             last_shot_time = std::chrono::steady_clock::now();
             stamina -= NG_PLAYER_CANNON_STAMINA_COST_PER_SHOT;
         }

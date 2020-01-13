@@ -53,9 +53,13 @@ void EnemyHead::shoot() {
 }
 
 EnemyCannon *EnemyHead::assemble_cannon(float rotation) {
-    auto cannon_go = scene()->spawn_gameobject("Cannon");
-    cannon_go->transform()->set_parent(gameobject()->transform());
-    cannon_go->transform()->set_local_rotation(rotation);
+    auto cannon_container = scene()->spawn_gameobject("Cannon Container");
+    cannon_container->transform()->set_parent(gameobject()->transform());
+    cannon_container->transform()->set_local_rotation(rotation);
+
+    auto cannon_go= scene()->spawn_gameobject("Enemy Cannon");
+    cannon_go->transform()->set_parent(cannon_container->transform());
+    cannon_go->transform()->set_local_position(build_data->get_offsets().cannon_offset);
     auto cannon_logic = new EnemyCannon(build_data, build_data->cannon_load_paths());
     cannon_go->logichub()->attach_logic(cannon_logic);
     return cannon_logic;
