@@ -7,14 +7,6 @@
 #include "EnemyPart.hpp"
 #include "EnemyCannon.hpp"
 
-#define SGE_ENEMY_SHOT_PERIOD       3
-#define SGE_ENEMY_MIN_ANGLE         -M_PI_4
-#define SGE_ENEMY_MAX_ANGLE         M_PI_4
-#define SGE_ENEMY_SHOOTING_VEL      5
-
-#define SGE_ENEMY_BASIC_CANNON_COLOR sf::Color(72, 34, 31)
-
-
 class EnemyHead : public EnemyPart {
     std::string get_logic_id() override;
 

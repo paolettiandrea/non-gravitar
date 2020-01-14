@@ -4,14 +4,8 @@
 #include "EnemyHead.hpp"
 #include "enemies/parts/head/sniper/Laser.hpp"
 
-
-#define NG_ENEMY_SNIPER_LASER_RANGE                     100
-#define NG_ENEMY_SNIPER_SHOOTING_VELOCITY               60
-
 #define NG_ENEMY_SNIPER_LASER_TIME_BEFORE_SHOOTING      1.0
-#define NG_ENEMY_SNIPER_LASER_TIME_AFTER_SHOOTING       0.5
-
-#define NG_ENEMY_SNIPER_MAX_HEAD_ANGLE                  M_PI_2
+#define NG_ENEMY_SNIPER_LASER_TIME_AFTER_SHOOTING       1.0
 
 
 class SniperEnemyHead : public EnemyHead {

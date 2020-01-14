@@ -24,8 +24,8 @@ void EnemyHead::on_update() {
 
     if (m_is_active) {
         m_shot_counter += env()->delta_time();
-        if (m_shot_counter > SGE_ENEMY_SHOT_PERIOD) {
-            m_shot_counter -= SGE_ENEMY_SHOT_PERIOD;
+        if (m_shot_counter > build_data->get_shooting_period()) {
+            m_shot_counter -= build_data->get_shooting_period();
             head_rotation_animation.set_from_val(head_rotation_animation.get_val());
             head_rotation_animation.set_to_val(get_shooting_angle());
             head_rotation_animation.start(true);
@@ -67,5 +67,5 @@ EnemyCannon *EnemyHead::assemble_cannon(float rotation) {
 }
 
 float EnemyHead::get_shooting_angle() {
-    return (((float)rand()) / RAND_MAX) * (SGE_ENEMY_MAX_ANGLE - SGE_ENEMY_MIN_ANGLE) + SGE_ENEMY_MIN_ANGLE;
+    return (((float)rand()) / RAND_MAX) * (build_data->get_max_shooting_angle() - build_data->get_min_shooting_angle()) + build_data->get_min_shooting_angle();
 }

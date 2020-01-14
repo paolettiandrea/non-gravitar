@@ -8,13 +8,6 @@
 #include "PlayerPersistentData.hpp"
 #include "Trigger.hpp"
 
-
-#define SGE_ENEMY_VIEW_RANGE 30
-
-#define SGE_ENEMY_BASIC_HEAD_COLOR sf::Color(202, 40, 27)
-#define SGE_ENEMY_BASIC_BASE_COLOR sf::Color(255, 62, 47)
-
-
 class Enemy : public sge::Logic {
 public:
     Enemy(EnemyBuildData *build_data, PlayerPersistentData* player_persistent_data);

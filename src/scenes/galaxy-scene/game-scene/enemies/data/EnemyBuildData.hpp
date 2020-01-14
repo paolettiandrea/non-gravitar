@@ -34,6 +34,10 @@ public:
     virtual float get_shooting_speed() = 0;
     virtual EnemyOffsets get_offsets() = 0;
     virtual float get_head_turning_duration() { return 0.5; }
+    virtual float get_view_range() = 0;
+    virtual float get_max_shooting_angle() = 0;
+    float get_min_shooting_angle() { return - get_max_shooting_angle(); };
+    virtual float get_shooting_period() = 0;
 
     sge::Vec2<float> get_position_relative_to_planetoid() override {
         return anchor_position;

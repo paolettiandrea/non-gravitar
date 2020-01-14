@@ -31,6 +31,8 @@ public:
         return BreakableObject_ConstructionData("./res/models/enemies/basic/basic_cannon__bullet", 3);
     }
 
+    float get_view_range() override                     { return 30; }
+
     float space_needed_on_edge() override               { return 0.6; }
 
     sf::Color get_minimap_pin_color() override          { return sf::Color(200, 30, 30); }
@@ -41,6 +43,9 @@ public:
 
     float get_shooting_speed() override                 { return 5.0; }
 
+    float get_max_shooting_angle() override             { return M_PI_2; }
+
+    float get_shooting_period() override                { return 3.0; }
 
 
     EnemyOffsets get_offsets() override {

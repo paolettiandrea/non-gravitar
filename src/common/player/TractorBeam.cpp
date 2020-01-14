@@ -40,7 +40,8 @@ void TractorBeam::on_start() {
     }
 
     vert_array->set_color(PLAYER_PALETTE.light);
-    vert_array->set_alpha(7);
+    vert_array->set_alpha(12);
+    vert_array->set_active(false);
 
 }
 

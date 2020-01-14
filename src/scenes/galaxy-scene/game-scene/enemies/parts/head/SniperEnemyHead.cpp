@@ -38,13 +38,13 @@ void SniperEnemyHead::on_start() {
         shoot();
     };
 
-    cannon_l->set_shooting_vel(NG_ENEMY_SNIPER_SHOOTING_VELOCITY);
+    cannon_l->set_shooting_vel(build_data->get_shooting_speed());
 }
 
 void SniperEnemyHead::spawn_laser() {
     auto filter = collider()->get_filter_data();
     auto vec = sge::Vec2<float>::rotate(sge::Vec2<float>(0, 1), gameobject()->transform()->get_world_rotation());
-    vec.set_magnitude(NG_ENEMY_SNIPER_LASER_RANGE);
+    vec.set_magnitude(build_data->get_view_range()*2);
     auto laser_end_pos = gameobject()->transform()->get_world_position() + vec;
     auto laser_go = scene()->spawn_gameobject("Laser");
     LaserBuildData laser_build_data;
@@ -67,22 +67,20 @@ float SniperEnemyHead::get_shooting_angle() {
     auto future_player_pos = player_go->transform()->get_world_position() + player_vel*time_until_shooting;
     auto player_distance = (player_go->transform()->get_world_position() -
                             gameobject()->transform()->get_world_position()).get_magnitude();
-    auto bullet_time = player_distance / NG_ENEMY_SNIPER_SHOOTING_VELOCITY;
+    auto bullet_time = player_distance / build_data->get_shooting_speed();
     future_player_pos = future_player_pos + player_vel*bullet_time;     // just a rough approximation, there's no point in the enemy being too good
 
-    double angle = sge::Vec2<float>::get_signed_angle(sge::Vec2<float>(0,1),
+    float angle = sge::Vec2<float>::get_signed_angle(sge::Vec2<float>(0,1),
                                                       future_player_pos - gameobject()->transform()->get_world_position());
 
 
-    env()->debug_draw_point(future_player_pos, 3);
-    LOG_INFO << angle;
     angle -= gameobject()->transform()->get_parent()->get_world_rotation();
 
     while (angle > M_PI) { angle -= M_PI * 2; }
     while (angle < -M_PI) { angle += M_PI * 2; }
 
-    angle = std::min(angle, NG_ENEMY_SNIPER_MAX_HEAD_ANGLE);
-    angle = std::max(angle, -NG_ENEMY_SNIPER_MAX_HEAD_ANGLE);
+    angle = std::min(angle, build_data->get_max_shooting_angle());
+    angle = std::max(angle, build_data->get_min_shooting_angle());
 
     return angle;
 

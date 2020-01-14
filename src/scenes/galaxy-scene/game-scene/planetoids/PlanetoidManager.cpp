@@ -41,13 +41,13 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
         }
 
         // TODO enemy spawning based on size and difficulty scaling
-        for (int j = 0; j < 0; ++j) {
+        for (int j = 0; j < 10; ++j) {
             map_gen_info.enemies_persistent_data_vec.push_back(new BasicEnemyBuildData());
         }
-        for (int j = 0; j < 0; ++j) {
+        for (int j = 0; j < 10; ++j) {
             map_gen_info.enemies_persistent_data_vec.push_back(new MultiShotEnemyBuildData());
         }
-        for (int j = 0; j < 30; ++j) {
+        for (int j = 0; j < 10; ++j) {
             map_gen_info.enemies_persistent_data_vec.push_back(new SniperEnemyBuildData());
         }
 
