@@ -5,7 +5,7 @@
 #include <SGE/components/graphics/VertArray.hpp>
 #include <SGE/utils/animation/Animation.hpp>
 
-#define NG_LASER_RAY_CAST_PERIOD 1/60.0
+#define NG_LASER_RAY_CAST_PERIOD 1/30.0
 
 struct LaserBuildData {
     sge::Vec2<float> starting_pos;
@@ -13,7 +13,7 @@ struct LaserBuildData {
     b2Filter filter;
     Rigidbody_H ingore_rb;
     float duration = 3.0;
-    float fade_in_duration = 0.5;
+    float fade_in_duration = 0.25;
     float width = 0.15;
 };
 

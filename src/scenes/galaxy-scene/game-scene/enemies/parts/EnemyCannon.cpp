@@ -25,5 +25,8 @@ EnemyCannon::EnemyCannon(EnemyBuildData *whole_data, const BreakableObject_Const
 
 void EnemyCannon::shoot(Bullet *bullet) {
     cannon_l->shoot(bullet);
+    break_trigger_l->set_ignored_rb(bullet->collider()->get_rigidbody());
 }
+
+void EnemyCannon::set_shooting_vel(float vel) { cannon_l->set_shooting_vel(vel); }
 

@@ -3,8 +3,10 @@
 
 
 #include <scaled-planetoid/minimap/MinimapTraced_I.hpp>
+#include <player/Player.hpp>
 #include "EnemyBuildData.hpp"
 #include "PlayerPersistentData.hpp"
+#include "Trigger.hpp"
 
 
 #define SGE_ENEMY_VIEW_RANGE 30
@@ -32,6 +34,8 @@ protected:
 
      EnemyBuildData* build_data;
     PlayerPersistentData *player_persistent_data;
+
+    Trigger<Player>* view_trigger;
 };
 
 

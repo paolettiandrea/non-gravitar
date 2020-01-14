@@ -1,4 +1,3 @@
-#include <BreakTrigger.hpp>
 #include "EnemyHead.hpp"
 #include <random>
 #include "Cannon.hpp"
@@ -28,8 +27,7 @@ void EnemyHead::on_update() {
         if (m_shot_counter > SGE_ENEMY_SHOT_PERIOD) {
             m_shot_counter -= SGE_ENEMY_SHOT_PERIOD;
             head_rotation_animation.set_from_val(head_rotation_animation.get_val());
-            auto random = (((float)rand()) / RAND_MAX) * (SGE_ENEMY_MAX_ANGLE - SGE_ENEMY_MIN_ANGLE) + SGE_ENEMY_MIN_ANGLE;
-            head_rotation_animation.set_to_val(random);
+            head_rotation_animation.set_to_val(get_shooting_angle());
             head_rotation_animation.start(true);
         }
     }
@@ -46,7 +44,10 @@ void EnemyHead::deactivate() {
 }
 
 EnemyHead::EnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
-        : EnemyPart(whole_data, my_breakable_geom_data), head_rotation_animation(new LinearInterpolator(), 0, 0, 0.5) {}
+: EnemyPart(whole_data, my_breakable_geom_data)
+, head_rotation_animation(new LinearInterpolator(), 0, 0, whole_data->get_head_turning_duration()) {
+
+}
 
 void EnemyHead::shoot() {
     cannon_l->shoot(new Bullet(build_data->bullet_load_paths()));
@@ -63,4 +64,8 @@ EnemyCannon *EnemyHead::assemble_cannon(float rotation) {
     auto cannon_logic = new EnemyCannon(build_data, build_data->cannon_load_paths());
     cannon_go->logichub()->attach_logic(cannon_logic);
     return cannon_logic;
+}
+
+float EnemyHead::get_shooting_angle() {
+    return (((float)rand()) / RAND_MAX) * (SGE_ENEMY_MAX_ANGLE - SGE_ENEMY_MIN_ANGLE) + SGE_ENEMY_MIN_ANGLE;
 }

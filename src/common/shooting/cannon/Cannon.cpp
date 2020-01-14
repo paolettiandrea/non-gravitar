@@ -15,6 +15,7 @@ void Cannon::shoot(Bullet* bullet_logic) {
     bullet->logichub()->attach_logic(bullet_logic);
     auto bullet_rb = bullet->get_component<sge::cmp::Rigidbody>("Rigidbody");
 
+
     auto vel = sge::Vec2<float>::rotate(sge::Vec2<float>(0, m_shooting_vel),
                                         gameobject()->transform()->get_world_rotation());
     bullet_rb->get_b2_body()->SetLinearVelocity(b2Vec2(vel.x, vel.y) + m_shooter_rigidbody->get_b2_body()->GetLinearVelocity());
@@ -25,3 +26,5 @@ Cannon::Cannon(float shooting_velocity, Rigidbody_H shooter_rigidbody) {
     m_shooting_vel = shooting_velocity;
     m_shooter_rigidbody = shooter_rigidbody;
 }
+
+void Cannon::set_shooting_vel(float vel) { m_shooting_vel = vel; }

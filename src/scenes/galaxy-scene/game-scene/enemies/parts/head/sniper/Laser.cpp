@@ -20,7 +20,6 @@ void Laser::on_update() {
     ray_cast_counter += env()->fixed_delta_time();
     total_counter += env()->fixed_delta_time();
 
-    LOG_INFO << "LASER UPDATE: total countr: " << total_counter;
     if (total_counter > laser_total_duration) {
         gameobject()->doom();
         return;
@@ -45,12 +44,10 @@ void Laser::on_start() {
     vert_array->set_layer("laser");
 
     width_animation.start();
-    LOG_INFO << "Starting animation";
 }
 
 void Laser::set_width(float new_width) {
     if (new_width != displayed_width) {
-        LOG_INFO << "Set width:" << new_width << "\tanim: " << width_animation.get_timer() << "\tdisplayed_width: " << displayed_width;
 
         width_lateral_offset = (ray_cast_handler.get_point_a() - ray_cast_handler.get_point_b()).set_magnitude(new_width/2.0);
         width_lateral_offset = sge::Vec2<float>::rotate(width_lateral_offset, M_PI_2);

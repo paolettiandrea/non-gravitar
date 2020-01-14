@@ -15,8 +15,12 @@ public:
         EnemyOffsets enemy_offsets;
         enemy_offsets.head_offset =                     sge::Vec2<float>(0,1.25);
         enemy_offsets.cannon_offset =                   sge::Vec2<float>(0,0);
-        enemy_offsets.shooting_offset =                 sge::Vec2<float>(0,1);
+        enemy_offsets.shooting_offset =                 sge::Vec2<float>(0,1.5);
         return enemy_offsets;
     }
+
+    GameObject_H player_go;
+
+
 };
 #endif //NON_GRAVITAR_SNIPERENEMYBUILDDATA_HPP

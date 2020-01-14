@@ -8,7 +8,6 @@ target_sources(non_gravitar PRIVATE
         EnemyPart.cpp
         EnemyPart.hpp
 
-        Trigger.cpp
         Trigger.hpp
         )
 

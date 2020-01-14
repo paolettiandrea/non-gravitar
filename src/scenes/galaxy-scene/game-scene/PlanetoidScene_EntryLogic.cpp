@@ -5,6 +5,7 @@
 #include <SGE/components/graphics/ui/UI.hpp>
 #include <scaled-planetoid/minimap/Minimap.hpp>
 #include <player/TractorBeam.hpp>
+#include <game-scene/enemies/parts/head/SniperEnemyHead.hpp>
 
 
 std::string PlanetoidScene_EntryLogic::get_logic_id() {
@@ -14,6 +15,16 @@ std::string PlanetoidScene_EntryLogic::get_logic_id() {
 void PlanetoidScene_EntryLogic::on_start() {
 
     scene()->set_gravity(sge::Vec2<float>(0,0));
+
+
+    // Spawn the player
+    auto player_go = scene()->spawn_gameobject("Player");
+    player_go->transform()->set_local_scale(0.4);
+
+    auto player_l = new Player(player_persistent_data);
+    player_go->logichub()->attach_logic(player_l);
+
+    SniperEnemyHead::player_go = player_go;
 
 
     // Spawn the planetoid (and relative enemies and crates)
@@ -27,12 +38,7 @@ void PlanetoidScene_EntryLogic::on_start() {
     auto outward_dir = (entrance_pos - center_pos).normalize();
     auto spawn_point = entrance_pos + (outward_dir * (float)NG_PLANETOID_SCENE_SPAWN_DISTANCE);
 
-    // Spawn the player
-    auto player_go = scene()->spawn_gameobject("Player");
-    player_go->transform()->set_local_scale(0.4);
     player_go->transform()->set_local_position(spawn_point);
-    auto player_l = new Player(player_persistent_data);
-    player_go->logichub()->attach_logic(player_l);
 
 
     auto transition_handler = scene()->spawn_gameobject("TransitionHandler");

@@ -35,6 +35,8 @@ protected:
 
     EnemyCannon *assemble_cannon(float rotation);
 
+    virtual float get_shooting_angle();
+
 private:
 
     float m_shot_counter = 0;

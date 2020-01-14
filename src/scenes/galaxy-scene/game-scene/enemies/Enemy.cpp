@@ -1,10 +1,9 @@
 #include <SGE/components/graphics/VertArray.hpp>
 #include <handler/BreakHandler.hpp>
-#include <enemies/parts/Trigger.hpp>
 #include <enemies/parts/EnemyBase.hpp>
 #include "Enemy.hpp"
 #include <EnemyHead.hpp>
-
+#include <player/Player.hpp>
 
 
 std::string Enemy::get_logic_id() {
@@ -39,7 +38,7 @@ void Enemy::on_start() {
     auto view_collider = m_view_gameobject->add_component<sge::cmp::Collider>("Collider");
     view_collider->set_sensor(true);
     view_collider->set_as_circle(SGE_ENEMY_VIEW_RANGE);
-    auto view_trigger = new Trigger("Player");
+    view_trigger = new Trigger<Player>("Player");
     m_view_gameobject->logichub()->attach_logic(view_trigger);
     view_trigger->on_collision_begin_event += [=]() {
         head_logic->activate();

@@ -15,7 +15,6 @@ public:
 protected:
     EnemyBuildData* build_data;
 
-private:
     BreakGenerator* break_generator_l;
     BreakTrigger* break_trigger_l;
 

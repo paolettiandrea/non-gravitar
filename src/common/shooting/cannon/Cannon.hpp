@@ -15,6 +15,8 @@ public:
 
     void shoot(Bullet* bullet_logic);
 
+    void set_shooting_vel(float vel);
+
 
 private:
     float m_shooting_vel;

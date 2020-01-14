@@ -33,6 +33,7 @@ public:
     virtual const ColorPalette* get_enemy_palette() = 0;
     virtual float get_shooting_speed() = 0;
     virtual EnemyOffsets get_offsets() = 0;
+    virtual float get_head_turning_duration() { return 0.5; }
 
     sge::Vec2<float> get_position_relative_to_planetoid() override {
         return anchor_position;

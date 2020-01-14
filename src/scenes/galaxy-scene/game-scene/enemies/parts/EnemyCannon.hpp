@@ -16,6 +16,8 @@ public:
 
     void shoot(Bullet* bullet);
 
+    void set_shooting_vel(float vel);
+
 protected:
     Cannon* cannon_l;
 
