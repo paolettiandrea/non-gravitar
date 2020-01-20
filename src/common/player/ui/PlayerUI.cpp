@@ -3,7 +3,6 @@
 
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
 #include "PlayerUI.hpp"
-#include "PlayerLivesIndicator.hpp"
 
 std::string PlayerUI::get_logic_id() {
     return std::string("PlayerUI");
@@ -38,8 +37,12 @@ void PlayerUI::on_start() {
         score_animation.set_to_val(player_persistent_data->score.value());
         score_animation.start();
     };
-
     player_persistent_data->score.subscribe(score_changed_ev_handler);
+
+    lives_changed_ev_handler = [&](){
+        lives_indicator_content->set_lives(player_persistent_data->lives.value());
+    };
+    player_persistent_data->lives.subscribe(lives_changed_ev_handler);
 
 
     // LIVES
@@ -55,7 +58,7 @@ void PlayerUI::on_start() {
     auto lives_indicator = scene()->spawn_gameobject("Lives header UI");
     lives_indicator->transform()->set_parent(gameobject()->transform());
     auto lives_indicator_ui = lives_indicator->add_component<sge::cmp::UI>("UI");
-    auto lives_indicator_content = new PlayerLivesIndicator(player_persistent_data->lives.value());
+    lives_indicator_content = new PlayerLivesIndicator(player_persistent_data->lives.value());
     lives_indicator_content->set_offset(sf::Vector2f(-NG_PLAYER_UI_HORIZONTAL_PADDING, -NG_PLAYER_UI_VERTICAL_PADDING - NG_PLAYER_UI_SCORE_HEADER_CHAR_SIZE - NG_PLAYER_UI_SCORE_SPACING));
     lives_indicator_ui->set_content(lives_indicator_content);
     lives_indicator_ui->set_anchor_alignment(sge::Alignment(sge::HotizontalAlignment::LEFT, sge::VerticalAlignment::TOP));
@@ -81,6 +84,7 @@ void PlayerUI::on_scene_resume() {
 
 void PlayerUI::on_scene_destruction() {
     player_persistent_data->score.unsubscribe(score_changed_ev_handler);
+    player_persistent_data->lives.unsubscribe(lives_changed_ev_handler);
 }
 
 std::string PlayerUI::get_string_with_leading_zeros(int amount, int number_of_digits) {

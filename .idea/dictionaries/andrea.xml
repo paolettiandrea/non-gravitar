@@ -9,6 +9,7 @@
       <w>gameobject</w>
       <w>gravitar</w>
       <w>linestrip</w>
+      <w>lookback</w>
       <w>minimap</w>
       <w>multishot</w>
       <w>noisemap</w>
@@ -16,6 +17,7 @@
       <w>planetoid</w>
       <w>populator</w>
       <w>raycast</w>
+      <w>respawn</w>
       <w>rigidbody</w>
       <w>smesh</w>
       <w>spath</w>

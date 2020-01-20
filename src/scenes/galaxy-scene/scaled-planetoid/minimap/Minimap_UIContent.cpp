@@ -58,11 +58,11 @@ void Minimap_UIContent::prepare_for_draw() {
     if (dirty_transform) clean_transform();
 }
 
-void Minimap_UIContent::refresh_geometry(Player *player, std::vector<MinimapTraced_I *> traced_objects) {
+void Minimap_UIContent::refresh_geometry(Player *player, std::vector<MinimapTraced_I *> traced_objects, const PlayerPersistentData& player_data) {
 
     // refresh the pins
     pins_vert_array.clear();
-    traced_objects.push_back(player);
+    if (player_data.is_player_alive()) traced_objects.push_back(player);
     for (int i = 0; i < traced_objects.size(); ++i) {
         auto pos = traced_objects[i]->get_position_relative_to_planetoid();
         auto scaled_pos = pos / base_miniature->get_grid_size();
@@ -74,11 +74,14 @@ void Minimap_UIContent::refresh_geometry(Player *player, std::vector<MinimapTrac
     }
 
     // refresh the fog geometry if necessary
-    auto palette = base_miniature->get_planetoid_persistent_data()->map_gen_info.palette;
-    if (base_miniature->burn_fog(player->scene()->get_camera())) {
-        fog_vert_array.clear();
-        Planetoid::assemble_vert_array(fog_vert_array, MarchingMap(*base_miniature->get_scaled_fog_noisemap(), 0.5, true), palette.light);
+    if (player_data.is_player_alive()) {
+        auto palette = base_miniature->get_planetoid_persistent_data()->map_gen_info.palette;
+        if (base_miniature->burn_fog(player->scene()->get_camera())) {
+            fog_vert_array.clear();
+            Planetoid::assemble_vert_array(fog_vert_array, MarchingMap(*base_miniature->get_scaled_fog_noisemap(), 0.5, true), palette.light);
+        }
     }
+
 
     dirty_transform = true;
 }

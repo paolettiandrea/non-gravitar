@@ -61,27 +61,34 @@ void SniperEnemyHead::spawn_laser() {
 float SniperEnemyHead::get_shooting_angle() {
     auto time_until_shooting = build_data->get_head_turning_duration() + NG_ENEMY_SNIPER_LASER_TIME_BEFORE_SHOOTING;
 
-    auto player_rb = player_go->get_component<sge::cmp::Rigidbody>("Rigidbody");
-    auto player_vel = player_rb->get_linear_velocity();
+    if (player_go.is_valid()) {
+        auto player_rb = player_go->get_component<sge::cmp::Rigidbody>("Rigidbody");
+        auto player_vel = player_rb->get_linear_velocity();
 
-    auto future_player_pos = player_go->transform()->get_world_position() + player_vel*time_until_shooting;
-    auto player_distance = (player_go->transform()->get_world_position() -
-                            gameobject()->transform()->get_world_position()).get_magnitude();
-    auto bullet_time = player_distance / build_data->get_shooting_speed();
-    future_player_pos = future_player_pos + player_vel*bullet_time;     // just a rough approximation, there's no point in the enemy being too good
+        auto future_player_pos = player_go->transform()->get_world_position() + player_vel*time_until_shooting;
+        auto player_distance = (player_go->transform()->get_world_position() -
+                                gameobject()->transform()->get_world_position()).get_magnitude();
+        auto bullet_time = player_distance / build_data->get_shooting_speed();
+        future_player_pos = future_player_pos + player_vel*bullet_time;     // just a rough approximation, there's no point in the enemy being too good
 
-    float angle = sge::Vec2<float>::get_signed_angle(sge::Vec2<float>(0,1),
-                                                      future_player_pos - gameobject()->transform()->get_world_position());
+        float angle = sge::Vec2<float>::get_signed_angle(sge::Vec2<float>(0,1),
+                                                         future_player_pos - gameobject()->transform()->get_world_position());
 
 
-    angle -= gameobject()->transform()->get_parent()->get_world_rotation();
+        angle -= gameobject()->transform()->get_parent()->get_world_rotation();
 
-    while (angle > M_PI) { angle -= M_PI * 2; }
-    while (angle < -M_PI) { angle += M_PI * 2; }
+        while (angle > M_PI) { angle -= M_PI * 2; }
+        while (angle < -M_PI) { angle += M_PI * 2; }
 
-    angle = std::min(angle, build_data->get_max_shooting_angle());
-    angle = std::max(angle, build_data->get_min_shooting_angle());
+        angle = std::min(angle, build_data->get_max_shooting_angle());
+        angle = std::max(angle, build_data->get_min_shooting_angle());
+        return angle;
+    } else {
+        return EnemyHead::get_shooting_angle();
+    }
 
-    return angle;
+
+
+
 
 }

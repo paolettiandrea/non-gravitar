@@ -12,7 +12,7 @@
 
 class PlayerBody : public sge::Logic {
 public:
-    PlayerBody(PlayerPersistentData *player_persistent_data);
+    explicit PlayerBody(PlayerPersistentData *player_persistent_data);
     std::string get_logic_id() override;
 
 

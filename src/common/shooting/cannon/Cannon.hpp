@@ -13,7 +13,7 @@ public:
 
     std::string get_logic_id() override;
 
-    void shoot(Bullet* bullet_logic);
+    virtual void shoot(Bullet* bullet_logic);
 
     void set_shooting_vel(float vel);
 

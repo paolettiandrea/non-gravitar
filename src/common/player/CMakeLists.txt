@@ -11,7 +11,10 @@ target_sources(non_gravitar PRIVATE
         TractorBeam.hpp
 
         PlayerPersistentData.hpp
-        PlayerPersistentData.cpp)
+        PlayerPersistentData.cpp
+
+        PlayerSpawnManager.cpp
+        PlayerSpawnManager.hpp)
 
 
 add_subdirectory(player_body)

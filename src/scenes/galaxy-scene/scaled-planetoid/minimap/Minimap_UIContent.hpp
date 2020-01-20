@@ -23,7 +23,7 @@ public:
 
     sf::FloatRect get_bounds() override;
 
-    void refresh_geometry(Player *player, std::vector<MinimapTraced_I *> traced_objects);
+    void refresh_geometry(Player *player, std::vector<MinimapTraced_I *> traced_objects, const PlayerPersistentData& player_data);
 
 protected:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

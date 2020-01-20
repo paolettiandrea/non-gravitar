@@ -29,8 +29,10 @@ void Minimap::on_update() {
     }
 }
 
-Minimap::Minimap(MiniaturePlanetoid *base_miniature, Planetoid *planetoid, Player *player) : base_miniature(
-        base_miniature), planetoid(planetoid), player(player) {}
+Minimap::Minimap(MiniaturePlanetoid *base_miniature, Planetoid *planetoid, PlayerSpawnManager* player_spawn_manager) : base_miniature(
+        base_miniature), planetoid(planetoid), player_spawn_manager(player_spawn_manager) {
+    player_persistent_data = player_spawn_manager->get_player_logic()->get_persistent_data();
+}
 
 void Minimap::refresh_geometry() {
     std::vector<MinimapTraced_I*> objects_to_trace;
@@ -51,5 +53,5 @@ void Minimap::refresh_geometry() {
         }
     }
 
-    minimap_ui_content->refresh_geometry(player, objects_to_trace);
+    minimap_ui_content->refresh_geometry(player_spawn_manager->get_player_logic(), objects_to_trace, *player_persistent_data);
 }

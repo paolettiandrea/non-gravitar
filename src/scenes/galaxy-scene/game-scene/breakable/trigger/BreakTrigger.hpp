@@ -22,6 +22,9 @@ public:
 
     void on_collision_begin(sge::CollisionInfo &collision_info) override;
 
+
+    utils::event::Event on_break_event;
+
 private:
     float m_trigger_impact_vel;
     Rigidbody_H ignored_rigidbody;

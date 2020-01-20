@@ -1,7 +1,6 @@
 #include "BreakTrigger.hpp"
 #include "BreakHandler.hpp"
 #include <SGE/components//physics/Collider.hpp>
-#include "Bullet.hpp"
 
 BreakTrigger::BreakTrigger(float trigger_impact_vel) {
     m_trigger_impact_vel = trigger_impact_vel;
@@ -40,6 +39,7 @@ void BreakTrigger::set_ignored_rb(Rigidbody_H rb) {
 }
 
 void BreakTrigger::break_object() {
+    on_break_event();
     // On break visit upstream the hierarchy and call the break pulse on the last child dependent BreakHandler
     GameObject_H pointed_go = gameobject();
     BreakHandler* found_handler = nullptr;

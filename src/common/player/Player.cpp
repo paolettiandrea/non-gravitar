@@ -1,12 +1,13 @@
-
 #include <follow/CameraFollow.hpp>
-#include "../shooting/cannon/Cannon.hpp"
 #include "Player.hpp"
 #include <SGE/components/graphics/ui/UI.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
-#include <player/ui/PlayerUI.hpp>
+#include <game-scene/breakable/handler/BreakHandler.hpp>
+#include <game-scene/breakable/generator/BreakGenerator.hpp>
+#include <death-scene/DeathSceneEntryLogic.hpp>
+#include "Bullet.hpp"
+#include "COLORS.hpp"
 
-#include "PlayerCannon.hpp"
 #include "TractorBeam.hpp"
 
 
@@ -30,7 +31,8 @@ void Player::on_start() {
     auto cannon_go = scene()->spawn_gameobject("Cannon");
     cannon_go->transform()->set_parent(player_body_go->transform());
     cannon_go->transform()->set_local_position(0, 1);
-    cannon_go->logichub()->attach_logic(new PlayerCannon(30, m_rigidbody));
+    player_cannon = new PlayerCannon(NG_PLAYER_CANNON_SHOOTING_VEL, m_rigidbody);
+    cannon_go->logichub()->attach_logic(player_cannon);
 
 
     auto tractor_beam_go = scene()->spawn_gameobject("TractorBeam");
@@ -39,16 +41,31 @@ void Player::on_start() {
     tractor_beam_go->logichub()->attach_logic(new TractorBeam());
 
 
-    auto ui_go = scene()->spawn_gameobject("PlayerUI");
-    ui_go->transform()->set_parent(player_body_go->transform());
-    ui_go->logichub()->attach_logic(new PlayerUI(persistent_data));
+    if (breakable) {
+        ExplosionInfo explosion_info;
+        explosion_info.explosion_radius = 1.0;
+        explosion_info.explosion_force = 2.0;
+        gameobject()->logichub()->attach_logic(new BreakHandler (explosion_info, true, true));
+        trigger_l = new BreakTrigger(10, Rigidbody_H());
+        trigger_l->on_break_event += [&]() {
+            death();
+            on_death_event();
+        };
+        player_body_go->logichub()->attach_logic(trigger_l);
+        player_body_go->logichub()->attach_logic(new BreakGenerator(2));
+    }
 
-
+    persistent_data->is_alive = true;
 }
 
-void Player::on_update() {
-
-
+void Player::on_fixed_update() {
+    if (env()->is_key_down(NG_CONTROLS_PLAYER_SHOOT_KEY)) {
+        if (player_cannon->is_ready_to_shoot()) {
+            auto bullet_l = new Bullet(PhysicsObject_ConstructionData("./res/models/enemies/basic/basic_cannon__bullet"));
+            player_cannon->shoot(bullet_l);
+            trigger_l->set_ignored_rb(bullet_l->collider()->get_rigidbody());
+        }
+    }
 }
 
 GameObject_H  Player::get_body_gameobject() const {
@@ -60,7 +77,7 @@ sge::Vec2<float> Player::get_position_relative_to_planetoid() {
 }
 
 std::vector<sf::Vertex> Player::get_minimap_model_vertices() {
-    sf::Color color(200, 200, 200);
+    sf::Color color(PLAYER_PALETTE.primary);
     sf::Color secondary_color(color);
     secondary_color.a = 150;
     float size = 0.7;
@@ -74,10 +91,24 @@ std::vector<sf::Vertex> Player::get_minimap_model_vertices() {
             sf::Vertex(sf::Vector2f(size*2,-size*2), secondary_color)};
 }
 
-Player::Player(PlayerPersistentData *persistent_data) {
+Player::Player(PlayerPersistentData *persistent_data, bool breakable) {
     this->persistent_data = persistent_data;
+    this->breakable = breakable;
 }
 
 PlayerPersistentData *Player::get_persistent_data() {
     return persistent_data;
+}
+
+void Player::death() {
+    if (persistent_data->is_alive) {
+        persistent_data->is_alive = false;
+        if (persistent_data->lives.value()>1) {
+            persistent_data->lives.set(persistent_data->lives.value() - 1);
+        } else {
+            env()->doom_top_scene();
+            env()->book_new_scene_push("Death scene", new DeathSceneEntryLogic());
+        }
+
+    }
 }

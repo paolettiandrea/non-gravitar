@@ -8,5 +8,6 @@ target_sources(non_gravitar PRIVATE
 target_include_directories(non_gravitar PRIVATE .)
 
 add_subdirectory(game-scene)
+add_subdirectory(death-scene)
 add_subdirectory(scaled-planetoid)
 add_subdirectory(scene-transition)

@@ -3,6 +3,7 @@
 
 
 #include <SGE/logic/Logic.hpp>
+#include "PlayerPersistentData.hpp"
 
 
 class   GalaxyScene_EntryLogic : public sge::Logic {

@@ -6,6 +6,7 @@
 #include <scaled-planetoid/minimap/Minimap.hpp>
 #include <player/TractorBeam.hpp>
 #include <game-scene/enemies/parts/head/SniperEnemyHead.hpp>
+#include <player/PlayerSpawnManager.hpp>
 
 
 std::string PlanetoidScene_EntryLogic::get_logic_id() {
@@ -15,17 +16,6 @@ std::string PlanetoidScene_EntryLogic::get_logic_id() {
 void PlanetoidScene_EntryLogic::on_start() {
 
     scene()->set_gravity(sge::Vec2<float>(0,0));
-
-
-    // Spawn the player
-    auto player_go = scene()->spawn_gameobject("Player");
-    player_go->transform()->set_local_scale(0.4);
-
-    auto player_l = new Player(player_persistent_data);
-    player_go->logichub()->attach_logic(player_l);
-
-    SniperEnemyHead::player_go = player_go;
-
 
     // Spawn the planetoid (and relative enemies and crates)
     auto planetoid_go = scene()->spawn_gameobject("Planetoid");
@@ -37,6 +27,16 @@ void PlanetoidScene_EntryLogic::on_start() {
     auto center_pos = sge::Vec2<float>(planetoid_persistent_data->size / 2.0, planetoid_persistent_data->size / 2.0);
     auto outward_dir = (entrance_pos - center_pos).normalize();
     auto spawn_point = entrance_pos + (outward_dir * (float)NG_PLANETOID_SCENE_SPAWN_DISTANCE);
+
+
+
+    // Spawn the player
+    auto player_spawn_manager_go = scene()->spawn_gameobject("PlayerSpawnManager");
+    auto player_spawn_manager_l = new PlayerSpawnManager(player_persistent_data, spawn_point);
+    player_spawn_manager_go->logichub()->attach_logic(player_spawn_manager_l);
+
+    auto player_l = player_spawn_manager_l->get_player_logic();
+    auto player_go = player_l->gameobject();
 
     player_go->transform()->set_local_position(spawn_point);
 
@@ -52,7 +52,7 @@ void PlanetoidScene_EntryLogic::on_start() {
 
     auto minimap_go = scene()->spawn_gameobject("Minimap");
     minimap_go->transform()->set_local_scale(0.5);
-    minimap_go->logichub()->attach_logic(new Minimap(base_miniature, planetoid_l, player_l));
+    minimap_go->logichub()->attach_logic(new Minimap(base_miniature, planetoid_l, player_spawn_manager_l));
 }
 
 PlanetoidScene_EntryLogic::PlanetoidScene_EntryLogic(PlanetoidPersistentData *planetoid_persistent_data, MiniaturePlanetoid* base_miniature, PlayerPersistentData* player_persistent_data, SceneTransitionHandler* parent_transition_handler) {

@@ -14,6 +14,7 @@ PlayerEngine::PlayerEngine(Rigidbody_H rigidbody, PlayerPersistentData* player_p
     fuel_amount_changed_ev_handler = [&]() {
         update_fuel_bar_geometry();
     };
+    player_persistent_data->fuel_amount.clear_subscribers();
     player_persistent_data->fuel_amount.subscribe(fuel_amount_changed_ev_handler);
 }
 
@@ -122,6 +123,8 @@ void PlayerEngine::update_fuel_bar_geometry() {
 }
 
 void PlayerEngine::on_destruction() {
+    player_persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
+
 }
 
 void PlayerEngine::on_scene_resume() {
@@ -129,5 +132,5 @@ void PlayerEngine::on_scene_resume() {
 }
 
 void PlayerEngine::on_scene_destruction() {
-    player_persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
+    //player_persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
 }

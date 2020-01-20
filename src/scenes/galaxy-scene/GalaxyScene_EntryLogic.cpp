@@ -17,6 +17,9 @@ std::string GalaxyScene_EntryLogic::get_logic_id() {
 
 
 void GalaxyScene_EntryLogic::on_start() {
+
+    scene()->set_gravity(sge::Vec2<float>(0,0));
+
     Galaxy_ConstructionData galaxy_construction_data;
     galaxy_construction_data.planetoid_number = 2;
     galaxy_construction_data.min_planetoid_size = 200;
