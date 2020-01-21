@@ -14,9 +14,10 @@ public:
     unsigned int size = 100;
     unsigned int min_cave_volume = 100;
     unsigned int min_filled_region_volume = 2;
+    float difficulty_factor = 1.0;
 
 
-    ColorPalette palette = ColorPalette(NG_COLORS_EASY_PLANETOID);
+    ColorPalette palette = PLANETOID_EASY_PALETTE;
 
     std::vector<EnemyBuildData*> enemies_persistent_data_vec;
     std::vector<CratePersistentData*> crates_persistent_data_vec;

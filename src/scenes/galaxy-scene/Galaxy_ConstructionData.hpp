@@ -4,8 +4,12 @@
 
 struct Galaxy_ConstructionData {
     unsigned int planetoid_number = 5;
+
     unsigned int min_planetoid_size = 50;
     unsigned int max_planetoid_size = 500;
+
+    float min_difficulty_factor = 0.5;
+    float max_difficulty_factor = 4.0;
 };
 
 

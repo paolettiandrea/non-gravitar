@@ -6,6 +6,7 @@
 #include "SGE/components/physics/Collider.hpp"
 #include "Planetoid.hpp"
 #include "MapGenInfo.hpp"
+#include "GAME.hpp"
 
 std::string PlanetoidManager::get_logic_id() {
     return std::string("PlanetoidManager");
@@ -34,29 +35,58 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
 
         if (data.planetoid_number > 1) {
             LinearInterpolator interpolator;
-            map_gen_info.size = interpolator.interpolate(((float) i) / (data.planetoid_number-1),
-                                                         data.min_planetoid_size, data.max_planetoid_size);
+            auto t = ((float) i) / (data.planetoid_number-1.0);
+            map_gen_info.size = interpolator.interpolate(t, data.min_planetoid_size, data.max_planetoid_size);
+            map_gen_info.difficulty_factor = interpolator.interpolate(t, data.min_difficulty_factor, data.max_difficulty_factor);
         } else {
             map_gen_info.size = data.min_planetoid_size;
+            map_gen_info.difficulty_factor = data.min_difficulty_factor;
         }
 
-        // TODO enemy spawning based on size and difficulty scaling
-        for (int j = 0; j < 10; ++j) {
+
+        float enemy_density = NG_GAME_BASE_ENEMY_DENSITY * map_gen_info.difficulty_factor;
+        int planetoid_area = map_gen_info.size * map_gen_info.size;
+        int enemy_number = planetoid_area * enemy_density;
+
+        LOG_INFO << "Enemy number: " << enemy_number;
+
+        int basic_enemies = enemy_number/4, multi_enemies = enemy_number/4, sniper_enemies = enemy_number/4;
+        int compensation = enemy_number - basic_enemies - multi_enemies - sniper_enemies;
+
+        if (map_gen_info.difficulty_factor > 3) {
+            sniper_enemies += compensation;
+            map_gen_info.palette = PLANETOID_HARD_PALETTE;
+        } else {
+            if (map_gen_info.difficulty_factor > 2){
+                multi_enemies += compensation;
+                map_gen_info.palette = PLANETOID_MEDIUM_PALETTE;
+            } else { basic_enemies += compensation; }
+        }
+
+        for (int j = 0; j < basic_enemies; ++j) {
             map_gen_info.enemies_persistent_data_vec.push_back(new BasicEnemyBuildData());
         }
-        for (int j = 0; j < 10; ++j) {
+        for (int j = 0; j < multi_enemies; ++j) {
             map_gen_info.enemies_persistent_data_vec.push_back(new MultiShotEnemyBuildData());
         }
-        for (int j = 0; j < 10; ++j) {
+        for (int j = 0; j < sniper_enemies; ++j) {
             map_gen_info.enemies_persistent_data_vec.push_back(new SniperEnemyBuildData());
         }
 
-        for (int j = 0; j < 0; ++j) {
+
+        // CRATES
+
+        float crate_density = NG_GAME_BASE_CRATE_DENSITY / map_gen_info.difficulty_factor;
+        int crate_number = planetoid_area * crate_density;
+        for (int j = 0; j < crate_number; ++j) {
             map_gen_info.crates_persistent_data_vec.push_back(new FuelCratePersistentData());
         }
 
 
         planetoid_data_vec.push_back(new PlanetoidPersistentData(map_gen_info));
+
+        LOG_INFO << "MAPGENINFO:\nSize: " << map_gen_info.size << "\nEnemies: basic[" << basic_enemies << "] multi["
+                 << multi_enemies << "] sniper[" << sniper_enemies << "]" << "\nCrates:" << crate_number;
     }
 }
 

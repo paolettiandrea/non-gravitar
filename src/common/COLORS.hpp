@@ -26,7 +26,27 @@ static const ColorPalette SNIPER_ENEMY_PALETTE (
         sf::Color(136, 204, 100));
 
 
-#define NG_COLORS_EASY_PLANETOID sf::Color(40, 160, 40), sf::Color(40, 120, 40), sf::Color(45, 218, 45), sf::Color(0, 68, 0), sf::Color(136, 204, 136)
+static const ColorPalette PLANETOID_EASY_PALETTE (
+        sf::Color(40, 160, 40),
+        sf::Color(40, 120, 40),
+        sf::Color(45, 218, 45),
+        sf::Color(0, 68, 0),
+        sf::Color(136, 204, 136));
+
+static const ColorPalette PLANETOID_MEDIUM_PALETTE (
+        sf::Color(160, 100, 100),
+        sf::Color(140, 100, 100),
+        sf::Color(190, 100, 100),
+        sf::Color(70, 50, 100),
+        sf::Color(136, 204, 100));
+
+static const ColorPalette PLANETOID_HARD_PALETTE (
+        sf::Color(160, 100, 100),
+        sf::Color(140, 100, 100),
+        sf::Color(190, 100, 100),
+        sf::Color(70, 50, 100),
+        sf::Color(136, 204, 100));
+
 
 # define NG_CRATE_PIN_COLOR sf::Color(100,100,100)
 
