@@ -63,6 +63,25 @@ void PlayerUI::on_start() {
     lives_indicator_ui->set_content(lives_indicator_content);
     lives_indicator_ui->set_anchor_alignment(sge::Alignment(sge::HotizontalAlignment::LEFT, sge::VerticalAlignment::TOP));
     lives_indicator_ui->set_origin_alignment(sge::Alignment(sge::HotizontalAlignment::LEFT, sge::VerticalAlignment::TOP));
+
+
+    // FUEL BAR
+    auto fuel_bar_go = scene()->spawn_gameobject("Fuel Bar UI");
+    fuel_bar_go->transform()->set_parent(gameobject()->transform());
+    auto fuel_bar_ui = fuel_bar_go->add_component<sge::cmp::UI>("UI");
+    fuel_bar_ui->set_anchor_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
+    fuel_bar_ui->set_origin_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
+
+    fuel_bar = new sge::UIBar(400, 20);
+    fuel_bar->set_offset(sf::Vector2f(0, 20));
+
+    fuel_bar_ui->set_content(fuel_bar);
+
+    fuel_changed_ev_handler = [&]() {
+        fuel_bar->set_bar(player_persistent_data->fuel_amount.value() / player_persistent_data->fuel_max.value());
+    };
+
+    player_persistent_data->fuel_amount.subscribe(fuel_changed_ev_handler);
 }
 
 void PlayerUI::on_update() {
@@ -85,6 +104,7 @@ void PlayerUI::on_scene_resume() {
 void PlayerUI::on_scene_destruction() {
     player_persistent_data->score.unsubscribe(score_changed_ev_handler);
     player_persistent_data->lives.unsubscribe(lives_changed_ev_handler);
+    player_persistent_data->fuel_amount.unsubscribe(fuel_changed_ev_handler);
 }
 
 std::string PlayerUI::get_string_with_leading_zeros(int amount, int number_of_digits) {

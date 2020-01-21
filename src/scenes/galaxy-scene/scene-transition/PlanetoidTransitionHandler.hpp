@@ -8,6 +8,8 @@ public:
     PlanetoidTransitionHandler(SceneTransitionHandler *parent_transition_handler);
 
     std::string get_logic_id() override;
+
+    void on_start() override;
 };
 
 

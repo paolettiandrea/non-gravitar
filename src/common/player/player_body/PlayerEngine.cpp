@@ -10,12 +10,6 @@ PlayerEngine::PlayerEngine(Rigidbody_H rigidbody, PlayerPersistentData* player_p
     controlled_rigidbody = rigidbody;
     this->player_persistent_data = player_persistent_data;
 
-
-    fuel_amount_changed_ev_handler = [&]() {
-        update_fuel_bar_geometry();
-    };
-    player_persistent_data->fuel_amount.clear_subscribers();
-    player_persistent_data->fuel_amount.subscribe(fuel_amount_changed_ev_handler);
 }
 
 void PlayerEngine::on_start() {
@@ -36,17 +30,6 @@ void PlayerEngine::on_start() {
     engine_trail->set_vertex_color(3, sf::Color::Transparent);
 
     engine_trail->set_active(false);
-
-    auto ui = gameobject()->add_component<sge::cmp::UI>("UI");
-    ui->set_anchor_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
-    ui->set_origin_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
-
-    fuel_bar = new sge::UIBar(400, 20);
-    fuel_bar->set_offset(sf::Vector2f(0, 20));
-
-    ui->set_content(fuel_bar);
-
-    update_fuel_bar_geometry();
 }
 
 void PlayerEngine::on_fixed_update() {
@@ -115,22 +98,4 @@ void PlayerEngine::update_engine_trail_lenght() {
     if (engine_trail->is_active()) {
         engine_trail->set_vertex_position(3, 0, -last_thrust_amount*TRAIL_LENGHT_MULTIPLIER);
     }
-}
-
-void PlayerEngine::update_fuel_bar_geometry() {
-    fuel_bar->set_bar(player_persistent_data->fuel_amount.value() / player_persistent_data->fuel_max.value());
-    m_last_displayed_fuel_amount = player_persistent_data->fuel_amount.value();
-}
-
-void PlayerEngine::on_destruction() {
-    player_persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
-
-}
-
-void PlayerEngine::on_scene_resume() {
-    update_fuel_bar_geometry();
-}
-
-void PlayerEngine::on_scene_destruction() {
-    //player_persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
 }

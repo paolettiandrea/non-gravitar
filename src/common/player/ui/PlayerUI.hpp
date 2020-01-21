@@ -7,6 +7,7 @@
 #include <player/PlayerPersistentData.hpp>
 #include <SGE/utils/animation/Animation.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
+#include <SGE/components/graphics/ui/blocks/UIBar.hpp>
 #include "PlayerLivesIndicator.hpp"
 
 #define NG_PLAYER_UI_VERTICAL_PADDING           20
@@ -41,8 +42,10 @@ public:
 private:
     PlayerPersistentData *player_persistent_data;
     sge::UIText* score_text;
+    sge::UIBar* fuel_bar;
 
 
+    utils::event::EventHandler fuel_changed_ev_handler;
     sge::Animation score_animation;
     utils::event::EventHandler score_changed_ev_handler;
     int represented_score_val = 0;
@@ -51,6 +54,8 @@ private:
     PlayerLivesIndicator* lives_indicator_content;
 
     static std::string get_string_with_leading_zeros(int amount, int number_of_digits);
+
+
 
 
 

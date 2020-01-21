@@ -2,6 +2,7 @@
 #include <Player.hpp>
 #include <scaled-planetoid/MiniaturePlanetPortal.hpp>
 #include <scene-transition/PlanetoidSceneTransitionTrigger.hpp>
+#include <PauseLauncher.hpp>
 #include "GalaxyScene_EntryLogic.hpp"
 
 #define NG_GALAXY_MINIATURE_PLANET_MIN_SIZE 10
@@ -19,6 +20,8 @@ std::string GalaxyScene_EntryLogic::get_logic_id() {
 void GalaxyScene_EntryLogic::on_start() {
 
     scene()->set_gravity(sge::Vec2<float>(0,0));
+
+    gameobject()->logichub()->attach_logic(new PauseLauncher());
 
     Galaxy_ConstructionData galaxy_construction_data;
     galaxy_construction_data.planetoid_number = 2;
@@ -63,4 +66,6 @@ void GalaxyScene_EntryLogic::on_start() {
         new_scaled_planetoid->transform()->set_local_position(temp_horizontal_anchor, 0);
         temp_horizontal_anchor+= 30;
     }
+
+    //gameobject()->logichub()->attach_logic(new PauseLauncher());
 }

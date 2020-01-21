@@ -2,17 +2,17 @@
 #define NON_GRAVITAR_DEATHSCENEENTRYLOGIC_HPP
 
 
-#include <SGE/logic/Logic.hpp>
+#include "TextMenu.hpp"
 
-#define NG_MENU_FONT "ARCADE_R"
 
-class DeathSceneEntryLogic : public sge::Logic {
+class DeathSceneEntryLogic : public TextMenu {
 public:
     std::string get_logic_id() override;
 
     void on_start() override;
 
     void on_update() override;
+
 };
 
 

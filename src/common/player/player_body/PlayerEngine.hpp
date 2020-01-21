@@ -20,12 +20,6 @@ public:
 
     void on_start() override;
 
-    void on_destruction() override;
-
-    void on_scene_destruction() override;
-
-    void on_scene_resume() override;
-
 private:
 
     enum ThrustStatus {Increasing, Stabilizing, Stable,  Decreasing, Zero};
@@ -60,13 +54,8 @@ private:
 
     static constexpr float FUEL_EFFICIENCY_FACTOR = 600;
 
-    float m_last_displayed_fuel_amount = 0;
-    sge::UIBar* fuel_bar;
-
     PlayerPersistentData* player_persistent_data;
 
-    void update_fuel_bar_geometry();
-    utils::event::EventHandler fuel_amount_changed_ev_handler;
 
 
 

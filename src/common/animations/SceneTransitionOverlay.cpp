@@ -19,6 +19,7 @@ void SceneTransitionOverlay::on_start() {
 void SceneTransitionOverlay::on_update() {
     if (radius_animation.is_active()) {
         auto new_radius = radius_animation.step(env()->delta_time());
+        LOG_INFO << "RADIUS ANIM ACTIVE to " << new_radius;
         ui_content->set_circle_radius(new_radius);
 
         if (radius_animation.is_done()) {
@@ -46,12 +47,11 @@ void SceneTransitionOverlay::expand(utils::event::EventHandler* post_expand_call
 
 void SceneTransitionOverlay::collapse() {
     auto max_radius = get_max_window_radius();
-    if (radius_animation.get_val()!=0) {
-        ui_content->set_circle_radius(max_radius);
-        radius_animation.set_from_val(max_radius);
-        radius_animation.set_to_val(0);
-        radius_animation.start();
-    }
+    ui_content->set_circle_radius(max_radius);
+    radius_animation.set_from_val(max_radius);
+    radius_animation.set_to_val(0);
+    radius_animation.start();
+
 }
 
 float SceneTransitionOverlay::get_max_window_radius() {

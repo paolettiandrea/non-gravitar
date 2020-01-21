@@ -7,6 +7,7 @@
 #include <player/TractorBeam.hpp>
 #include <game-scene/enemies/parts/head/SniperEnemyHead.hpp>
 #include <player/PlayerSpawnManager.hpp>
+#include "PauseLauncher.hpp"
 
 
 std::string PlanetoidScene_EntryLogic::get_logic_id() {
@@ -16,6 +17,8 @@ std::string PlanetoidScene_EntryLogic::get_logic_id() {
 void PlanetoidScene_EntryLogic::on_start() {
 
     scene()->set_gravity(sge::Vec2<float>(0,0));
+
+    gameobject()->logichub()->attach_logic(new PauseLauncher());
 
     // Spawn the planetoid (and relative enemies and crates)
     auto planetoid_go = scene()->spawn_gameobject("Planetoid");
