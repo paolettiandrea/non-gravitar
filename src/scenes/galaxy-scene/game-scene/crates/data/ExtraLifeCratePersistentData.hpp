@@ -1,0 +1,12 @@
+#ifndef NON_GRAVITAR_EXTRALIFECRATEPERSISTENTDATA_HPP
+#define NON_GRAVITAR_EXTRALIFECRATEPERSISTENTDATA_HPP
+
+
+#include "ImprovementCrate.hpp"
+
+class ExtraLifeCratePersistentData : ImprovementCrate {
+
+};
+
+
+#endif //NON_GRAVITAR_EXTRALIFECRATEPERSISTENTDATA_HPP

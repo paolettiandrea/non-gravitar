@@ -4,7 +4,6 @@
 #include <PlanetoidPersistentData.hpp>
 #include "SGE/logic/Logic.hpp"
 
-#include "CameraControls.hpp"
 #include "Player.hpp"
 
 #include "MiniaturePlanetoid.hpp"

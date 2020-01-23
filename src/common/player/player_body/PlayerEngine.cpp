@@ -34,13 +34,13 @@ void PlayerEngine::on_start() {
 
 void PlayerEngine::on_fixed_update() {
 
-    if (env()->is_key_pressed(thrust_key)) {
+    if (env()->is_key_pressed(NG_CONTROLS_PLAYER_THRUST_KEY)) {
         if (thrust_status != Increasing) {
             thrust_status = Increasing;
         }
     }
 
-    if (env()->is_key_released(thrust_key)) {
+    if (env()->is_key_released(NG_CONTROLS_PLAYER_THRUST_KEY)) {
         thrust_status = Decreasing;
     }
 

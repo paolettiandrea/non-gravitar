@@ -6,7 +6,7 @@
 #include <vector>
 #include <utility-classes/ColorPalette.hpp>
 #include "COLORS.hpp"
-#include "CratePersistentData.hpp"
+#include "game-scene/crates/data/CratePersistentData.hpp"
 #include "EnemyBuildData.hpp"
 
 class MapGenInfo {

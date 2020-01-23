@@ -1,10 +1,11 @@
-#include <follow/CameraFollow.hpp>
+#include "CameraFollow.hpp"
 #include "Player.hpp"
 #include <SGE/components/graphics/ui/UI.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
 #include <game-scene/breakable/handler/BreakHandler.hpp>
 #include <game-scene/breakable/generator/BreakGenerator.hpp>
 #include <death-scene/DeathSceneEntryLogic.hpp>
+#include <camera/follow/SmoothCamera.hpp>
 #include "Bullet.hpp"
 #include "COLORS.hpp"
 
@@ -24,8 +25,9 @@ void Player::on_start() {
     m_body = new PlayerBody(persistent_data);
     player_body_go->logichub()->attach_logic(m_body);
 
-
-    gameobject()->logichub()->attach_logic(new CameraFollow(gameobject()));
+    auto camera_l = new SmoothCamera();
+    camera_l->set_follow(gameobject());
+    gameobject()->logichub()->attach_logic(camera_l);
 
 
     auto cannon_go = scene()->spawn_gameobject("Cannon");
@@ -52,7 +54,7 @@ void Player::on_start() {
             on_death_event();
         };
         player_body_go->logichub()->attach_logic(trigger_l);
-        player_body_go->logichub()->attach_logic(new BreakGenerator(2));
+        player_body_go->logichub()->attach_logic(new BreakGenerator(1));
     }
 
     persistent_data->is_alive = true;

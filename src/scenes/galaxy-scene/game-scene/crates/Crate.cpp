@@ -1,7 +1,6 @@
-#include <game-scene/breakable/handler/BreakHandler.hpp>
-#include <game-scene/breakable/generator/BreakGenerator.hpp>
 #include <utility-logic/Fading.hpp>
 #include "Crate.hpp"
+#include "COLORS.hpp"
 
 
 Crate::Crate(CratePersistentData *crate_persistent_data)
@@ -17,6 +16,26 @@ void Crate::on_start() {
     m_rigidbody->get_b2_body()->SetAngularVelocity(NG_CRATE_ROTATION_SPEED);
 
     collider()->set_restitution(NG_CRATE_RESTITUTION);
+
+
+    auto background_go = scene()->spawn_gameobject("Background");
+    background_go->transform()->set_parent(gameobject()->transform());
+    auto background_vertarray = background_go->add_component<sge::cmp::VertArray>("VertArray");
+    background_vertarray->import_smesh("./res/models/crates/crate__background.smesh");
+
+    vertarray()->set_color(crate_persistent_data->get_overlay_color());
+    vertarray()->set_layer("crate-overlay");
+    background_vertarray->set_color(PLAYER_PALETTE.primary);
+    background_vertarray->set_layer("crate-background");
+
+    if (!crate_persistent_data->get_content_smesh_path().empty()) {
+        auto content_go = scene()->spawn_gameobject("Crate Content");
+        content_go->transform()->set_parent(gameobject()->transform());
+        auto content_vertarray = content_go->add_component<sge::cmp::VertArray>("VertArray");
+        content_vertarray->import_smesh(crate_persistent_data->get_content_smesh_path());
+        content_vertarray->set_layer("crate-overlay");
+        content_vertarray->set_color(crate_persistent_data->get_overlay_color());
+    }
 }
 
 std::string Crate::get_logic_id() {

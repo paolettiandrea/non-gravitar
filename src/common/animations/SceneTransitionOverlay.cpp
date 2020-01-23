@@ -19,7 +19,6 @@ void SceneTransitionOverlay::on_start() {
 void SceneTransitionOverlay::on_update() {
     if (radius_animation.is_active()) {
         auto new_radius = radius_animation.step(env()->delta_time());
-        LOG_INFO << "RADIUS ANIM ACTIVE to " << new_radius;
         ui_content->set_circle_radius(new_radius);
 
         if (radius_animation.is_done()) {

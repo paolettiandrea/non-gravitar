@@ -21,6 +21,9 @@ struct CratePersistentData : public MinimapTraced_I {
         return BreakableObject_ConstructionData("./res/models/crates/crate__base", 1);
     }
 
+    virtual std::string get_content_smesh_path() { return ""; }
+    virtual sf::Color get_overlay_color() { return sf::Color::White; }
+
     virtual void apply_effect_on_player(Player* player_logic) = 0;
 
     sge::Vec2<float> get_position_relative_to_planetoid() override {

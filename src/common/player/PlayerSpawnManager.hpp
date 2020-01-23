@@ -31,7 +31,7 @@ private:
 
 
     sge::Vec2<float> past_positions_buffer[NG_PLAYER_SPAWN_PAST_POSITIONS_BUFFER_SIZE];
-    float past_position_counter;
+    float past_position_counter = 0;
 
     float respawn_counter = 0;
 

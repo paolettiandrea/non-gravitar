@@ -14,14 +14,7 @@ void CameraFollow::on_update() {
 
     float delta_time = env()->delta_time();
 
-    float zoom_dependernt_zoom_speed = ZOOM_SPEED*scene()->get_camera()->get_zoom()*delta_time;
 
 
-    if (env()->is_key_down(sf::Keyboard::LControl)) {
-        scene()->get_camera()->offset_zoom(zoom_dependernt_zoom_speed);
-    }
 
-    if (env()->is_key_down(sf::Keyboard::LAlt)) {
-        scene()->get_camera()->offset_zoom(-zoom_dependernt_zoom_speed);
-    }
 }

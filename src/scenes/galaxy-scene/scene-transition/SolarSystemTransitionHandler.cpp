@@ -34,3 +34,7 @@ SolarSystemTransitionHandler::SolarSystemTransitionHandler(Player *player_l) : S
 std::string SolarSystemTransitionHandler::get_logic_id() {
     return std::string("SolarSystemTransitionHandler");
 }
+
+SolarSystemTransitionHandler::~SolarSystemTransitionHandler() {
+    if (launch_planetoid_callback) delete launch_planetoid_callback;
+}

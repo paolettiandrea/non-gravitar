@@ -1,7 +1,8 @@
 #include <BasicEnemyBuildData.hpp>
-#include <map-generation/generator/FuelCratePersistentData.hpp>
+#include <game-scene/crates/data/FuelCratePersistentData.hpp>
 #include <game-scene/enemies/data/MultiShotEnemyBuildData.hpp>
 #include <game-scene/enemies/data/SniperEnemyBuildData.hpp>
+#include <game-scene/crates/data/MaxFuelCratePersistentData.hpp>
 #include "PlanetoidManager.hpp"
 #include "SGE/components/physics/Collider.hpp"
 #include "Planetoid.hpp"
@@ -78,8 +79,14 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
 
         float crate_density = NG_GAME_BASE_CRATE_DENSITY / map_gen_info.difficulty_factor;
         int crate_number = planetoid_area * crate_density;
+
         for (int j = 0; j < crate_number; ++j) {
             map_gen_info.crates_persistent_data_vec.push_back(new FuelCratePersistentData());
+        }
+
+
+        for (int j = 0; j < 3; ++j) {
+            map_gen_info.crates_persistent_data_vec.push_back(new MaxFuelCratePersistentData());
         }
 
 

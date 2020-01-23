@@ -3,7 +3,6 @@
 
 #include "SGE/logic/Logic.hpp"
 
-#define ZOOM_SPEED 10
 
 class CameraFollow : public sge::Logic {
 public:

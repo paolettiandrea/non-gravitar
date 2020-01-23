@@ -7,6 +7,7 @@
 #include "SGE/logic/Logic.hpp"
 #include "SGE/components/graphics/VertArray.hpp"
 #include "PlayerPersistentData.hpp"
+#include "CONTROLS.hpp"
 
 class PlayerEngine : public sge::Logic {
 public:
@@ -27,7 +28,6 @@ private:
     Rigidbody_H controlled_rigidbody;
     VertArray_H engine_trail;
 
-    const sf::Keyboard::Key thrust_key = sf::Keyboard::W;
     // The time in seconds needed to reach maximum thrust force
     const float THRUST_INCREASE_TIME = 0.07;
     const float THRUST_STABILIZATION_TIME = 0.15;

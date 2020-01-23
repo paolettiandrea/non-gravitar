@@ -8,6 +8,7 @@
 #include <SGE/components/physics/Collider.hpp>
 #include "PlayerEngine.hpp"
 #include "PlayerPersistentData.hpp"
+#include "CONTROLS.hpp"
 
 
 class PlayerBody : public sge::Logic {

@@ -13,6 +13,8 @@ int main() {
     engine_cd.window.layers.emplace_back("planetoid-secondary");
     engine_cd.window.layers.emplace_back("planetoid-walls");
     engine_cd.window.layers.emplace_back("tractor-beam");
+    engine_cd.window.layers.emplace_back("crate-overlay");
+    engine_cd.window.layers.emplace_back("crate-background");
     engine_cd.window.layers.emplace_back("enemy_head");
     engine_cd.window.layers.emplace_back("enemy_base");
     engine_cd.window.layers.emplace_back("enemy_cannon");

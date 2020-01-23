@@ -16,11 +16,6 @@ target_sources(non_gravitar PRIVATE
 
         RegionDistanceData.hpp
         RegionDistanceData.cpp
-
-        CratePersistentData.hpp
-
-        FuelCratePersistentData.hpp
-        FuelCratePersistentData.cpp
         )
 
 add_subdirectory(marching-squares)

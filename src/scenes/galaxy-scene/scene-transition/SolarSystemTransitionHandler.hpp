@@ -8,6 +8,8 @@ class SolarSystemTransitionHandler : public SceneTransitionHandler {
 public:
     explicit SolarSystemTransitionHandler(Player *player_l);
 
+    virtual ~SolarSystemTransitionHandler();
+
     void launch_planetoid_scene(MiniaturePlanetoid *base_miniature);
 
     std::string get_logic_id() override;

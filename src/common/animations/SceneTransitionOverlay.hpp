@@ -31,7 +31,7 @@ private:
     UI_H ui;
     SceneTransitionUIContent* ui_content;
 
-    utils::event::EventHandler* post_animation_ev_handler;
+    utils::event::EventHandler* post_animation_ev_handler = nullptr;
 
     float get_max_window_radius();
 };

@@ -26,12 +26,12 @@ void PlayerBody::on_start() {
 
 void PlayerBody::on_update() {
     float rot_per_s = 2*M_PI;
-    if (env()->is_key_down(sf::Keyboard::D)) {
+    if (env()->is_key_down(NG_CONTROLS_PLAYER_TURN_RIGHT_KEY)) {
         auto rot = gameobject()->transform()->get_world_rotation();
         auto b2_body = m_collider->get_rigidbody()->get_b2_body();
         b2_body->SetTransform(b2_body->GetPosition(), rot - rot_per_s*env()->fixed_delta_time());
     }
-    if (env()->is_key_down(sf::Keyboard::A)) {
+    if (env()->is_key_down(NG_CONTROLS_PLAYER_TURN_LEFT_KEY)) {
         auto rot = gameobject()->transform()->get_world_rotation();
         auto b2_body = m_collider->get_rigidbody()->get_b2_body();
         b2_body->SetTransform(b2_body->GetPosition(), rot + rot_per_s*env()->fixed_delta_time());
