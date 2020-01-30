@@ -1,6 +1,5 @@
 #include <enemies/Enemy.hpp>
 #include <game-scene/crates/Crate.hpp>
-#include <game-scene/PlanetoidCorePortal.hpp>
 #include "Planetoid.hpp"
 
 
@@ -58,11 +57,6 @@ void Planetoid::on_start() {
             crate_counter++;
         }
     }
-
-    // Core Portal
-    auto core_portal_go = scene()->spawn_gameobject("Core Portal");
-    core_portal_go->transform()->set_local_position(planetoid_data->size / 2.0, planetoid_data->size / 2.0);
-    core_portal_go->logichub()->attach_logic(new PlanetoidCorePortal());
  }
 
 std::string Planetoid::get_logic_id() {

@@ -184,9 +184,7 @@ void BreakHandler::on_update() {
             }
 
             // Add some Fading logic if the fade_on_break flag is on
-            LOG_INFO << spawned_containers[l]->transform()->get_child_count(true);
             if (spawned_containers[l]->transform()->get_child_count(true) <= 2 || m_fade_on_break_flag) {
-                LOG_INFO << "FADING: ";
                 spawned_containers[l]->logichub()->attach_logic(new Fading(0.3));
             } else {
                 // If the fragment container is not fading add breakable logic

@@ -9,6 +9,8 @@ int main() {
     // Build the engine
     sge::cd::Engine_ConstructionData engine_cd;
 
+    //engine_cd.window.vsync_on = false;
+
     // Render layers setup
     engine_cd.window.layers.emplace_back("planetoid-secondary");
     engine_cd.window.layers.emplace_back("planetoid-walls");

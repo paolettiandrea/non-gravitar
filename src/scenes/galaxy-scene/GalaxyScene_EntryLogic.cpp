@@ -24,9 +24,9 @@ void GalaxyScene_EntryLogic::on_start() {
     gameobject()->logichub()->attach_logic(new PauseLauncher());
 
     Galaxy_ConstructionData galaxy_construction_data;
-    galaxy_construction_data.planetoid_number = 1;
-    galaxy_construction_data.min_planetoid_size = 200;
-    galaxy_construction_data.max_planetoid_size =700;
+    galaxy_construction_data.planetoid_number = NG_GAME_PLANETOID_NUMBER;
+    galaxy_construction_data.min_planetoid_size = NG_GAME_PLANETOID_MIN_SIZE;
+    galaxy_construction_data.max_planetoid_size = NG_GAME_PLANETOID_MAX_SIZE;
 
     auto player_l = new Player(&player_persistent_data);
 

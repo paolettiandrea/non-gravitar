@@ -180,10 +180,10 @@ void PlanetoidPopulator::spawn_enemies(float space_needed, std::vector<EnemyBuil
         affinity_map.apply_gradient_as_mask(CircularGradient(space_needed*3, space_needed*1.5, target_coord.x, target_coord.y, 0, 1,
                                                                new LinearInterpolator()));
         affinity_map.apply_gradient_as_mask(CircularGradient(space_needed*40, space_needed*3, target_coord.x, target_coord.y, 0.2, 1,
-                                                             new RootInterpolator(2)));
+                                                             new LinearInterpolator()));
         // Inibhition on a map level
         affinity_map.apply_gradient_as_mask(CircularGradient(affinity_map.width/4, 0, target_coord.x, target_coord.y, 0.8, 1,
-                                                             new RootInterpolator(2)));
+                                                             new LinearInterpolator()));
         enemies_data[j]->anchor_position = planetoid_square_grid[target_coord].get_edge_centers()[0];
         enemies_data[j]->angle = planetoid_square_grid[target_coord].get_edge_normal_rotations()[0]; // FIXME
         affinity_map[target_coord.x][target_coord.y] = 0;

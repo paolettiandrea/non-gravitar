@@ -4,9 +4,10 @@
 
 #include <SGE/logic/Logic.hpp>
 #include "PlayerPersistentData.hpp"
+#include "GAME.hpp"
 
 
-class   GalaxyScene_EntryLogic : public sge::Logic {
+class GalaxyScene_EntryLogic : public sge::Logic {
 public:
     void on_start() override;
 

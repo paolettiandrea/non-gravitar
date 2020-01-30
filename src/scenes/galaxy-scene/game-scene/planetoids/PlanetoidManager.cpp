@@ -48,6 +48,7 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
         float enemy_density = NG_GAME_BASE_ENEMY_DENSITY * map_gen_info.difficulty_factor;
         int planetoid_area = map_gen_info.size * map_gen_info.size;
         int enemy_number = planetoid_area * enemy_density;
+        if (enemy_number < 1) enemy_number = 1;
 
         LOG_INFO << "Enemy number: " << enemy_number;
 
