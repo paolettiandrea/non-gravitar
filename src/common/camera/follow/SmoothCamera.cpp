@@ -18,18 +18,21 @@ void SmoothCamera::on_fixed_update() {
     float blend = SHARPNESS * env()->fixed_delta_time();
     scene()->get_camera()->set_center(lerp(current_pos, target_pos, blend));
 
+
+    update_target_zoom();
+
+    float current_zoom = scene()->get_camera()->get_zoom();
+    float blend2 = ZOOM_SHARPNESS * env()->fixed_delta_time();
+    float new_zoom = lerp(current_zoom, target_zoom, blend2);
+    if (current_zoom!=new_zoom) scene()->get_camera()->set_zoom(new_zoom);
+
 }
 
 void SmoothCamera::on_update() {
 
-    float zoom_dependernt_zoom_speed = ZOOM_SPEED*scene()->get_camera()->get_zoom()*env()->delta_time();
-    if (env()->is_key_down(NG_CONTROLS_CAMERA_ZOOM_OUT)) {
-        scene()->get_camera()->offset_zoom(zoom_dependernt_zoom_speed);
-    }
 
-    if (env()->is_key_down(NG_CONTROLS_CAMERA_ZOOM_IN)) {
-        scene()->get_camera()->offset_zoom(-zoom_dependernt_zoom_speed);
-    }
+
+
 }
 
 std::string SmoothCamera::get_logic_id() {
@@ -40,6 +43,25 @@ sge::Vec2<float> SmoothCamera::lerp(sge::Vec2<float> current, sge::Vec2<float> t
     float x = lerp(current.x, target.x, sharpness);
     float y = lerp(current.y, target.y, sharpness);
     return sge::Vec2<float>(x, y);
+}
+
+SmoothCamera::SmoothCamera(GameObject_H target_go) {
+    this->follow_go = target_go;
+}
+
+SmoothCamera::SmoothCamera() {
+    this->follow_go = GameObject_H();
+}
+
+void SmoothCamera::update_target_zoom() {
+    float zoom_dependernt_zoom_speed = ZOOM_SPEED*scene()->get_camera()->get_zoom()*env()->delta_time();
+    if (env()->is_key_down(NG_CONTROLS_CAMERA_ZOOM_OUT)) {
+        target_zoom += zoom_dependernt_zoom_speed;
+    }
+
+    if (env()->is_key_down(NG_CONTROLS_CAMERA_ZOOM_IN)) {
+        target_zoom -= zoom_dependernt_zoom_speed;
+    }
 }
 
 

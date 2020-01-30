@@ -3,6 +3,7 @@
 
 
 #include <SGE/logic/Logic.hpp>
+#include <camera/follow/SmoothCamera.hpp>
 #include "Player.hpp"
 
 #define NG_PLAYER_SPAWN_LOOKBACK_TIME               3.0
@@ -16,7 +17,7 @@
  */
 class PlayerSpawnManager : public sge::Logic {
 public:
-    PlayerSpawnManager(PlayerPersistentData *data, sge::Vec2<float> initial_spawn_point);
+    PlayerSpawnManager(PlayerPersistentData *data, sge::Vec2<float> initial_spawn_point, SmoothCamera* camera_l);
     std::string get_logic_id() override;
 
     void on_start() override;
@@ -28,6 +29,7 @@ public:
 private:
     PlayerPersistentData *player_persistent_data;
     Player* player_l = nullptr;
+    SmoothCamera* camera_l;
 
 
     sge::Vec2<float> past_positions_buffer[NG_PLAYER_SPAWN_PAST_POSITIONS_BUFFER_SIZE];

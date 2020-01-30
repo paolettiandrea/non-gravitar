@@ -14,9 +14,10 @@ void PlayerSpawnManager::on_start() {
     ui_go->logichub()->attach_logic(player_ui_l);
 }
 
-PlayerSpawnManager::PlayerSpawnManager(PlayerPersistentData *data, sge::Vec2<float> initial_spawn_point) {
+PlayerSpawnManager::PlayerSpawnManager(PlayerPersistentData *data, sge::Vec2<float> initial_spawn_point, SmoothCamera* camera_l) {
     this->player_persistent_data = data;
     this->initial_spawn_point = initial_spawn_point;
+    this->camera_l = camera_l;
 }
 
 Player *PlayerSpawnManager::get_player_logic() {
@@ -33,6 +34,8 @@ void PlayerSpawnManager::spawn_player(sge::Vec2<float> pos) {
     player_l->on_death_event += [&](){
         player_l = nullptr;
     };
+
+    camera_l->set_follow(player_go);
 }
 
 void PlayerSpawnManager::on_update() {

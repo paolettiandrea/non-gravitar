@@ -1,4 +1,3 @@
-#include "CameraFollow.hpp"
 #include "Player.hpp"
 #include <SGE/components/graphics/ui/UI.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
@@ -24,10 +23,6 @@ void Player::on_start() {
     player_body_go->transform()->set_parent(gameobject()->transform());
     m_body = new PlayerBody(persistent_data);
     player_body_go->logichub()->attach_logic(m_body);
-
-    auto camera_l = new SmoothCamera();
-    camera_l->set_follow(gameobject());
-    gameobject()->logichub()->attach_logic(camera_l);
 
 
     auto cannon_go = scene()->spawn_gameobject("Cannon");

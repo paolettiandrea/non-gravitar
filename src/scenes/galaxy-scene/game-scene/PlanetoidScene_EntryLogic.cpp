@@ -7,6 +7,8 @@
 #include <player/TractorBeam.hpp>
 #include <game-scene/enemies/parts/head/SniperEnemyHead.hpp>
 #include <player/PlayerSpawnManager.hpp>
+#include <camera/follow/SmoothCamera.hpp>
+#include <camera/follow/AutoZoomCamera.hpp>
 #include "PauseLauncher.hpp"
 
 
@@ -31,17 +33,19 @@ void PlanetoidScene_EntryLogic::on_start() {
     auto outward_dir = (entrance_pos - center_pos).normalize();
     auto spawn_point = entrance_pos + (outward_dir * (float)NG_PLANETOID_SCENE_SPAWN_DISTANCE);
 
-
+    // Camera
+    auto camera_l = new AutoZoomCamera(center_pos, (center_pos - entrance_pos).get_magnitude());
+    gameobject()->logichub()->attach_logic(camera_l);
 
     // Spawn the player
     auto player_spawn_manager_go = scene()->spawn_gameobject("PlayerSpawnManager");
-    auto player_spawn_manager_l = new PlayerSpawnManager(player_persistent_data, spawn_point);
+    auto player_spawn_manager_l = new PlayerSpawnManager(player_persistent_data, spawn_point, camera_l);
     player_spawn_manager_go->logichub()->attach_logic(player_spawn_manager_l);
 
     auto player_l = player_spawn_manager_l->get_player_logic();
     auto player_go = player_l->gameobject();
-
     player_go->transform()->set_local_position(spawn_point);
+    camera_l->set_follow(player_go);
 
 
     auto transition_handler = scene()->spawn_gameobject("TransitionHandler");

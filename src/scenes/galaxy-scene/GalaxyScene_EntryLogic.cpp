@@ -3,6 +3,7 @@
 #include <scaled-planetoid/MiniaturePlanetPortal.hpp>
 #include <scene-transition/PlanetoidSceneTransitionTrigger.hpp>
 #include <PauseLauncher.hpp>
+#include <camera/follow/SmoothCamera.hpp>
 #include "GalaxyScene_EntryLogic.hpp"
 
 #define NG_GALAXY_MINIATURE_PLANET_MIN_SIZE 10
@@ -39,6 +40,7 @@ void GalaxyScene_EntryLogic::on_start() {
     GameObject_H player = scene()->spawn_gameobject("Player");
     player->logichub()->attach_logic(player_l);
     player_l->get_body_gameobject()->logichub()->attach_logic(new PlanetoidSceneTransitionTrigger(scene_transition_handler_l));
+    gameobject()->logichub()->attach_logic(new SmoothCamera(player));
 
     // Planetoid Manager
     GameObject_H planetoid_manager = scene()->spawn_gameobject("Planetoid Manager");
