@@ -5,7 +5,7 @@
 #include <utility-logic/PhysicsObject.hpp>
 #include <game-scene/crates/data/CratePersistentData.hpp>
 
-#define NG_CRATE_SCALE                  0.5
+#define NG_CRATE_SCALE                  0.8
 #define NG_CRATE_RESTITUTION            0.8
 #define NG_CRATE_ROTATION_SPEED         1
 #define NG_CRATE_DISTANCE_FROM_EDGES    1.2

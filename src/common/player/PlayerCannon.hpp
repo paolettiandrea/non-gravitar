@@ -5,6 +5,7 @@
 #include <Cannon.hpp>
 #include <SGE/components/graphics/ui/blocks/UIBar.hpp>
 #include <SGE/components/graphics/ui/UI.hpp>
+#include "PlayerPersistentData.hpp"
 
 
 #define NG_PLAYER_CANNON_DEFAULT_STAMINA            100
@@ -14,7 +15,7 @@
 
 class PlayerCannon : public Cannon {
 public:
-    PlayerCannon(float shooting_velocity, const Rigidbody_H &shooter_rigidbody);
+    PlayerCannon(float shooting_velocity, const Rigidbody_H &shooter_rigidbody, PlayerPersistentData* data);
 
     void on_start() override;
 
@@ -26,12 +27,7 @@ public:
     bool is_ready_to_shoot();
 
 private:
-    UI_H m_ui_component;
-    sge::UIBar *stamina_bar;
-
-    float max_stamina = NG_PLAYER_CANNON_DEFAULT_STAMINA;
-    float stamina = NG_PLAYER_CANNON_DEFAULT_STAMINA;
-
+    PlayerPersistentData *player_persistent_data;
     std::chrono::time_point<std::chrono::steady_clock> last_shot_time;
 };
 

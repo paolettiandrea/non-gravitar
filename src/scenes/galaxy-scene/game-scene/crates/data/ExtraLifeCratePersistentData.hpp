@@ -4,8 +4,13 @@
 
 #include "ImprovementCrate.hpp"
 
-class ExtraLifeCratePersistentData : ImprovementCrate {
+class ExtraLifeCratePersistentData : public ImprovementCrate {
+    std::string get_content_smesh_path() override;
 
+    void apply_effect_on_player(Player *player_logic) override;
+
+public:
+    float get_content_logo_scale() override;
 };
 
 

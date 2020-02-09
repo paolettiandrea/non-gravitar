@@ -60,8 +60,6 @@ void GalaxyScene_EntryLogic::on_start() {
 
         auto grid_size = planetoid_data_vec[i]->size / target_size / NG_GALAXY_MINIATURE_PLANET_DEFINITION;
 
-        LOG_DEBUG(3) << "Planetoid " << i << ":\tTarget size" << target_size << ",\tGrid size: " << grid_size;
-
         GameObject_H new_scaled_planetoid = scene()->spawn_gameobject("Planetoid " + std::to_string(i));
         new_scaled_planetoid->logichub()->attach_logic(new MiniaturePlanetPortal(planetoid_data_vec[i], grid_size));
         new_scaled_planetoid->transform()->set_local_scale(1.0 / NG_GALAXY_MINIATURE_PLANET_DEFINITION);

@@ -28,7 +28,7 @@ void Player::on_start() {
     auto cannon_go = scene()->spawn_gameobject("Cannon");
     cannon_go->transform()->set_parent(player_body_go->transform());
     cannon_go->transform()->set_local_position(0, 1);
-    player_cannon = new PlayerCannon(NG_PLAYER_CANNON_SHOOTING_VEL, m_rigidbody);
+    player_cannon = new PlayerCannon(NG_PLAYER_CANNON_SHOOTING_VEL, m_rigidbody, persistent_data);
     cannon_go->logichub()->attach_logic(player_cannon);
 
 
@@ -46,13 +46,19 @@ void Player::on_start() {
         trigger_l = new BreakTrigger(10, Rigidbody_H());
         trigger_l->on_break_event += [&]() {
             death();
-            on_death_event();
         };
         player_body_go->logichub()->attach_logic(trigger_l);
         player_body_go->logichub()->attach_logic(new BreakGenerator(1));
     }
 
     persistent_data->is_alive = true;
+
+    fuel_amount_changed_ev_handler = [&](){
+        if (persistent_data->fuel_amount.value()<=0 && !scene()->is_doomed()) {
+            game_over();
+        }
+    };
+    persistent_data->fuel_amount.subscribe(fuel_amount_changed_ev_handler);
 }
 
 void Player::on_fixed_update() {
@@ -98,14 +104,25 @@ PlayerPersistentData *Player::get_persistent_data() {
 }
 
 void Player::death() {
+    LOG_DEBUG(1) << "Player is dead!";
+    on_death_event();
     if (persistent_data->is_alive) {
         persistent_data->is_alive = false;
         if (persistent_data->lives.value()>1) {
             persistent_data->lives.set(persistent_data->lives.value() - 1);
         } else {
-            env()->doom_top_scene();
-            env()->book_new_scene_push("Death scene", new DeathSceneEntryLogic());
+            game_over();
         }
 
     }
 }
+
+void Player::on_scene_destruction() {
+    persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
+}
+
+void Player::game_over() {
+    env()->doom_top_scene();
+    env()->book_new_scene_push("Death scene", new DeathSceneEntryLogic(persistent_data));
+}
+

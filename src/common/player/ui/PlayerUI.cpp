@@ -3,46 +3,45 @@
 
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
 #include "PlayerUI.hpp"
+#include "ScoreIndicator.hpp"
 
 std::string PlayerUI::get_logic_id() {
     return std::string("PlayerUI");
 }
 
-PlayerUI::PlayerUI(PlayerPersistentData *player_persistent_data) : score_animation(new LinearInterpolator, 0, 0, NG_PLAYER_UI_SCORE_ANIMATION_DURATION) {
+PlayerUI::PlayerUI(PlayerPersistentData *player_persistent_data) {
     this->player_persistent_data = player_persistent_data;
 }
 
 void PlayerUI::on_start() {
-    // SCORE
-    auto score_go = scene()->spawn_gameobject("Score UI");
-    score_go->transform()->set_parent(gameobject()->transform());
-    auto score_ui = score_go->add_component<sge::cmp::UI>("UI");
-    auto score_header_content = new sge::UIText("SCORE", NG_PLAYER_UI_SCORE_FONT_ID, NG_PLAYER_UI_SCORE_HEADER_CHAR_SIZE);
-    score_header_content->set_offset(sf::Vector2f(0, -NG_PLAYER_UI_VERTICAL_PADDING));
-    score_ui->set_content(score_header_content);
-    score_ui->set_anchor_alignment(sge::Alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::TOP));
-    score_ui->set_origin_alignment(sge::Alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::TOP));
-
-    auto score_text_go = scene()->spawn_gameobject("Score Text");
-    score_text_go->transform()->set_parent(gameobject()->transform());
-    auto score_text_ui = score_text_go->add_component<sge::cmp::UI>("UI");
-    score_text_ui->set_anchor_alignment(sge::Alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::TOP));
-    score_text_ui->set_origin_alignment(sge::Alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::TOP));
-    score_text = new sge::UIText(get_string_with_leading_zeros(player_persistent_data->score.value(), NG_PLAYER_SCORE_NUMBER_OF_DIGITS), NG_PLAYER_UI_SCORE_FONT_ID, NG_PLAYER_UI_SCORE_AMOUNT_CHAR_SIZE);
-    score_text_ui->set_content(score_text);
-    score_text->set_offset(sf::Vector2f(0, -NG_PLAYER_UI_VERTICAL_PADDING - NG_PLAYER_UI_SCORE_HEADER_CHAR_SIZE - NG_PLAYER_UI_SCORE_SPACING));
-
-    score_changed_ev_handler = [&]() {
-        score_animation.set_from_val(represented_score_val);
-        score_animation.set_to_val(player_persistent_data->score.value());
-        score_animation.start();
-    };
-    player_persistent_data->score.subscribe(score_changed_ev_handler);
 
     lives_changed_ev_handler = [&](){
         lives_indicator_content->set_lives(player_persistent_data->lives.value());
     };
     player_persistent_data->lives.subscribe(lives_changed_ev_handler);
+
+
+    ScoreIndicatorCD score_cd;
+    score_cd.origin_alignment = sge::Alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::TOP);
+    score_cd.anchor_alignment = sge::Alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::TOP);
+    score_cd.header_string = "SCORE";
+    score_cd.val = &player_persistent_data->score;
+    score_cd.offset = sf::Vector2f(0, -NG_PLAYER_UI_VERTICAL_PADDING);
+    ScoreIndicator *score_indicator = new ScoreIndicator(score_cd);
+    auto score_go = scene()->spawn_gameobject("Score Indicator");
+    score_go->transform()->set_parent(gameobject()->transform());
+    score_go->logichub()->attach_logic(score_indicator);
+
+    ScoreIndicatorCD cd;
+    cd.origin_alignment = sge::Alignment(sge::HotizontalAlignment::RIGHT, sge::VerticalAlignment::TOP);
+    cd.anchor_alignment = sge::Alignment(sge::HotizontalAlignment::RIGHT, sge::VerticalAlignment::TOP);
+    cd.header_string = "BONUS";
+    cd.val = &player_persistent_data->bonus_score;
+    cd.offset = sf::Vector2f(NG_PLAYER_UI_HORIZONTAL_PADDING, -NG_PLAYER_UI_VERTICAL_PADDING);
+    ScoreIndicator *bonus_score_indicator = new ScoreIndicator(cd);
+    auto bonus_score_go = scene()->spawn_gameobject("Bonus Score Indicator");
+    bonus_score_go->logichub()->attach_logic(bonus_score_indicator);
+
 
 
     // LIVES
@@ -72,39 +71,62 @@ void PlayerUI::on_start() {
     fuel_bar_ui->set_anchor_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
     fuel_bar_ui->set_origin_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
 
-    fuel_bar = new sge::UIBar(400, 20);
+    fuel_bar = new sge::UIBar(player_persistent_data->fuel_max.value()*NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER, 20);
     fuel_bar->set_offset(sf::Vector2f(0, 20));
-
     fuel_bar_ui->set_content(fuel_bar);
 
     fuel_changed_ev_handler = [&]() {
         fuel_bar->set_bar(player_persistent_data->fuel_amount.value() / player_persistent_data->fuel_max.value());
     };
-
     player_persistent_data->fuel_amount.subscribe(fuel_changed_ev_handler);
-}
 
-void PlayerUI::on_update() {
-    if (!score_animation.is_done()) {
-        int animated_score_val =  std::ceil(score_animation.step(env()->delta_time()));
-        score_text->set_string(get_string_with_leading_zeros(animated_score_val, NG_PLAYER_SCORE_NUMBER_OF_DIGITS));
-        represented_score_val = animated_score_val;
-    }
+    max_fuel_changed_ev_handler = [&](){
+        fuel_bar->set_size(player_persistent_data->fuel_max.value() * NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER,
+                           fuel_bar->get_height());
+    };
+    player_persistent_data->fuel_max.subscribe(max_fuel_changed_ev_handler);
 
+
+
+    // STAMINA BAR
+    auto stamina_bar_go = scene()->spawn_gameobject("Fuel Bar UI");
+    stamina_bar_go->transform()->set_parent(gameobject()->transform());
+    auto stamina_bar_ui = stamina_bar_go->add_component<sge::cmp::UI>("UI");
+    stamina_bar_ui->set_anchor_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
+    stamina_bar_ui->set_origin_alignment(sge::HotizontalAlignment::MIDDLE, sge::VerticalAlignment::BOTTOM);
+
+    stamina_bar = new sge::UIBar(player_persistent_data->stamina_max.value()*NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER, 20);
+    stamina_bar->set_offset(sf::Vector2f(0, 50));
+    stamina_bar_ui->set_content(stamina_bar);
+
+    stamina_changed_ev_handler = [&]() {
+        stamina_bar->set_bar(player_persistent_data->stamina_amount.value() / player_persistent_data->stamina_max.value());
+    };
+    player_persistent_data->stamina_amount.subscribe(stamina_changed_ev_handler);
+
+    max_stamina_changed_ev_handler = [&](){
+        stamina_bar->set_size(player_persistent_data->stamina_max.value() * NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER,
+                           stamina_bar->get_height());
+    };
+    player_persistent_data->stamina_max.subscribe(max_fuel_changed_ev_handler);
+
+    stamina_changed_ev_handler();
+    fuel_changed_ev_handler();
 }
 
 void PlayerUI::on_destruction() {
 }
 
 void PlayerUI::on_scene_resume() {
-    score_animation.stop();
     score_text->set_string(get_string_with_leading_zeros(player_persistent_data->score.value(), NG_PLAYER_SCORE_NUMBER_OF_DIGITS));
 }
 
 void PlayerUI::on_scene_destruction() {
-    player_persistent_data->score.unsubscribe(score_changed_ev_handler);
     player_persistent_data->lives.unsubscribe(lives_changed_ev_handler);
     player_persistent_data->fuel_amount.unsubscribe(fuel_changed_ev_handler);
+    player_persistent_data->fuel_max.unsubscribe(max_fuel_changed_ev_handler);
+    player_persistent_data->stamina_amount.unsubscribe(stamina_changed_ev_handler);
+    player_persistent_data->stamina_max.unsubscribe(max_stamina_changed_ev_handler);
 }
 
 std::string PlayerUI::get_string_with_leading_zeros(int amount, int number_of_digits) {

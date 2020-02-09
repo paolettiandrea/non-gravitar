@@ -12,7 +12,7 @@
 
 class OuterSpaceTransitionTrigger : public sge::Logic {
 public:
-    explicit OuterSpaceTransitionTrigger(float radius, MiniaturePlanetoid* miniature_planetoid, PlanetoidTransitionHandler* planetoid_transition_handler);
+    explicit OuterSpaceTransitionTrigger(float radius, PlanetoidTransitionHandler* planetoid_transition_handler);
 
     void on_start() override;
 

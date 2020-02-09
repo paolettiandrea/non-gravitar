@@ -39,6 +39,8 @@ public:
 
     PlayerPersistentData *get_persistent_data();
 
+    void on_scene_destruction() override;
+
 
 private:
     bool breakable;
@@ -51,9 +53,11 @@ private:
 
     PlayerPersistentData *persistent_data;
 
+    utils::event::EventHandler fuel_amount_changed_ev_handler;
+
     void death();
 
-
+    void game_over();
 
 };
 

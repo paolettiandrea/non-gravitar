@@ -3,12 +3,14 @@
 
 #include <ColorPalette.hpp>
 
+#define UI_FONT "ARCADE_R"
+
 static const ColorPalette PLAYER_PALETTE (
-        sf::Color(89, 64, 161),
-        sf::Color(67, 37, 150),
-        sf::Color(117, 94, 183),
-        sf::Color(47, 22, 115),
-        sf::Color(159, 140, 211));
+        sf::Color(27, 55,107),
+        sf::Color(53,108,209),
+        sf::Color( 34, 78,158),
+        sf::Color(14, 31, 60),
+        sf::Color(7, 13, 25));
 
 // ENEMIES  -----------------------------------------------------------------------------------------------------------
 
@@ -36,16 +38,16 @@ static const ColorPalette PLANETOID_EASY_PALETTE (
         sf::Color(136, 204, 136));
 
 static const ColorPalette PLANETOID_MEDIUM_PALETTE (
-        sf::Color(160, 100, 100),
-        sf::Color(140, 100, 100),
-        sf::Color(190, 100, 100),
-        sf::Color(70, 50, 100),
+        sf::Color(0, 169, 169),
+        sf::Color(0, 114, 114),
+        sf::Color(0, 114, 114),
+        sf::Color(50,0,0),
         sf::Color(136, 204, 100));
 
 static const ColorPalette PLANETOID_HARD_PALETTE (
-        sf::Color(160, 150, 100),
-        sf::Color(140, 150, 100),
-        sf::Color(190, 150, 100),
+        sf::Color(255, 124, 0),
+        sf::Color(230, 112, 0),
+        sf::Color(255, 124, 0),
         sf::Color(70, 50, 100),
         sf::Color(136, 204, 100));
 

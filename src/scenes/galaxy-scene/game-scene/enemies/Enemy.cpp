@@ -59,7 +59,7 @@ Enemy::Enemy(EnemyBuildData *build_data, PlayerPersistentData* player_persistent
 void Enemy::on_destruction() {
     if (!scene()->is_doomed()) {
         build_data->destroyed = true;
-
-        player_persistent_data->score.set(player_persistent_data->score.value() + 50);
+        build_data->destroy_event();
+        player_persistent_data->score.set(player_persistent_data->score.value() + build_data->get_score_value());
     }
 }

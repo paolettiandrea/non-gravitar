@@ -5,4 +5,7 @@ target_sources(non_gravitar PRIVATE
         PlayerUI.hpp
 
         PlayerLivesIndicator.cpp
-        PlayerLivesIndicator.hpp)
+        PlayerLivesIndicator.hpp
+
+        ScoreIndicator.cpp
+        ScoreIndicator.hpp)

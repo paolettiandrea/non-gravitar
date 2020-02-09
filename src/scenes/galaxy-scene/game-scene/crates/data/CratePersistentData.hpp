@@ -30,6 +30,8 @@ struct CratePersistentData : public MinimapTraced_I {
         return position;
     }
 
+    virtual float get_content_logo_scale() { return 1.f; };
+
     std::vector<sf::Vertex> get_minimap_model_vertices() override {
         float size = NG_MINIMAP_DEFAULT_PIN_SIZE;
         return {sf::Vertex(sf::Vector2f(size,size), NG_CRATE_PIN_COLOR),

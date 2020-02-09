@@ -3,6 +3,8 @@
 #include <game-scene/enemies/data/MultiShotEnemyBuildData.hpp>
 #include <game-scene/enemies/data/SniperEnemyBuildData.hpp>
 #include <game-scene/crates/data/MaxFuelCratePersistentData.hpp>
+#include <game-scene/crates/data/ExtraLifeCratePersistentData.hpp>
+#include <game-scene/crates/data/MaxStaminaCratePersistentData.hpp>
 #include "PlanetoidManager.hpp"
 #include "SGE/components/physics/Collider.hpp"
 #include "Planetoid.hpp"
@@ -50,8 +52,6 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
         int enemy_number = planetoid_area * enemy_density;
         if (enemy_number < 1) enemy_number = 1;
 
-        LOG_INFO << "Enemy number: " << enemy_number;
-
         int basic_enemies = enemy_number/4, multi_enemies = enemy_number/4, sniper_enemies = enemy_number/4;
         int compensation = enemy_number - basic_enemies - multi_enemies - sniper_enemies;
 
@@ -80,16 +80,10 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
 
         float crate_density = NG_GAME_BASE_CRATE_DENSITY / map_gen_info.difficulty_factor;
         int crate_number = planetoid_area * crate_density;
-
         for (int j = 0; j < crate_number; ++j) {
             map_gen_info.crates_persistent_data_vec.push_back(new FuelCratePersistentData());
         }
-
-
-        for (int j = 0; j < 3; ++j) {
-            map_gen_info.crates_persistent_data_vec.push_back(new MaxFuelCratePersistentData());
-        }
-
+        add_special_crates(map_gen_info);
 
         planetoid_data_vec.push_back(new PlanetoidPersistentData(map_gen_info));
 
@@ -100,5 +94,21 @@ PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
 
 const std::vector<PlanetoidPersistentData *> &PlanetoidManager::get_planetoid_data_vec() const {
     return planetoid_data_vec;
+}
+
+void PlanetoidManager::add_special_crates(MapGenInfo& map_gen_info) {
+
+
+    auto actual_1up_chance = NG_GAME_BASE_CRATE_1UP_CHANCE/map_gen_info.difficulty_factor;
+    auto actual_maxup_chance = NG_GAME_BASE_CRATE_MAXUP_CHANCE/map_gen_info.difficulty_factor;
+
+    auto r = ((double) rand() / (RAND_MAX));
+    if (actual_1up_chance>r) map_gen_info.crates_persistent_data_vec.push_back(new ExtraLifeCratePersistentData());
+    r = ((double) rand() / (RAND_MAX));
+    if (actual_maxup_chance>r) {
+        r = ((double) rand() / (RAND_MAX));
+        if (r>=0.5f) map_gen_info.crates_persistent_data_vec.push_back(new MaxFuelCratePersistentData());
+        else map_gen_info.crates_persistent_data_vec.push_back(new MaxStaminaCratePersistentData());
+    }
 }
 

@@ -24,6 +24,8 @@ public:
 
 private:
     std::vector<PlanetoidPersistentData*> planetoid_data_vec;
+
+    void add_special_crates(MapGenInfo& map_gen_info);
 };
 
 #endif //NON_GRAVITAR_PLANETOIDMANAGER_HPP

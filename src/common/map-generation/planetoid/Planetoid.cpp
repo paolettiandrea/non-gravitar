@@ -5,6 +5,10 @@
 
 void Planetoid::on_start() {
 
+    enemy_destroyed_ev_handler = [&]() {
+        decrease_enemy_counter();
+    };
+
     // APPEAREANCE
     // Main body
     auto main_body = scene()->spawn_gameobject("Main Body");
@@ -36,14 +40,15 @@ void Planetoid::on_start() {
     }
 
     // Enemies
-    int enemy_counter = 1;
+    enemy_counter = 0;
     for(EnemyBuildData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
         if (!enemy_to_spawn->destroyed) {
+            enemy_counter++;
+            enemy_to_spawn->destroy_event += enemy_destroyed_ev_handler;
             auto new_enemy = scene()->spawn_gameobject("Enemy " + std::to_string(enemy_counter));
             new_enemy->transform()->set_local_position(enemy_to_spawn->anchor_position);
             new_enemy->transform()->set_local_rotation(enemy_to_spawn->angle+M_PI_2);
             new_enemy->logichub()->attach_logic(new Enemy(enemy_to_spawn, player_persistent_data));
-            enemy_counter++;
         }
     }
 
@@ -86,5 +91,22 @@ void Planetoid::assemble_vert_array(sf::VertexArray& recipient, const MarchingMa
 
 const PlanetoidPersistentData *Planetoid::get_planetoid_persistent_data() const {
     return planetoid_data;
+}
+
+
+void Planetoid::decrease_enemy_counter() {
+    enemy_counter--;
+    if (enemy_counter<=0) {
+        planetoid_destroyed_event();
+        player_persistent_data->bonus_score.set(player_persistent_data->bonus_score.value() +
+                                                planetoid_data->map_gen_info.size * planetoid_data->map_gen_info.size *
+                                                planetoid_data->map_gen_info.difficulty_factor / 10);
+    }
+}
+
+void Planetoid::on_scene_destruction() {
+    for(EnemyBuildData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
+        enemy_to_spawn->destroy_event -= enemy_destroyed_ev_handler;
+    }
 }
 

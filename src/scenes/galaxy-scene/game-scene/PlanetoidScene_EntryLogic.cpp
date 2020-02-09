@@ -49,12 +49,12 @@ void PlanetoidScene_EntryLogic::on_start() {
 
 
     auto transition_handler = scene()->spawn_gameobject("TransitionHandler");
-    auto planetoid_transition_handler_l = new PlanetoidTransitionHandler(parent_transition_handler);
+    auto planetoid_transition_handler_l = new PlanetoidTransitionHandler(parent_transition_handler, planetoid_l, base_miniature);
     transition_handler->logichub()->attach_logic(planetoid_transition_handler_l);
 
     auto transition_trigger = scene()->spawn_gameobject("TransitionTrigger");
     transition_trigger->transform()->set_local_position(center_pos);
-    transition_trigger->logichub()->attach_logic(new OuterSpaceTransitionTrigger(planetoid_persistent_data->size*2, base_miniature, planetoid_transition_handler_l));
+    transition_trigger->logichub()->attach_logic(new OuterSpaceTransitionTrigger(planetoid_persistent_data->size*2, planetoid_transition_handler_l));
 
 
     auto minimap_go = scene()->spawn_gameobject("Minimap");

@@ -38,6 +38,7 @@ public:
     virtual float get_max_shooting_angle() = 0;
     float get_min_shooting_angle() { return - get_max_shooting_angle(); };
     virtual float get_shooting_period() = 0;
+    virtual int get_score_value() { return 50; }
 
     sge::Vec2<float> get_position_relative_to_planetoid() override {
         return anchor_position;
@@ -56,5 +57,7 @@ public:
     float angle;
 
     bool destroyed = false;
+
+    utils::event::Event destroy_event;
 };
 #endif //NON_GRAVITAR_ENEMYBUILDDATA_HPP

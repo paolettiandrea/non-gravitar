@@ -16,7 +16,7 @@ public:
     explicit SceneTransitionHandler(SceneTransitionHandler *parent_transition_handler);
     void on_start() override;
 
-    void pop_scene();
+    virtual void pop_scene();
 
 protected:
     void start_transition_animation(utils::event::EventHandler* post_animation_callback);
@@ -27,6 +27,8 @@ private:
     SceneTransitionHandler* parent_transition_handler;
 
     utils::event::EventHandler pop_callback;
+
+
 
 };
 

@@ -31,6 +31,7 @@ void Crate::on_start() {
     if (!crate_persistent_data->get_content_smesh_path().empty()) {
         auto content_go = scene()->spawn_gameobject("Crate Content");
         content_go->transform()->set_parent(gameobject()->transform());
+        content_go->transform()->set_local_scale(crate_persistent_data->get_content_logo_scale());
         auto content_vertarray = content_go->add_component<sge::cmp::VertArray>("VertArray");
         content_vertarray->import_smesh(crate_persistent_data->get_content_smesh_path());
         content_vertarray->set_layer("crate-overlay");

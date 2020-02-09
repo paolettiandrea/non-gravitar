@@ -34,8 +34,10 @@ struct PlayerPersistentData {
     WatchedVal<float> fuel_amount = WatchedVal<float>(NG_PLAYER_STARTING_MAX_FUEL);
     WatchedVal<float> fuel_max = WatchedVal<float>(NG_PLAYER_STARTING_MAX_FUEL);
     WatchedVal<float> stamina_max = WatchedVal<float>(NG_PLAYER_STARTING_MAX_STAMINA);
+    WatchedVal<float> stamina_amount = WatchedVal<float>(NG_PLAYER_STARTING_MAX_STAMINA);
     WatchedVal<int> lives = WatchedVal<int>(NG_PLAYER_STARTING_LIVES);
     WatchedVal<int> score = WatchedVal<int>(0);
+    WatchedVal<int> bonus_score = WatchedVal<int>(0);
 
     bool is_player_alive() const {
         return is_alive;

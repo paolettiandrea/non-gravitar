@@ -20,8 +20,13 @@ void DeathSceneEntryLogic::on_update() {
 void DeathSceneEntryLogic::on_start() {
     Logic::on_start();
 
-    add_text("You died!", NG_MENU_FONT, 20, sf::Vector2f(0, 50));
+    add_text("You died!", NG_MENU_FONT, 20, sf::Vector2f(0, 60));
+    add_text("Total score: " + std::to_string(player_persistent_data->score.value() + player_persistent_data->bonus_score.value()), NG_MENU_FONT, 20, sf::Vector2f(0, 30));
     add_text("(R)estart or (Q)uit", NG_MENU_FONT, 15, sf::Vector2f(0, -30));
+}
+
+DeathSceneEntryLogic::DeathSceneEntryLogic(PlayerPersistentData *player_persistent_data) {
+    this->player_persistent_data = player_persistent_data;
 }
 
 
