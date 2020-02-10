@@ -31,14 +31,10 @@ public:
 
     void on_scene_destruction() override;
 
-    void on_scene_resume() override;
-
 private:
     PlayerPersistentData *player_persistent_data;
-    sge::UIText* score_text;
     sge::UIBar* fuel_bar;
     sge::UIBar *stamina_bar;
-
 
     utils::event::EventHandler fuel_changed_ev_handler;
     utils::event::EventHandler max_fuel_changed_ev_handler;
@@ -47,12 +43,6 @@ private:
 
     utils::event::EventHandler lives_changed_ev_handler;
     PlayerLivesIndicator* lives_indicator_content;
-
-    static std::string get_string_with_leading_zeros(int amount, int number_of_digits);
-
-
-
-
 
 };
 

@@ -2,7 +2,7 @@
 #define NON_GRAVITAR_MULTISHOTENEMYBUILDDATA_HPP
 
 
-#include <game-scene/enemies/parts/head/MultiShotEnemyHead.hpp>
+#include "MultiShotEnemyHead.hpp"
 #include "BasicEnemyBuildData.hpp"
 
 class MultiShotEnemyBuildData : public BasicEnemyBuildData {

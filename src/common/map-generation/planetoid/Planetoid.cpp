@@ -1,5 +1,5 @@
-#include <enemies/Enemy.hpp>
-#include <game-scene/crates/Crate.hpp>
+#include "Enemy.hpp"
+#include "Crate.hpp"
 #include "Planetoid.hpp"
 
 
@@ -101,6 +101,7 @@ void Planetoid::decrease_enemy_counter() {
         player_persistent_data->bonus_score.set(player_persistent_data->bonus_score.value() +
                                                 planetoid_data->map_gen_info.size * planetoid_data->map_gen_info.size *
                                                 planetoid_data->map_gen_info.difficulty_factor / 10);
+        planetoid_data->completed = true;
     }
 }
 

@@ -3,7 +3,7 @@
 
 #include <PhysicsObject.hpp>
 #include <scaled-planetoid/minimap/MinimapTraced_I.hpp>
-#include <game-scene/breakable/handler/BreakHandler.hpp>
+#include <BreakHandler.hpp>
 #include <utility-classes/ColorPalette.hpp>
 #include "SGE/Vec2.hpp"
 #include "SGE/logic/Logic.hpp"

@@ -4,12 +4,12 @@
 #include <SGE/components/graphics/VertArray.hpp>
 #include "SGE/components/physics/Rigidbody.hpp"
 #include "SGE/components/physics/Collider.hpp"
-#include "SGE/logic/Logic.hpp"
+#include <SGE/logic/Logic.hpp>
 #include "PlanetoidPersistentData.hpp"
 
 class Planetoid : public sge::Logic {
 public:
-    explicit Planetoid(const PlanetoidPersistentData& planetoid_data, PlayerPersistentData* player_persistent_data) {
+    explicit Planetoid(PlanetoidPersistentData& planetoid_data, PlayerPersistentData* player_persistent_data) {
         this->planetoid_data = &planetoid_data;
         this->player_persistent_data = player_persistent_data;
     }
@@ -26,7 +26,7 @@ public:
     int get_enemy_counter() { return enemy_counter; };
 private:
 
-    const PlanetoidPersistentData* planetoid_data;
+    PlanetoidPersistentData* planetoid_data;
     PlayerPersistentData *player_persistent_data;
 
     int enemy_counter = 0;

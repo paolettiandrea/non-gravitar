@@ -5,7 +5,7 @@
 #include <SGE/components/graphics/ui/UI.hpp>
 #include <scaled-planetoid/minimap/Minimap.hpp>
 #include <player/TractorBeam.hpp>
-#include <game-scene/enemies/parts/head/SniperEnemyHead.hpp>
+#include "SniperEnemyHead.hpp"
 #include <player/PlayerSpawnManager.hpp>
 #include <camera/follow/SmoothCamera.hpp>
 #include <camera/follow/AutoZoomCamera.hpp>
@@ -34,7 +34,7 @@ void PlanetoidScene_EntryLogic::on_start() {
     auto spawn_point = entrance_pos + (outward_dir * (float)NG_PLANETOID_SCENE_SPAWN_DISTANCE);
 
     // Camera
-    auto camera_l = new AutoZoomCamera(center_pos, (center_pos - entrance_pos).get_magnitude());
+    auto camera_l = new AutoZoomCamera(center_pos, (center_pos - entrance_pos).get_magnitude(), NG_CAMERA_TARGET_ZOOM);
     gameobject()->logichub()->attach_logic(camera_l);
 
     // Spawn the player

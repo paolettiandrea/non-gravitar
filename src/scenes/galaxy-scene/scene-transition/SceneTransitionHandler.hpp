@@ -18,9 +18,11 @@ public:
 
     virtual void pop_scene();
 
-protected:
     void start_transition_animation(utils::event::EventHandler* post_animation_callback);
 
+    SceneTransitionOverlay* get_scene_transition_overlay() { return scene_transition_overlay_l; }
+
+protected:
 
     SceneTransitionOverlay *scene_transition_overlay_l;
 private:

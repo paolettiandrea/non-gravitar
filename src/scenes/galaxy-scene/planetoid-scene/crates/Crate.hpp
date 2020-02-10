@@ -3,7 +3,7 @@
 
 
 #include <utility-logic/PhysicsObject.hpp>
-#include <game-scene/crates/data/CratePersistentData.hpp>
+#include "CratePersistentData.hpp"
 
 #define NG_CRATE_SCALE                  0.8
 #define NG_CRATE_RESTITUTION            0.8

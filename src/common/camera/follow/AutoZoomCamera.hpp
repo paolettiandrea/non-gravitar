@@ -6,7 +6,7 @@
 
 class AutoZoomCamera : public SmoothCamera {
 public:
-    AutoZoomCamera(sge::Vec2<float> center, float radius);
+    AutoZoomCamera(sge::Vec2<float> center, float radius, float base_zoom);
 
 
     std::string get_logic_id() override;
@@ -17,6 +17,7 @@ protected:
 private:
     sge::Vec2<float> center;
     float radius;
+    float base_zoom;
 };
 
 

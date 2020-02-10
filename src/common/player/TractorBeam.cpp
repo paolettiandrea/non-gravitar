@@ -73,9 +73,6 @@ void TractorBeam::on_fixed_update() {
                 auto dir = (gameobject()->transform()->get_world_position() -
                             body->gameobject()->transform()->get_world_position()).normalize();
                 body->apply_force_center(dir * NG_TRACTOR_BEAM_FORCE, true);
-
-
-                env()->debug_draw_point(body->gameobject()->transform()->get_world_position());
             } else {
                 bodies_to_remove.push_back(body);
             }

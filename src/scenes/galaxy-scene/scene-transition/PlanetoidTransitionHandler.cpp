@@ -1,4 +1,4 @@
-#include <game-scene/scene-transition/PlanetCompletedPrompt.hpp>
+#include "CompletionPrompt.hpp"
 #include "PlanetoidTransitionHandler.hpp"
 
 std::string PlanetoidTransitionHandler::get_logic_id() {
@@ -31,5 +31,5 @@ void PlanetoidTransitionHandler::build_completed_prompt() {
     pop_ev_handler = [&](){
         pop_scene();
     };
-    prompt_go->logichub()->attach_logic(new PlanetCompletedPrompt(planetoid, pop_ev_handler));
+    prompt_go->logichub()->attach_logic(new CompletionPrompt(pop_ev_handler, "You cleared the planetoid!\nPress ENTER to jump to Solar System"));
 }

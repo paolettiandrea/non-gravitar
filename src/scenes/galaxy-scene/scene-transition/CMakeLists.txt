@@ -10,6 +10,9 @@ target_sources(non_gravitar PRIVATE
 
         PlanetoidTransitionHandler.cpp
         PlanetoidTransitionHandler.hpp
+
+        CompletionPrompt.cpp
+        CompletionPrompt.hpp
         )
 
 target_include_directories(non_gravitar PRIVATE .)

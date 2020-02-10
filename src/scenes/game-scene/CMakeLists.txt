@@ -1,6 +1,6 @@
 target_sources(non_gravitar PRIVATE
-        PlanetoidManager.cpp
-        PlanetoidManager.hpp
+        GameSceneEntryLogic.cpp
+        GameSceneEntryLogic.hpp
         )
 
 target_include_directories(non_gravitar PRIVATE .)

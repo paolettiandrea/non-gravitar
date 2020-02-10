@@ -1,5 +1,5 @@
-#include <game-scene/enemies/parts/head/SniperEnemyHead.hpp>
-#include <player/ui/PlayerUI.hpp>
+#include "SniperEnemyHead.hpp"
+#include "PlayerUI.hpp"
 #include "PlayerSpawnManager.hpp"
 
 std::string PlayerSpawnManager::get_logic_id() {

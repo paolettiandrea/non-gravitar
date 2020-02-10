@@ -1,4 +1,5 @@
 #include <iostream>
+#include <GameSceneEntryLogic.hpp>
 
 #include "SGE/engine/Engine.hpp"
 #include "PlanetoidScene_EntryLogic.hpp"
@@ -14,6 +15,8 @@ int main() {
     // Render layers setup
     engine_cd.window.layers.emplace_back("planetoid-secondary");
     engine_cd.window.layers.emplace_back("planetoid-walls");
+    engine_cd.window.layers.emplace_back("player");
+    engine_cd.window.layers.emplace_back("engine-trail");
     engine_cd.window.layers.emplace_back("tractor-beam");
     engine_cd.window.layers.emplace_back("crate-overlay");
     engine_cd.window.layers.emplace_back("crate-background");
@@ -36,7 +39,7 @@ int main() {
 
 
     // Initialize the engine with an entry scene
-    auto entry_logic = new GalaxyScene_EntryLogic();
+    auto entry_logic = new GameScene_EntryLogic();
     sge::cd::SceneConstructionData scene_cd("Entry Scene", entry_logic);
     scene_cd.camera_vertical_zoom = 30;
 

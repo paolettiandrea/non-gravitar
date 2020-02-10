@@ -41,6 +41,8 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
         bool exclude_surface = true;
 
         NoiseMap prev_iteration_combined_mask(combined_mask);
+
+        int previous_caves_number = cave_regions.size();
         while (!linking_done) {
             LOG_DEBUG(1) << "Starting planetoid generation iteration.\nNumber of caves: " << cave_regions.size();
             linking_iterations_counter++;
@@ -66,8 +68,10 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
                 }
             }
 
+
+            previous_caves_number = cave_regions.size();
             if (linking_iterations_counter>3) {
-                if (linking_iterations_counter>15 || combined_mask == prev_iteration_combined_mask) {
+                if (previous_caves_number == cave_regions.size()) {
                     malformed = true;
                     break;
                 }

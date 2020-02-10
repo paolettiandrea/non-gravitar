@@ -1,10 +1,10 @@
 #include "Player.hpp"
 #include <SGE/components/graphics/ui/UI.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
-#include <game-scene/breakable/handler/BreakHandler.hpp>
-#include <game-scene/breakable/generator/BreakGenerator.hpp>
-#include <death-scene/DeathSceneEntryLogic.hpp>
-#include <camera/follow/SmoothCamera.hpp>
+#include "BreakHandler.hpp"
+#include "BreakGenerator.hpp"
+#include "DeathSceneEntryLogic.hpp"
+#include "SmoothCamera.hpp"
 #include "Bullet.hpp"
 #include "COLORS.hpp"
 
@@ -41,7 +41,7 @@ void Player::on_start() {
     if (breakable) {
         ExplosionInfo explosion_info;
         explosion_info.explosion_radius = 1.0;
-        explosion_info.explosion_force = 2.0;
+        explosion_info.explosion_force = 1.0;
         gameobject()->logichub()->attach_logic(new BreakHandler (explosion_info, true, true));
         trigger_l = new BreakTrigger(10, Rigidbody_H());
         trigger_l->on_break_event += [&]() {
@@ -53,9 +53,9 @@ void Player::on_start() {
 
     persistent_data->is_alive = true;
 
-    fuel_amount_changed_ev_handler = [&](){
-        if (persistent_data->fuel_amount.value()<=0 && !scene()->is_doomed()) {
-            game_over();
+    fuel_amount_changed_ev_handler = [=](){
+        if (this->persistent_data->fuel_amount.value()<=0 && !this->scene()->is_doomed()) {
+            this->game_over();
         }
     };
     persistent_data->fuel_amount.subscribe(fuel_amount_changed_ev_handler);

@@ -5,7 +5,6 @@ target_sources(non_gravitar PRIVATE
 
 target_include_directories(non_gravitar PRIVATE .)
 
-add_subdirectory(planetoids)
 add_subdirectory(enemies)
 add_subdirectory(breakable)
 add_subdirectory(scene-transition)

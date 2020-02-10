@@ -13,7 +13,7 @@ void DeathSceneEntryLogic::on_update() {
 
     if (env()->is_key_pressed(sf::Keyboard::R)) {
         env()->doom_scenes(2);
-        env()->book_new_scene_push("Solar System", new GalaxyScene_EntryLogic());
+        env()->book_new_scene_push("Solar System", new GalaxyScene_EntryLogic(player_persistent_data));
     }
 }
 

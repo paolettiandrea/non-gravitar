@@ -4,6 +4,7 @@
 
 #include <SGE/components/physics/Rigidbody.hpp>
 #include <SGE/components/graphics/ui/blocks/UIBar.hpp>
+#include <noise-generation/NoiseMap.hpp>
 #include "SGE/logic/Logic.hpp"
 #include "SGE/components/graphics/VertArray.hpp"
 #include "PlayerPersistentData.hpp"
@@ -38,7 +39,7 @@ private:
     const float MAX_INITIAL_THRUST_FACTOR = 1.2;
 
     // While the lenght of the displayed trail is proportional to the actual acceleration, this can be use to tune the result
-    const float TRAIL_LENGHT_MULTIPLIER = 0.12;
+    const float TRAIL_LENGHT_MULTIPLIER = 0.14;
 
     // The amount of force that needs to be added to the thrust every fixedupdate in order to reach the initial thrust tarhet in the target time
     float INITIAL_THRUST_TARGET;
@@ -55,6 +56,9 @@ private:
     static constexpr float FUEL_EFFICIENCY_FACTOR = 600;
 
     PlayerPersistentData* player_persistent_data;
+
+    NoiseMap noise_map;
+    float noise_circling_angle = 0;
 
 
 

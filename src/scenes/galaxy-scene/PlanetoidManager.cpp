@@ -1,12 +1,13 @@
-#include <BasicEnemyBuildData.hpp>
-#include <game-scene/crates/data/FuelCratePersistentData.hpp>
-#include <game-scene/enemies/data/MultiShotEnemyBuildData.hpp>
-#include <game-scene/enemies/data/SniperEnemyBuildData.hpp>
-#include <game-scene/crates/data/MaxFuelCratePersistentData.hpp>
-#include <game-scene/crates/data/ExtraLifeCratePersistentData.hpp>
-#include <game-scene/crates/data/MaxStaminaCratePersistentData.hpp>
+#include <SGE/components/physics/Collider.hpp>
+
+#include "BasicEnemyBuildData.hpp"
+#include "FuelCratePersistentData.hpp"
+#include "MultiShotEnemyBuildData.hpp"
+#include "SniperEnemyBuildData.hpp"
+#include "MaxFuelCratePersistentData.hpp"
+#include "ExtraLifeCratePersistentData.hpp"
+#include "MaxStaminaCratePersistentData.hpp"
 #include "PlanetoidManager.hpp"
-#include "SGE/components/physics/Collider.hpp"
 #include "Planetoid.hpp"
 #include "MapGenInfo.hpp"
 #include "GAME.hpp"

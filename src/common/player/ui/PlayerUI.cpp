@@ -117,9 +117,7 @@ void PlayerUI::on_start() {
 void PlayerUI::on_destruction() {
 }
 
-void PlayerUI::on_scene_resume() {
-    score_text->set_string(get_string_with_leading_zeros(player_persistent_data->score.value(), NG_PLAYER_SCORE_NUMBER_OF_DIGITS));
-}
+
 
 void PlayerUI::on_scene_destruction() {
     player_persistent_data->lives.unsubscribe(lives_changed_ev_handler);
@@ -127,10 +125,4 @@ void PlayerUI::on_scene_destruction() {
     player_persistent_data->fuel_max.unsubscribe(max_fuel_changed_ev_handler);
     player_persistent_data->stamina_amount.unsubscribe(stamina_changed_ev_handler);
     player_persistent_data->stamina_max.unsubscribe(max_stamina_changed_ev_handler);
-}
-
-std::string PlayerUI::get_string_with_leading_zeros(int amount, int number_of_digits) {
-    std::stringstream ss;
-    ss << std::setfill('0') << std::setw(number_of_digits) << amount;
-    return ss.str();
 }

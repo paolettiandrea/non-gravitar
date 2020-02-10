@@ -23,6 +23,8 @@ public:
     MapGenerator map_generator;
     MarchingMap* main_fill_square_grid;
     MarchingMap* secondary_fill_square_grid;
+
+    bool completed = false;
 };
 
 
