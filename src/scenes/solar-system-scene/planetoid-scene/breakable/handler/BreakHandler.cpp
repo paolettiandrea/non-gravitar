@@ -188,7 +188,10 @@ void BreakHandler::on_update() {
                 spawned_containers[l]->logichub()->attach_logic(new Fading(0.3));
             } else {
                 // If the fragment container is not fading add breakable logic
-                spawned_containers[l]->logichub()->attach_logic(new BreakHandler(true, m_fade_on_break_flag, fragment_collision_layer));
+
+                ExplosionInfo container_explosion_info(explosion_info);
+                container_explosion_info.explosion_force = explosion_info.explosion_force * 0.5f;
+                spawned_containers[l]->logichub()->attach_logic(new BreakHandler(container_explosion_info, true, m_fade_on_break_flag, fragment_collision_layer));
                 for (auto layer : spawned_containers[l]->transform()->get_children()) {
                     layer->gameobject()->logichub()->attach_logic(new FragmentedLayerGenerator(collected_fragment_info[0][0].max_triangles-1));
                     for (auto fragment : layer->get_children()) {

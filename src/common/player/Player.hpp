@@ -41,6 +41,8 @@ public:
 
     void on_scene_destruction() override;
 
+    void on_destruction() override;
+
 
 private:
     bool breakable;

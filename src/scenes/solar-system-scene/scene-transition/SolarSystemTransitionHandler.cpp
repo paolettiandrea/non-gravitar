@@ -21,7 +21,7 @@ void SolarSystemTransitionHandler::launch_planetoid_scene(MiniaturePlanetoid *ba
             auto player_rb = player_logic->gameobject()->get_component<sge::cmp::Rigidbody>("Rigidbody");
             auto player_body = player_rb->get_b2_body();
             player_body->SetTransform(b2Vec2(new_player_pos.x, new_player_pos.y), player_body->GetAngle());
-            player_body->SetLinearVelocity(b2Vec2(diff.x*NG_GALAXY_SCENE_TRANSITION_DRIFTING_VELOCITY, diff.y*NG_GALAXY_SCENE_TRANSITION_DRIFTING_VELOCITY));
+            player_body->SetLinearVelocity(b2Vec2(diff.x*NG_SOLAR_SYSTEM_SCENE_TRANSITION_DRIFTING_VELOCITY, diff.y*NG_SOLAR_SYSTEM_SCENE_TRANSITION_DRIFTING_VELOCITY));
         };
         start_transition_animation(launch_planetoid_callback);
     }

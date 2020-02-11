@@ -56,19 +56,13 @@ void PlayerEngine::on_start() {
 
     noise_map.normalize(NG_ENGINE_NOISE_MIN_MULTIPLIER, 1);
 
+
+
 }
 
 void PlayerEngine::on_fixed_update() {
 
-    if (env()->is_key_pressed(NG_CONTROLS_PLAYER_THRUST_KEY)) {
-        if (thrust_status != Increasing) {
-            thrust_status = Increasing;
-        }
-    }
 
-    if (env()->is_key_released(NG_CONTROLS_PLAYER_THRUST_KEY)) {
-        thrust_status = Decreasing;
-    }
 
     float thrust_this_fixedupdate = 0;
 
@@ -117,6 +111,16 @@ void PlayerEngine::on_fixed_update() {
 }
 
 void PlayerEngine::on_update() {
+    if (env()->is_key_pressed(NG_CONTROLS_PLAYER_THRUST_KEY)) {
+        if (thrust_status != Increasing) {
+            thrust_status = Increasing;
+        }
+    }
+
+    if (env()->is_key_released(NG_CONTROLS_PLAYER_THRUST_KEY)) {
+        thrust_status = Decreasing;
+    }
+
     update_engine_trail_lenght();
 }
 

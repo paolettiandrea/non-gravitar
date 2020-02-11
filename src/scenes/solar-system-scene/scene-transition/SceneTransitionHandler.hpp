@@ -9,7 +9,7 @@
 #include <SceneTransitionOverlay.hpp>
 
 
-#define NG_GALAXY_SCENE_TRANSITION_DRIFTING_VELOCITY 0.5
+#define NG_SOLAR_SYSTEM_SCENE_TRANSITION_DRIFTING_VELOCITY 0.5
 
 class SceneTransitionHandler : public sge::Logic {
 public:

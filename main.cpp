@@ -3,7 +3,7 @@
 
 #include "SGE/engine/Engine.hpp"
 #include "PlanetoidScene_EntryLogic.hpp"
-#include "GalaxyScene_EntryLogic.hpp"
+#include "SolarSystemScene_EntryLogic.hpp"
 
 int main() {
 

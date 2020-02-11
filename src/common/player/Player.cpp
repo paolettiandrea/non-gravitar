@@ -121,6 +121,10 @@ void Player::on_scene_destruction() {
     persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
 }
 
+void Player::on_destruction() {
+    persistent_data->fuel_amount.unsubscribe(fuel_amount_changed_ev_handler);
+}
+
 void Player::game_over() {
     env()->doom_top_scene();
     env()->book_new_scene_push("Death scene", new DeathSceneEntryLogic(persistent_data));

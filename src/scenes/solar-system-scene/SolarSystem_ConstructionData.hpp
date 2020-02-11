@@ -1,8 +1,8 @@
-#ifndef NON_GRAVITAR_GALAXY_CONSTRUCTIONDATA_HPP
-#define NON_GRAVITAR_GALAXY_CONSTRUCTIONDATA_HPP
+#ifndef NON_GRAVITAR_SOLARSYSTEM_CONSTRUCTIONDATA_HPP
+#define NON_GRAVITAR_SOLARSYSTEM_CONSTRUCTIONDATA_HPP
 
 
-struct Galaxy_ConstructionData {
+struct SolarSystem_ConstructionData {
     unsigned int planetoid_number = 5;
 
     unsigned int min_planetoid_size = 50;
@@ -13,4 +13,4 @@ struct Galaxy_ConstructionData {
 };
 
 
-#endif //NON_GRAVITAR_GALAXY_CONSTRUCTIONDATA_HPP
+#endif //NON_GRAVITAR_SOLARSYSTEM_CONSTRUCTIONDATA_HPP

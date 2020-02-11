@@ -1,8 +1,8 @@
 target_sources(non_gravitar PRIVATE
-        GalaxyScene_EntryLogic.cpp
-        GalaxyScene_EntryLogic.hpp
+        SolarSystemScene_EntryLogic.cpp
+        SolarSystemScene_EntryLogic.hpp
 
-        Galaxy_ConstructionData.hpp
+        SolarSystem_ConstructionData.hpp
 
         PlanetoidManager.cpp
         PlanetoidManager.hpp

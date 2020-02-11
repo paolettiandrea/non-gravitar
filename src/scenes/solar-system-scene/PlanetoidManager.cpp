@@ -31,7 +31,7 @@ PlanetoidManager::~PlanetoidManager() {
     }
 }
 
-PlanetoidManager::PlanetoidManager(const Galaxy_ConstructionData &data) {
+PlanetoidManager::PlanetoidManager(const SolarSystem_ConstructionData &data) {
 
     planetoid_data_vec.reserve(data.planetoid_number);
     for (int i = 0; i < data.planetoid_number; ++i) {

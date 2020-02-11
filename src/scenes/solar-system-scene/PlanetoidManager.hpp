@@ -3,7 +3,7 @@
 
 #include <SGE/logic/Logic.hpp>
 #include <PlanetoidPersistentData.hpp>
-#include <Galaxy_ConstructionData.hpp>
+#include <SolarSystem_ConstructionData.hpp>
 #include "EnemyBuildData.hpp"
 
 
@@ -13,7 +13,7 @@
  */
 class PlanetoidManager : public sge::Logic {
 public:
-    explicit PlanetoidManager(const Galaxy_ConstructionData& data);
+    explicit PlanetoidManager(const SolarSystem_ConstructionData& data);
     std::string get_logic_id() override;
 
     virtual ~PlanetoidManager();

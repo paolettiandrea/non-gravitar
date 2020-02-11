@@ -12,6 +12,7 @@
 #define NG_PLAYER_CANNON_STAMINA_REGEN_PER_SEC      20
 #define NG_PLAYER_CANNON_STAMINA_COST_PER_SHOT      20
 #define NG_PLAYER_CANNON_MIN_SHOT_FREQUENCY         0.25
+#define NG_PLAYER_CANNON_KNOCKBACK_FORCE            0.5
 
 class PlayerCannon : public Cannon {
 public:
@@ -29,6 +30,7 @@ public:
 private:
     PlayerPersistentData *player_persistent_data;
     std::chrono::time_point<std::chrono::steady_clock> last_shot_time;
+    Rigidbody_H shooter_rb;
 };
 
 

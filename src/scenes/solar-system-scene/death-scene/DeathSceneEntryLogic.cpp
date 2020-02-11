@@ -1,4 +1,4 @@
-#include <GalaxyScene_EntryLogic.hpp>
+#include <SolarSystemScene_EntryLogic.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
 #include "DeathSceneEntryLogic.hpp"
 
@@ -13,7 +13,7 @@ void DeathSceneEntryLogic::on_update() {
 
     if (env()->is_key_pressed(sf::Keyboard::R)) {
         env()->doom_scenes(2);
-        env()->book_new_scene_push("Solar System", new GalaxyScene_EntryLogic(player_persistent_data));
+        env()->book_new_scene_push("Solar System", new SolarSystemScene_EntryLogic(player_persistent_data));
     }
 }
 
