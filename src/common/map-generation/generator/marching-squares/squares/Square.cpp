@@ -58,6 +58,11 @@ Square::Square(ControlNode* top_left, ControlNode* top_right, ControlNode* bot_r
             edge_centers.push_back((top_left_cn->right_node.position + top_left_cn->down_node.position)/2);
             edge_normal_rotations.push_back(-3.0/4.0*M_PI);
             edge_centers.push_back((top_right_cn->down_node.position + bot_left_cn->right_node.position)/2);
+
+            append_triangle(bot_left_cn->position, top_left_cn->right_node.position, top_left_cn->down_node.position);
+            append_triangle(bot_left_cn->position, bot_left_cn->right_node.position, top_right_cn->position);
+            append_triangle(bot_left_cn->position, top_right_cn->position, top_left_cn->right_node.position);
+            append_triangle(bot_left_cn->right_node.position, top_right_cn->down_node.position, top_right->position);
             break;
 
         case TOP_RIGHT_BOT_RIGHT:
@@ -104,6 +109,11 @@ Square::Square(ControlNode* top_left, ControlNode* top_right, ControlNode* bot_r
             edge_centers.push_back((top_left_cn->down_node.position + bot_left_cn->right_node.position)/2);
             edge_normal_rotations.push_back(-M_PI_4);
             edge_centers.push_back((top_right_cn->down_node.position + top_left_cn->right_node.position)/2);
+
+            append_triangle(top_left_cn->down_node.position, bot_left_cn->right_node.position, bot_right_cn->position);
+            append_triangle(top_left_cn->down_node.position, bot_right_cn->position, top_left_cn->position);
+            append_triangle(top_left_cn->position, bot_right_cn->position, top_right_cn->down_node.position);
+            append_triangle(top_left_cn->position, top_right_cn->down_node.position, top_left_cn->right_node.position);
             break;
 
         case TOP_LEFT_BOT_LEFT_BOT_RIGHT:
