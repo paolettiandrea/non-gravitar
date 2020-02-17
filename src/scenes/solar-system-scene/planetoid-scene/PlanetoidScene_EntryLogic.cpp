@@ -19,6 +19,7 @@ std::string PlanetoidScene_EntryLogic::get_logic_id() {
 void PlanetoidScene_EntryLogic::on_start() {
 
     scene()->set_gravity(sge::Vec2<float>(0,0));
+    scene()->get_camera()->set_background_color(NG_BACKGROUND_COLOR);
 
     gameobject()->logichub()->attach_logic(new PauseLauncher());
 

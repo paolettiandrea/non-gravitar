@@ -24,7 +24,7 @@ void Crate::on_start() {
 
     vertarray()->set_color(crate_persistent_data->get_overlay_color());
     vertarray()->set_layer("crate-overlay");
-    background_vertarray->set_color(PLAYER_PALETTE.primary);
+    background_vertarray->set_color(NG_CRATE_BACKGROUND_COLOR);
     background_vertarray->set_layer("crate-background");
 
     if (!crate_persistent_data->get_content_smesh_path().empty()) {

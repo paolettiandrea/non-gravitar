@@ -15,6 +15,7 @@ struct LaserBuildData {
     float duration = 3.0;
     float fade_in_duration = 0.25;
     float width = 0.15;
+    sf::Color laser_color = sf::Color::Red;
 };
 
 class Laser : public sge::Logic {
@@ -28,6 +29,7 @@ public:
     void on_update() override;
 
 private:
+    LaserBuildData data;
     VertArray_H vert_array;
     sge::RayCastHandler ray_cast_handler;
     float ray_cast_counter = NG_LASER_RAY_CAST_PERIOD;

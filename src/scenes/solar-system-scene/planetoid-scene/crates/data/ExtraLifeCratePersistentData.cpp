@@ -11,3 +11,7 @@ void ExtraLifeCratePersistentData::apply_effect_on_player(Player *player_logic) 
 float ExtraLifeCratePersistentData::get_content_logo_scale() {
     return 0.7;
 }
+
+sf::Color ExtraLifeCratePersistentData::get_overlay_color() {
+    return PLAYER_PALETTE.dark;
+}

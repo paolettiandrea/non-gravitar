@@ -41,7 +41,7 @@ public:
 
     const ColorPalette *get_enemy_palette() override    { return &BASIC_ENEMY_PALETTE; }
 
-    float get_shooting_speed() override                 { return 5.0; }
+    float get_shooting_speed() override                 { return 7.0; }
 
     float get_max_shooting_angle() override             { return M_PI_2; }
 

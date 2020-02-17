@@ -5,6 +5,7 @@ std::string PauseScene_EntryLogic::get_logic_id() {
 }
 
 void PauseScene_EntryLogic::on_start() {
+    scene()->get_camera()->set_background_color(NG_BACKGROUND_COLOR);
     add_text("Game paused", NG_MENU_FONT, 20, sf::Vector2f(0, 50));
     add_text("(R)esume or (Q)uit", NG_MENU_FONT, 15, sf::Vector2f(0, -30));
 }

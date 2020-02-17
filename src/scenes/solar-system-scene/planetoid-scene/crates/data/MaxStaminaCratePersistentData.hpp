@@ -9,6 +9,12 @@ public:
         player_logic->get_persistent_data()->stamina_max.set(player_logic->get_persistent_data()->stamina_max.value() + 20);
         player_logic->get_persistent_data()->stamina_amount.set(player_logic->get_persistent_data()->stamina_max.value());
     }
+
+    sf::Color get_overlay_color() override {
+        return PLAYER_PALETTE.light;
+    }
+
+
 };
 
 #endif //NON_GRAVITAR_MAXSTAMINACRATEPERSISTENTDATA_HPP

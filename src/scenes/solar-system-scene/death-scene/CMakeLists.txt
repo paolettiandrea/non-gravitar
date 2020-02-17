@@ -1,6 +1,6 @@
 target_sources(non_gravitar PRIVATE
-        DeathSceneEntryLogic.cpp
-        DeathSceneEntryLogic.hpp
+        DeathScene_EntryLogic.cpp
+        DeathScene_EntryLogic.hpp
 
         TextMenu.cpp
         TextMenu.hpp

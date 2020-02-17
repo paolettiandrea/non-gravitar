@@ -73,6 +73,7 @@ void PlayerUI::on_start() {
 
     fuel_bar = new sge::UIBar(player_persistent_data->fuel_max.value()*NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER, 20);
     fuel_bar->set_offset(sf::Vector2f(0, 20));
+    fuel_bar->set_bar_color(NG_PLAYER_UI_FUEL_BAR_COLOR);
     fuel_bar_ui->set_content(fuel_bar);
 
     fuel_changed_ev_handler = [&]() {
@@ -97,7 +98,10 @@ void PlayerUI::on_start() {
 
     stamina_bar = new sge::UIBar(player_persistent_data->stamina_max.value()*NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER, 20);
     stamina_bar->set_offset(sf::Vector2f(0, 50));
+    stamina_bar->set_bar_color(NG_PLAYER_UI_STAMINA_BAR_COLOR);
+
     stamina_bar_ui->set_content(stamina_bar);
+
 
     stamina_changed_ev_handler = [&]() {
         stamina_bar->set_bar(player_persistent_data->stamina_amount.value() / player_persistent_data->stamina_max.value());
@@ -114,8 +118,6 @@ void PlayerUI::on_start() {
     fuel_changed_ev_handler();
 }
 
-void PlayerUI::on_destruction() {
-}
 
 
 

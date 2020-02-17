@@ -5,7 +5,6 @@
 #include "enemies/parts/head/sniper/Laser.hpp"
 
 #define NG_ENEMY_SNIPER_LASER_TIME_BEFORE_SHOOTING      1.0
-#define NG_ENEMY_SNIPER_LASER_TIME_AFTER_SHOOTING       1.0
 
 
 class SniperEnemyHead : public EnemyHead {

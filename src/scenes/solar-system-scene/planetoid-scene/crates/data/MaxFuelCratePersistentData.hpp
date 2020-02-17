@@ -10,6 +10,10 @@ public:
         player_logic->get_persistent_data()->fuel_max.set(player_logic->get_persistent_data()->fuel_max.value() + 20);
         player_logic->get_persistent_data()->fuel_amount.set(player_logic->get_persistent_data()->fuel_max.value());
     }
+
+    sf::Color get_overlay_color() override {
+        return PLAYER_PALETTE.dark;
+    }
 };
 
 

@@ -1,5 +1,6 @@
 #include "SniperEnemyHead.hpp"
 #include <SGE/components/physics/Rigidbody.hpp>
+#include <COLORS.hpp>
 
 GameObject_H SniperEnemyHead::player_go = GameObject_H();
 
@@ -51,9 +52,10 @@ void SniperEnemyHead::spawn_laser() {
     laser_build_data.starting_pos = gameobject()->transform()->get_world_position();
     laser_build_data.ending_pos = laser_end_pos;
     laser_build_data.filter = filter;
+    laser_build_data.laser_color = SNIPER_ENEMY_PALETTE.primary;
     collider()->set_filter_collision_enabled_with(laser_build_data.filter, "Bullet", false);
     laser_build_data.ingore_rb = collider()->get_rigidbody();
-    laser_build_data.duration = NG_ENEMY_SNIPER_LASER_TIME_BEFORE_SHOOTING + NG_ENEMY_SNIPER_LASER_TIME_AFTER_SHOOTING;
+    laser_build_data.duration = NG_ENEMY_SNIPER_LASER_TIME_BEFORE_SHOOTING;
     laser_build_data.fade_in_duration = 0.35;
     laser_go->logichub()->attach_logic(new Laser(laser_build_data));
 }

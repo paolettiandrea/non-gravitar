@@ -1,13 +1,13 @@
 #include <SolarSystemScene_EntryLogic.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
 #include <GameSceneEntryLogic.hpp>
-#include "DeathSceneEntryLogic.hpp"
+#include "DeathScene_EntryLogic.hpp"
 
-std::string DeathSceneEntryLogic::get_logic_id() {
+std::string DeathScene_EntryLogic::get_logic_id() {
     return std::string("DeathSceneEntryLogic");
 }
 
-void DeathSceneEntryLogic::on_update() {
+void DeathScene_EntryLogic::on_update() {
     if (env()->is_key_pressed(sf::Keyboard::Q)) {
         env()->quit();
     }
@@ -18,15 +18,14 @@ void DeathSceneEntryLogic::on_update() {
     }
 }
 
-void DeathSceneEntryLogic::on_start() {
-    Logic::on_start();
-
+void DeathScene_EntryLogic::on_start() {
+    scene()->get_camera()->set_background_color(NG_BACKGROUND_COLOR);
     add_text("You died!", NG_MENU_FONT, 20, sf::Vector2f(0, 60));
     add_text("Total score: " + std::to_string(player_persistent_data->score.value() + player_persistent_data->bonus_score.value()), NG_MENU_FONT, 20, sf::Vector2f(0, 30));
     add_text("(R)estart or (Q)uit", NG_MENU_FONT, 15, sf::Vector2f(0, -30));
 }
 
-DeathSceneEntryLogic::DeathSceneEntryLogic(PlayerPersistentData *player_persistent_data) {
+DeathScene_EntryLogic::DeathScene_EntryLogic(PlayerPersistentData *player_persistent_data) {
     this->player_persistent_data = player_persistent_data;
 }
 

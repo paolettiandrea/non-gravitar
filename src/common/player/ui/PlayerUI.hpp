@@ -11,23 +11,20 @@
 #include "PlayerLivesIndicator.hpp"
 
 
-#define NG_PLAYER_UI_HORIZONTAL_PADDING         20
-#define NG_PLAYER_UI_VERTICAL_PADDING           20
+#define NG_PLAYER_UI_HORIZONTAL_PADDING             20
+#define NG_PLAYER_UI_VERTICAL_PADDING               20
 
-#define NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER  3
-
+#define NG_PLAYER_UI_FUEL_BAR_WIDTH_MULTIPLIER      3
 
 
 
 class PlayerUI : public sge::Logic {
 public:
-    PlayerUI(PlayerPersistentData *player_persistent_data);
+    explicit PlayerUI(PlayerPersistentData *player_persistent_data);
 
     void on_start() override;
 
     std::string get_logic_id() override;
-
-    void on_destruction() override;
 
     void on_scene_destruction() override;
 

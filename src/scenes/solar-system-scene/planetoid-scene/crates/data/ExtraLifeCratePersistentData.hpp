@@ -11,6 +11,8 @@ class ExtraLifeCratePersistentData : public ImprovementCrate {
 
 public:
     float get_content_logo_scale() override;
+
+    sf::Color get_overlay_color() override;
 };
 
 

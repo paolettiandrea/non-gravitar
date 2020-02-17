@@ -3,7 +3,7 @@
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
 #include "BreakHandler.hpp"
 #include "BreakGenerator.hpp"
-#include "DeathSceneEntryLogic.hpp"
+#include "DeathScene_EntryLogic.hpp"
 #include "SmoothCamera.hpp"
 #include "Bullet.hpp"
 #include "COLORS.hpp"
@@ -127,6 +127,6 @@ void Player::on_destruction() {
 
 void Player::game_over() {
     env()->doom_top_scene();
-    env()->book_new_scene_push("Death scene", new DeathSceneEntryLogic(persistent_data));
+    env()->book_new_scene_push("Death scene", new DeathScene_EntryLogic(persistent_data));
 }
 

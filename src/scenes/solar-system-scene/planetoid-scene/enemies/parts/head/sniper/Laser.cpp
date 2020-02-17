@@ -8,6 +8,7 @@ Laser::Laser(const LaserBuildData& data)
 : ray_cast_handler(data.filter, data.ingore_rb, data.starting_pos, data.ending_pos)
 , width_animation (new LinearInterpolator(), 0, data.width, data.fade_in_duration){
     this->laser_total_duration = data.duration;
+    this->data = data;
 
 }
 
@@ -40,7 +41,7 @@ void Laser::on_start() {
     vert_array->append_local_point(ray_cast_handler.get_point_a());
     vert_array->append_local_point(ray_cast_handler.get_point_b());
     vert_array->append_local_point(ray_cast_handler.get_point_b());
-    vert_array->set_color(sf::Color::Red);
+    vert_array->set_color(data.laser_color);
     vert_array->set_layer("laser");
 
     width_animation.start();

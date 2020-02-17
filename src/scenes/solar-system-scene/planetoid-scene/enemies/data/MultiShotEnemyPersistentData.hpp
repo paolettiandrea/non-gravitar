@@ -27,7 +27,9 @@ public:
         return enemy_offsets;
     }
 
-
+    float get_max_shooting_angle() override {
+        return M_PI/3.f;
+    }
 };
 
 
