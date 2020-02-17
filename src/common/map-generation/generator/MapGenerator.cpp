@@ -12,27 +12,14 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
         , tunnel_noise(map_gen_info.size,map_gen_info.size), tunnel_mask(map_gen_info.size,map_gen_info.size)
         , combined_mask(map_gen_info.size, map_gen_info.size), secondary_fill_mask(map_gen_info.size, map_gen_info.size)
         , flooded_map(map_gen_info.size, map_gen_info.size, 0)
-
 {
-    bool save_debug_images = false;
-#ifdef DEBUG
-    save_debug_images = true;
-#endif
+
 
     bool malformed = true;
     while (malformed) {
         generate_surface_mask();
-        if (save_debug_images) surface_mask.save_as_image("../out/1 surface mask.bmp",0,1);
-
         generate_tunnel_noise();
-        if (save_debug_images) tunnel_noise.save_as_image("../out/2 tunnel noise.bmp",0,1);
-
-
         update_combination_masks();
-        if (save_debug_images) tunnel_mask.save_as_image("../out/3 tunnel mask.bmp",0,1);
-        if (save_debug_images) combined_mask.save_as_image("../out/4 combined mask.bmp",0,1);
-        if (save_debug_images) secondary_fill_mask.save_as_image("../out/4a-secondary-fill-mask.bmp", 0, 1);
-
         define_regions();
         discard_regions(map_gen_info.min_cave_volume, map_gen_info.min_filled_region_volume);
 
@@ -44,21 +31,13 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
 
         int previous_caves_number = cave_regions.size();
         while (!linking_done) {
-            LOG_DEBUG(1) << "Starting planetoid generation iteration.\nNumber of caves: " << cave_regions.size();
+            LOG_DEBUG(4) << "Starting planetoid generation iteration.\nNumber of caves: " << cave_regions.size();
             linking_iterations_counter++;
 
-
             link_caves(exclude_surface);
-            if (save_debug_images) tunnel_noise.save_as_image("../out/" + std::to_string(linking_iterations_counter*4) + " linking (iteration " + std::to_string(linking_iterations_counter) + ").bmp", 0, 1);
-
             update_combination_masks();
-            if (save_debug_images) tunnel_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+1) + " linked tunnel mask.bmp", 0, 1);
-            if (save_debug_images) combined_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+2) + " linked combined mask.bmp", 0, 1);
-
             define_regions();
             discard_regions(map_gen_info.min_cave_volume, map_gen_info.min_filled_region_volume);
-
-            if (save_debug_images) combined_mask.save_as_image("../out/" + std::to_string(linking_iterations_counter*4+3) + " small regions excluded.bmp", 0, 1);
 
             if (cave_regions.size()<=2) {
                 if (!cave_regions[0].contains(sge::Vec2<int>(0,0))) exclude_surface = false;
@@ -68,14 +47,13 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
                 }
             }
 
-
-            previous_caves_number = cave_regions.size();
             if (linking_iterations_counter>3) {
                 if (previous_caves_number == cave_regions.size()) {
                     malformed = true;
                     break;
                 }
             }
+            previous_caves_number = cave_regions.size();
         }
 
         if (!malformed) {
@@ -88,7 +66,7 @@ MapGenerator::MapGenerator(const MapGenInfo& map_gen_info)
         }
 
         if (malformed) {
-            LOG_DEBUG(1) << "The generated planetoid was found malformed";
+            LOG_DEBUG(4) << "The generated planetoid was found malformed";
         }
     }
 
@@ -101,8 +79,11 @@ void MapGenerator::generate_surface_mask() {
     surface_perlin.simple_setup(3,0.6,2);
     surface_perlin.fill_noise_map(surface_mask, true);
 
+
+
     CircularGradient gradient (m_size/2.f, m_size/3.f, m_size/2.f,m_size/2.f, 1.f, 0, new RootInterpolator(2));
     NoiseMap gradient_map(m_size,m_size, 1.f);
+
     gradient_map.apply_gradient_as_mask(gradient);
 
     surface_mask.apply_gradient_as_mask(gradient);
@@ -110,6 +91,7 @@ void MapGenerator::generate_surface_mask() {
 
     surface_mask.normalize(0,1);
     surface_mask.apply_threshold(0.5,1,0);
+
 
     // Calculate whole planetoid relevant info
     Region planetoid_region;
@@ -168,11 +150,6 @@ void MapGenerator::define_regions() {
             }
         }
     }
-
-#ifdef DEBUG
-    checked_map.normalize(0,1);
-    checked_map.save_as_image("../out/regions_checked.bmp", 0, 1);
-#endif 
 }
 
 void MapGenerator::link_caves(bool exclude_surface_points) {
@@ -253,8 +230,8 @@ bool MapGenerator::is_surface_border(sge::Vec2<int> point) {
 void MapGenerator::calculate_final_stats() {
     define_regions();
     int cave_volume = cave_regions[0].get_volume() - (m_size*m_size - m_whole_planet_volume);
-    std::cout << "Planet generation done.\n"
-                 "Whole initial volume: " << m_whole_planet_volume << " || Cave volume: " << cave_volume << "|| Caved percentage: " << cave_volume/(float)m_whole_planet_volume*100 << "%" << std::endl;
+    LOG_DEBUG(2) << "Planetoid generated -> "
+                 "Whole initial volume: " << m_whole_planet_volume << " || Cave volume: " << cave_volume << "|| Caved percentage: " << cave_volume/(float)m_whole_planet_volume*100 << "%";
 }
 
 void MapGenerator::find_entrances() {
@@ -333,8 +310,6 @@ void MapGenerator::distance_flood_fill(NoiseMap &mask, sge::Vec2<int> starting_p
         }
         distance++;
     }
-
-    mask.save_as_image("../out/flood_fill.bmp", 0,distance);
 }
 
 

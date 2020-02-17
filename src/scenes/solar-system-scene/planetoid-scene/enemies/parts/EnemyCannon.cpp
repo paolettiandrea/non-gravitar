@@ -19,7 +19,7 @@ void EnemyCannon::on_start() {
     offset_go->logichub()->attach_logic(cannon_l);
 }
 
-EnemyCannon::EnemyCannon(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
+EnemyCannon::EnemyCannon(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
         : EnemyPart(whole_data, my_breakable_geom_data) {
 }
 

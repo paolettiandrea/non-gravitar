@@ -2,7 +2,7 @@
 #define NON_GRAVITAR_CRATEPERSISTENTDATA_HPP
 
 #include <SGE/Vec2.hpp>
-#include <utility-logic/PhysicsObject.hpp>
+#include "PhysicsObject.hpp"
 #include "Player.hpp"
 #include "COLORS.hpp"
 

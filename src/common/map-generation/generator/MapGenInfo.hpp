@@ -7,7 +7,7 @@
 #include <utility-classes/ColorPalette.hpp>
 #include "COLORS.hpp"
 #include "CratePersistentData.hpp"
-#include "EnemyBuildData.hpp"
+#include "EnemyPersistentData.hpp"
 
 class MapGenInfo {
 public:
@@ -19,7 +19,7 @@ public:
 
     ColorPalette palette = PLANETOID_EASY_PALETTE;
 
-    std::vector<EnemyBuildData*> enemies_persistent_data_vec;
+    std::vector<EnemyPersistentData*> enemies_persistent_data_vec;
     std::vector<CratePersistentData*> crates_persistent_data_vec;
 };
 

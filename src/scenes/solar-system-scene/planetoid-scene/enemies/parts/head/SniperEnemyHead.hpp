@@ -10,7 +10,7 @@
 
 class SniperEnemyHead : public EnemyHead {
 public:
-    SniperEnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
+    SniperEnemyHead(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
 
     void on_start() override;
 

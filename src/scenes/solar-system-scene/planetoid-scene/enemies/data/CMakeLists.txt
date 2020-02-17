@@ -1,9 +1,9 @@
 target_sources(non_gravitar PRIVATE
-        EnemyBuildData.hpp
+        EnemyPersistentData.hpp
 
-        BasicEnemyBuildData.hpp
+        BasicEnemyPersistentData.hpp
 
-        MultiShotEnemyBuildData.hpp
+        MultiShotEnemyPersistentData.hpp
 
         SniperEnemyBuildData.hpp
         )

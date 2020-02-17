@@ -5,15 +5,17 @@
 #include <camera/follow/SmoothCamera.hpp>
 #include <scene-transition/CompletionPrompt.hpp>
 #include <camera/follow/AutoZoomCamera.hpp>
+#include <random>
 #include "SolarSystemScene_EntryLogic.hpp"
 
 #define NG_SOLAR_SYSTEM_MINIATURE_PLANET_MIN_SIZE     10
 #define NG_SOLAR_SYSTEM_MINIATURE_PLANET_MAX_SIZE     30
 
-#define NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE    150
-#define NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SCALE   1.8f
 
-// The definition of the planetoid, measured in grid_points per length unit
+#define NG_SOLAR_SYSTEM_ARRANGEMENT_RADIUS_VARIABILITY  0.3f
+#define NG_SOLAR_SYSTEM_ARRANGEMENT_RADIUS_MULTIPLIER   1.5f
+
+// The definition of the planetoid miniature, measured in grid_points per length unit
 #define NG_SOLAR_SYSTEM_MINIATURE_PLANET_DEFINITION 3
 
 
@@ -51,10 +53,12 @@ void SolarSystemScene_EntryLogic::on_start() {
     planetoid_manager_l = new PlanetoidManager(solar_sys_construction_data);
     planetoid_manager->logichub()->attach_logic(planetoid_manager_l);
 
-    spawn_planets(solar_sys_construction_data, planetoid_manager_l->get_planetoid_data_vec());
+    float safe_circumference = planetoid_manager_l->get_planetoid_data_vec().size() * NG_SOLAR_SYSTEM_MINIATURE_PLANET_MAX_SIZE;
+    float safe_radius = safe_circumference / (2 * M_PI);
+    float actual_radius = safe_radius * NG_SOLAR_SYSTEM_ARRANGEMENT_RADIUS_MULTIPLIER;
+    spawn_planets(solar_sys_construction_data, actual_radius);
 
-    float scene_size = NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE*NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SCALE;
-    auto camera_l = new AutoZoomCamera(sge::Vec2<float>(0, 0), scene_size/20.f, scene_size*0.8f);
+    auto camera_l = new AutoZoomCamera(sge::Vec2<float>(0, 0), actual_radius, actual_radius*3);
     gameobject()->logichub()->attach_logic(camera_l);
     camera_l->set_follow(player);
 
@@ -65,10 +69,6 @@ void SolarSystemScene_EntryLogic::on_start() {
     on_completion_key_ev_handler = [=](){
         scene_transition_handler_l->start_transition_animation(&on_completion_animation_ended_ev_handler);
     };
-
-    //scene_transition_handler_l->get_scene_transition_overlay()->collapse();
-
-    //gameobject()->logichub()->attach_logic(new PauseLauncher());
 
 
     auto ui_go = scene()->spawn_gameobject("PlayerUI");
@@ -92,19 +92,15 @@ SolarSystemScene_EntryLogic::SolarSystemScene_EntryLogic(PlayerPersistentData *p
     this->player_persistent_data = player_persistent_data;
 }
 
-void SolarSystemScene_EntryLogic::spawn_planets(const SolarSystem_ConstructionData& solar_sys_construction_data, const std::vector<PlanetoidPersistentData *> &data_vec) {
+void SolarSystemScene_EntryLogic::spawn_planets(const SolarSystem_ConstructionData& solar_sys_construction_data, float safe_radius) {
     auto planetoid_data_vec = planetoid_manager_l->get_planetoid_data_vec();
-    auto solar_system_size = NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE * NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SCALE;
 
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd());
+    auto random_angle_gen = std::uniform_real_distribution<float>(0, M_PI_2);
 
-    NoiseMap noise_map(NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE,NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE);
-    auto noise_map_half_size = NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE / 2;
-    Perlin perlin(NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE / 5.f);
-    perlin.simple_setup(1, 0.1, 1);
-    perlin.fill_noise_map(noise_map, true);
-    noise_map.apply_gradient_as_mask(CircularGradient(noise_map_half_size, noise_map_half_size*0.4f, noise_map_half_size, noise_map_half_size, 1.f, 0.3, new LinearInterpolator));
-    int safe_distance = NG_SOLAR_SYSTEM_MINIATURE_PLANET_MAX_SIZE/NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SCALE;
-    noise_map.apply_gradient_as_mask(CircularGradient(safe_distance, safe_distance-1, noise_map_half_size, noise_map_half_size, 0, 0.5, new LinearInterpolator));
+    float angle = random_angle_gen(gen);
+    auto random_radius_gen = std::uniform_real_distribution<float>(0, safe_radius*NG_SOLAR_SYSTEM_ARRANGEMENT_RADIUS_VARIABILITY);
 
     for (int i = 0; i < planetoid_data_vec.size(); ++i) {
 
@@ -121,26 +117,12 @@ void SolarSystemScene_EntryLogic::spawn_planets(const SolarSystem_ConstructionDa
         new_scaled_planetoid->logichub()->attach_logic(new MiniaturePlanetPortal(planetoid_data_vec[i], grid_size));
         new_scaled_planetoid->transform()->set_local_scale(1.0 / NG_SOLAR_SYSTEM_MINIATURE_PLANET_DEFINITION);
 
-
-        // Find the position in the NoiseMap
-        sge::Vec2<int> best_coord(-1, -1);
-        float best_val = 0;
-        for (int x = 0; x < NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE; ++x) {
-            for (int y = 0; y < NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SIZE; ++y) {
-                if (noise_map[x][y] > best_val) {
-
-                    best_val = noise_map[x][y];
-                    best_coord = sge::Vec2<int>(x, y);
-                }
-            }
-        }
-        int this_planetoid_safe_distance = target_size/NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SCALE*1.2f;
-
-        noise_map.apply_gradient_as_mask(CircularGradient(this_planetoid_safe_distance*2, this_planetoid_safe_distance, best_coord.x, best_coord.y, 0.f, 1.f, new LinearInterpolator));
-
-        auto planetoid_pos = sge::Vec2<float>(
-                best_coord.x * NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SCALE - solar_system_size / 2.f,
-                best_coord.y * NG_SOLAR_SYSTEM_ARRANGEMENT_NOISE_MAP_SCALE - solar_system_size / 2.f);
+        float radius_offset = random_radius_gen(gen);
+        if (i%2==0) radius_offset = -radius_offset;
+        auto actual_radius = safe_radius + radius_offset;
+        auto planetoid_pos = (sge::Vec2<float>(std::cos(angle), std::sin(angle)) * actual_radius) - sge::Vec2<float>(target_size/2, target_size/2);
         new_scaled_planetoid->transform()->set_local_position(planetoid_pos);
+
+        angle += 2.f * M_PI / planetoid_data_vec.size();
     }
 }

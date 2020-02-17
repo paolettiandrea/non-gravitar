@@ -7,7 +7,7 @@ string SniperEnemyHead::get_logic_id() {
     return std::string("SniperEnemyHead");
 }
 
-SniperEnemyHead::SniperEnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
+SniperEnemyHead::SniperEnemyHead(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
 : EnemyHead(whole_data, my_breakable_geom_data)
 , pause_animation(new LinearInterpolator(), 0, 0, NG_ENEMY_SNIPER_LASER_TIME_BEFORE_SHOOTING)
 {

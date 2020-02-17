@@ -4,7 +4,7 @@
 #include <SGE/logic/Logic.hpp>
 #include <PlanetoidPersistentData.hpp>
 #include <SolarSystem_ConstructionData.hpp>
-#include "EnemyBuildData.hpp"
+#include "EnemyPersistentData.hpp"
 
 
 

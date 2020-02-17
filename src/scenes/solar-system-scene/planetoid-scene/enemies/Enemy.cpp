@@ -50,7 +50,7 @@ void Enemy::on_start() {
     gameobject()->logichub()->attach_logic(new BreakHandler(build_data->get_explosion_info(), true));
 }
 
-Enemy::Enemy(EnemyBuildData *build_data, PlayerPersistentData* player_persistent_data) {
+Enemy::Enemy(EnemyPersistentData *build_data, PlayerPersistentData* player_persistent_data) {
     this->build_data = build_data;
     this->player_persistent_data = player_persistent_data;
 }

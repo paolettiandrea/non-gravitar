@@ -41,9 +41,9 @@ void Player::on_start() {
     if (breakable) {
         ExplosionInfo explosion_info;
         explosion_info.explosion_radius = 1.0;
-        explosion_info.explosion_force = 1.0;
+        explosion_info.explosion_force = 0.2;
         gameobject()->logichub()->attach_logic(new BreakHandler (explosion_info, true, true));
-        trigger_l = new BreakTrigger(10, Rigidbody_H());
+        trigger_l = new BreakTrigger(2.f, Rigidbody_H());
         trigger_l->on_break_event += [&]() {
             death();
         };
@@ -66,7 +66,7 @@ void Player::on_fixed_update() {
         if (player_cannon->is_ready_to_shoot()) {
             auto bullet_l = new Bullet(PhysicsObject_ConstructionData("./res/models/enemies/basic/basic_cannon__bullet"));
             player_cannon->shoot(bullet_l);
-            trigger_l->set_ignored_rb(bullet_l->collider()->get_rigidbody());
+            if (breakable) trigger_l->set_ignored_rb(bullet_l->collider()->get_rigidbody());
         }
     }
 }

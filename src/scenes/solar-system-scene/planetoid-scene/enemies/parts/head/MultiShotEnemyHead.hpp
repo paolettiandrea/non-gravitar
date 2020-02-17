@@ -8,7 +8,7 @@
 
 class MultiShotEnemyHead : public EnemyHead {
 public:
-    MultiShotEnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
+    MultiShotEnemyHead(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
 
     string get_logic_id() override;
 

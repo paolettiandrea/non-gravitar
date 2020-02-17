@@ -1,6 +1,6 @@
 #include "MultiShotEnemyHead.hpp"
 
-MultiShotEnemyHead::MultiShotEnemyHead(EnemyBuildData *whole_data,
+MultiShotEnemyHead::MultiShotEnemyHead(EnemyPersistentData *whole_data,
                                        const BreakableObject_ConstructionData &my_breakable_geom_data) : EnemyHead(whole_data,
                                                                                                          my_breakable_geom_data) {}
 

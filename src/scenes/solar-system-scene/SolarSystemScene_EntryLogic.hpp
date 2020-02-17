@@ -25,7 +25,7 @@ private:
     utils::event::EventHandler on_completion_key_ev_handler;
     utils::event::EventHandler on_completion_animation_ended_ev_handler;
 
-    void spawn_planets(const SolarSystem_ConstructionData& solar_sys_construction_data, const std::vector<PlanetoidPersistentData*>& data_vec);
+    void spawn_planets(const SolarSystem_ConstructionData& solar_sys_construction_data, float safe_radius);
 
 };
 

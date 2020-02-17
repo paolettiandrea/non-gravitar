@@ -7,7 +7,7 @@ void EnemyPart::on_start() {
     gameobject()->logichub()->attach_logic(break_trigger_l);
 }
 
-EnemyPart::EnemyPart(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
+EnemyPart::EnemyPart(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
 : PhysicsObject(my_breakable_geom_data){
     this->build_data = whole_data;
     break_generator_l = new BreakGenerator(my_breakable_geom_data.get_max_stuck_pieces_on_break());

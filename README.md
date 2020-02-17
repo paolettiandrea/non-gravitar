@@ -4,6 +4,7 @@ It shares with the original similar aesthetics and mechanics, with the main exce
 
 ## Build
     git clone https://github.com/paolettiandrea/non-gravitar
+    cd non-gravitar
     git submodule update --init --recursive
     mkdir build
     cd build

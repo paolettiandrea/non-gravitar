@@ -4,13 +4,13 @@
 
 #include <scaled-planetoid/minimap/MinimapTraced_I.hpp>
 #include <player/Player.hpp>
-#include "EnemyBuildData.hpp"
+#include "EnemyPersistentData.hpp"
 #include "PlayerPersistentData.hpp"
 #include "Trigger.hpp"
 
 class Enemy : public sge::Logic {
 public:
-    Enemy(EnemyBuildData *build_data, PlayerPersistentData* player_persistent_data);
+    Enemy(EnemyPersistentData *build_data, PlayerPersistentData* player_persistent_data);
 
     std::string get_logic_id() override;
 
@@ -25,7 +25,7 @@ protected:
     GameObject_H m_base_gameobject;
     GameObject_H m_view_gameobject;
 
-     EnemyBuildData* build_data;
+     EnemyPersistentData* build_data;
     PlayerPersistentData *player_persistent_data;
 
     Trigger<Player>* view_trigger;

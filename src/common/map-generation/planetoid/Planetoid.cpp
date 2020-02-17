@@ -41,7 +41,7 @@ void Planetoid::on_start() {
 
     // Enemies
     enemy_counter = 0;
-    for(EnemyBuildData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
+    for(EnemyPersistentData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
         if (!enemy_to_spawn->destroyed) {
             enemy_counter++;
             enemy_to_spawn->destroy_event += enemy_destroyed_ev_handler;
@@ -106,7 +106,7 @@ void Planetoid::decrease_enemy_counter() {
 }
 
 void Planetoid::on_scene_destruction() {
-    for(EnemyBuildData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
+    for(EnemyPersistentData* enemy_to_spawn : planetoid_data->map_gen_info.enemies_persistent_data_vec) {
         enemy_to_spawn->destroy_event -= enemy_destroyed_ev_handler;
     }
 }

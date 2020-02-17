@@ -1,5 +1,5 @@
-#ifndef NON_GRAVITAR_ENEMYBUILDDATA_HPP
-#define NON_GRAVITAR_ENEMYBUILDDATA_HPP
+#ifndef NON_GRAVITAR_ENEMYPERSISTENTDATA_HPP
+#define NON_GRAVITAR_ENEMYPERSISTENTDATA_HPP
 
 #include <PhysicsObject.hpp>
 #include <scaled-planetoid/minimap/MinimapTraced_I.hpp>
@@ -16,9 +16,9 @@ struct EnemyOffsets {
     sge::Vec2<float> shooting_offset;
 };
 
-class EnemyBuildData: public MinimapTraced_I {
+class EnemyPersistentData: public MinimapTraced_I {
 public:
-    virtual ~EnemyBuildData() {
+    virtual ~EnemyPersistentData() {
     }
     virtual float space_needed_on_edge() = 0;
 
@@ -60,4 +60,4 @@ public:
 
     utils::event::Event destroy_event;
 };
-#endif //NON_GRAVITAR_ENEMYBUILDDATA_HPP
+#endif //NON_GRAVITAR_ENEMYPERSISTENTDATA_HPP

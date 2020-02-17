@@ -1,7 +1,7 @@
 #ifndef NON_GRAVITAR_GAME_HPP
 #define NON_GRAVITAR_GAME_HPP
 
-#define NG_GAME_PLANETOID_NUMBER            6
+#define NG_GAME_PLANETOID_NUMBER            7
 #define NG_GAME_PLANETOID_MIN_SIZE          60
 #define NG_GAME_PLANETOID_MAX_SIZE          300
 

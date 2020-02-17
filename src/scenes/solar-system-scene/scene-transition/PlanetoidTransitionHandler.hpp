@@ -13,6 +13,8 @@ public:
 
     void pop_scene() override;
 
+    const PlanetoidPersistentData* get_planetoid_data() { return planetoid->get_planetoid_persistent_data(); }
+
 private:
     Planetoid* planetoid;
 

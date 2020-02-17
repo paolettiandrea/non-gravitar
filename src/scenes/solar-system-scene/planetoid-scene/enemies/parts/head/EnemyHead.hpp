@@ -11,7 +11,7 @@ class EnemyHead : public EnemyPart {
     std::string get_logic_id() override;
 
 public:
-    EnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
+    EnemyHead(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data);
 
     void on_start() override;
 

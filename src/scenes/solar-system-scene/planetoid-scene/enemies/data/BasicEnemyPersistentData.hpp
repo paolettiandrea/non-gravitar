@@ -1,13 +1,13 @@
-#ifndef NON_GRAVITAR_BASICENEMYBUILDDATA_HPP
-#define NON_GRAVITAR_BASICENEMYBUILDDATA_HPP
+#ifndef NON_GRAVITAR_BASICENEMYPERSISTENTDATA_HPP
+#define NON_GRAVITAR_BASICENEMYPERSISTENTDATA_HPP
 
 #include <SGE/logic/Logic.hpp>
 #include <enemies/Enemy.hpp>
-#include "EnemyBuildData.hpp"
+#include "EnemyPersistentData.hpp"
 #include "EnemyHead.hpp"
 #include "COLORS.hpp"
 
-class BasicEnemyBuildData : public EnemyBuildData {
+class BasicEnemyPersistentData : public EnemyPersistentData {
 
 
 public:
@@ -66,4 +66,4 @@ public:
 
 
 };
-#endif //NON_GRAVITAR_BASICENEMYBUILDDATA_HPP
+#endif //NON_GRAVITAR_BASICENEMYPERSISTENTDATA_HPP

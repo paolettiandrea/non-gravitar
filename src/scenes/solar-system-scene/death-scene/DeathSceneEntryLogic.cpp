@@ -1,5 +1,6 @@
 #include <SolarSystemScene_EntryLogic.hpp>
 #include <SGE/components/graphics/ui/blocks/UIText.hpp>
+#include <GameSceneEntryLogic.hpp>
 #include "DeathSceneEntryLogic.hpp"
 
 std::string DeathSceneEntryLogic::get_logic_id() {
@@ -8,12 +9,12 @@ std::string DeathSceneEntryLogic::get_logic_id() {
 
 void DeathSceneEntryLogic::on_update() {
     if (env()->is_key_pressed(sf::Keyboard::Q)) {
-        env()->doom_scenes(2);
+        env()->quit();
     }
 
     if (env()->is_key_pressed(sf::Keyboard::R)) {
-        env()->doom_scenes(2);
-        env()->book_new_scene_push("Solar System", new SolarSystemScene_EntryLogic(player_persistent_data));
+        env()->doom_scenes(env()->get_scene_number());
+        env()->book_new_scene_push("Restarted Game Scene", new GameScene_EntryLogic());
     }
 }
 

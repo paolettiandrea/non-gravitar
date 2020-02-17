@@ -43,7 +43,7 @@ void EnemyHead::deactivate() {
     head_rotation_animation.stop();
 }
 
-EnemyHead::EnemyHead(EnemyBuildData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
+EnemyHead::EnemyHead(EnemyPersistentData *whole_data, const BreakableObject_ConstructionData &my_breakable_geom_data)
 : EnemyPart(whole_data, my_breakable_geom_data)
 , head_rotation_animation(new LinearInterpolator(), 0, 0, whole_data->get_head_turning_duration()) {
 

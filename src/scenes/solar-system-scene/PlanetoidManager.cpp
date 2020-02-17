@@ -1,8 +1,9 @@
 #include <SGE/components/physics/Collider.hpp>
+#include <random>
 
-#include "BasicEnemyBuildData.hpp"
+#include "BasicEnemyPersistentData.hpp"
 #include "FuelCratePersistentData.hpp"
-#include "MultiShotEnemyBuildData.hpp"
+#include "MultiShotEnemyPersistentData.hpp"
 #include "SniperEnemyBuildData.hpp"
 #include "MaxFuelCratePersistentData.hpp"
 #include "ExtraLifeCratePersistentData.hpp"
@@ -67,10 +68,10 @@ PlanetoidManager::PlanetoidManager(const SolarSystem_ConstructionData &data) {
         }
 
         for (int j = 0; j < basic_enemies; ++j) {
-            map_gen_info.enemies_persistent_data_vec.push_back(new BasicEnemyBuildData());
+            map_gen_info.enemies_persistent_data_vec.push_back(new BasicEnemyPersistentData());
         }
         for (int j = 0; j < multi_enemies; ++j) {
-            map_gen_info.enemies_persistent_data_vec.push_back(new MultiShotEnemyBuildData());
+            map_gen_info.enemies_persistent_data_vec.push_back(new MultiShotEnemyPersistentData());
         }
         for (int j = 0; j < sniper_enemies; ++j) {
             map_gen_info.enemies_persistent_data_vec.push_back(new SniperEnemyBuildData());
@@ -87,10 +88,9 @@ PlanetoidManager::PlanetoidManager(const SolarSystem_ConstructionData &data) {
         add_special_crates(map_gen_info);
 
         planetoid_data_vec.push_back(new PlanetoidPersistentData(map_gen_info));
-
-        LOG_INFO << "MAPGENINFO:\nSize: " << map_gen_info.size << "\nEnemies: basic[" << basic_enemies << "] multi["
-                 << multi_enemies << "] sniper[" << sniper_enemies << "]" << "\nCrates:" << crate_number;
     }
+
+    std::shuffle(planetoid_data_vec.begin(), planetoid_data_vec.end(), std::mt19937(std::random_device()()));
 }
 
 const std::vector<PlanetoidPersistentData *> &PlanetoidManager::get_planetoid_data_vec() const {

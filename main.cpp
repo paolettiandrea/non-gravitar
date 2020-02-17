@@ -40,7 +40,7 @@ int main() {
 
     // Initialize the engine with an entry scene
     auto entry_logic = new GameScene_EntryLogic();
-    sge::cd::SceneConstructionData scene_cd("Entry Scene", entry_logic);
+    sge::cd::Scene_ConstructionData scene_cd("Entry Scene", entry_logic);
     scene_cd.camera_vertical_zoom = 30;
 
     engine.initialize(scene_cd);

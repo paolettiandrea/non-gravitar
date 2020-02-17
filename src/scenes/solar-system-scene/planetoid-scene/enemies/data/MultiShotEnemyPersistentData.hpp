@@ -1,11 +1,11 @@
-#ifndef NON_GRAVITAR_MULTISHOTENEMYBUILDDATA_HPP
-#define NON_GRAVITAR_MULTISHOTENEMYBUILDDATA_HPP
+#ifndef NON_GRAVITAR_MULTISHOTENEMYPERSISTENTDATA_HPP
+#define NON_GRAVITAR_MULTISHOTENEMYPERSISTENTDATA_HPP
 
 
 #include "MultiShotEnemyHead.hpp"
-#include "BasicEnemyBuildData.hpp"
+#include "BasicEnemyPersistentData.hpp"
 
-class MultiShotEnemyBuildData : public BasicEnemyBuildData {
+class MultiShotEnemyPersistentData : public BasicEnemyPersistentData {
 public:
     EnemyHead *new_head_logic() override {
         return new MultiShotEnemyHead(this, this->head_load_paths());
@@ -31,4 +31,4 @@ public:
 };
 
 
-#endif //NON_GRAVITAR_MULTISHOTENEMYBUILDDATA_HPP
+#endif //NON_GRAVITAR_MULTISHOTENEMYPERSISTENTDATA_HPP

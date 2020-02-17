@@ -1,10 +1,10 @@
 #ifndef NON_GRAVITAR_SNIPERENEMYBUILDDATA_HPP
 #define NON_GRAVITAR_SNIPERENEMYBUILDDATA_HPP
 
-#include "BasicEnemyBuildData.hpp"
+#include "BasicEnemyPersistentData.hpp"
 #include "SniperEnemyHead.hpp"
 
-class SniperEnemyBuildData : public BasicEnemyBuildData {
+class SniperEnemyBuildData : public BasicEnemyPersistentData {
 public:
     EnemyHead *new_head_logic() override {
         return new SniperEnemyHead(this, this->head_load_paths());
@@ -12,7 +12,7 @@ public:
 
     float get_shooting_speed() override                 { return 70; }
 
-    float get_view_range() override                     { return BasicEnemyBuildData::get_view_range()*2; }
+    float get_view_range() override                     { return BasicEnemyPersistentData::get_view_range() * 2; }
 
     EnemyOffsets get_offsets() override {
         EnemyOffsets enemy_offsets;

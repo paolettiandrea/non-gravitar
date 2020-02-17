@@ -10,7 +10,9 @@
 #include <PlanetoidTransitionHandler.hpp>
 
 
-#define NG_PLANETOID_SCENE_SPAWN_DISTANCE 20
+#define NG_PLANETOID_SCENE_SPAWN_DISTANCE                       20
+#define NG_PLANETOID_SCENE_TELEPORT_DISTANCE_FROM_SURFACE       70
+#define NG_PLANETOID_SCENE_DOOM_DISTANCE_FROM_SURFACE           300
 
 class PlanetoidScene_EntryLogic : public sge::Logic {
 public:
@@ -24,6 +26,8 @@ private:
     MiniaturePlanetoid *base_miniature;
     PlayerPersistentData *player_persistent_data;
     SceneTransitionHandler* parent_transition_handler;
+
+    float actual_radius;
 
 };
 

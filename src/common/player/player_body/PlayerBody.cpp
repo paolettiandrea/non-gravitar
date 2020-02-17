@@ -1,4 +1,5 @@
 #include <player/PlayerPersistentData.hpp>
+#include <utility-classes/Math.hpp>
 #include "PlayerBody.hpp"
 
 std::string PlayerBody::get_logic_id() {
@@ -25,20 +26,22 @@ void PlayerBody::on_start() {
 }
 
 void PlayerBody::on_update() {
-    float rot_per_s = 2*M_PI;
-    if (env()->is_key_down(NG_CONTROLS_PLAYER_TURN_RIGHT_KEY)) {
-        auto rot = gameobject()->transform()->get_world_rotation();
-        auto b2_body = m_collider->get_rigidbody()->get_b2_body();
-        b2_body->SetTransform(b2_body->GetPosition(), rot - rot_per_s*env()->delta_time());
+    if (env()->is_key_released(NG_CONTROLS_PLAYER_TURN_RIGHT_KEY) || env()->is_key_released(NG_CONTROLS_PLAYER_TURN_LEFT_KEY)) {
+        current_rotation_vel = 0.f;
     }
-    if (env()->is_key_down(NG_CONTROLS_PLAYER_TURN_LEFT_KEY)) {
-        auto rot = gameobject()->transform()->get_world_rotation();
-        auto b2_body = m_collider->get_rigidbody()->get_b2_body();
-        b2_body->SetTransform(b2_body->GetPosition(), rot + rot_per_s*env()->delta_time());
-    }
-}
 
-void PlayerBody::on_fixed_update() {
+    bool right_down = env()->is_key_down(NG_CONTROLS_PLAYER_TURN_RIGHT_KEY);
+    bool left_down = env()->is_key_down(NG_CONTROLS_PLAYER_TURN_LEFT_KEY);
+
+    if (right_down || left_down) {
+        float blend = NG_PLAYER_ROTATION_SHARPNESS * env()->delta_time();
+        current_rotation_vel = Math::lerp(current_rotation_vel, target_rotation_vel, blend);
+
+        auto rot = gameobject()->transform()->get_world_rotation();
+        auto b2_body = m_collider->get_rigidbody()->get_b2_body();
+        if (right_down) { b2_body->SetTransform(b2_body->GetPosition(), rot - current_rotation_vel*env()->delta_time()); }
+        if (left_down) { b2_body->SetTransform(b2_body->GetPosition(), rot + current_rotation_vel*env()->delta_time()); }
+    }
 
 }
 

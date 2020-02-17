@@ -10,6 +10,7 @@
 #define ZOOM_SHARPNESS 10
 #define NG_CAMERA_TARGET_ZOOM 45.f
 
+#include "Math.hpp"
 
 class SmoothCamera : public sge::Logic {
 public:
@@ -30,11 +31,6 @@ public:
     std::string get_logic_id() override;
 
     void on_fixed_update() override;
-
-private:
-
-    float lerp (float current, float target, float sharpness);
-    sge::Vec2<float> lerp (sge::Vec2<float> current, sge::Vec2<float> target, float sharpness);
 };
 
 

@@ -2,8 +2,10 @@
 #define NON_GRAVITAR_CRATE_HPP
 
 
-#include <utility-logic/PhysicsObject.hpp>
+#include "PhysicsObject.hpp"
 #include "CratePersistentData.hpp"
+#include "Fading.hpp"
+
 
 #define NG_CRATE_SCALE                  0.8
 #define NG_CRATE_RESTITUTION            0.8

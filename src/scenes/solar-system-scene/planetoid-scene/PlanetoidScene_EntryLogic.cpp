@@ -30,6 +30,7 @@ void PlanetoidScene_EntryLogic::on_start() {
     auto entrance_pos = sge::Vec2<float>(planetoid_persistent_data->map_generator.entrance_coords.x,
                               planetoid_persistent_data->map_generator.entrance_coords.y);
     auto center_pos = sge::Vec2<float>(planetoid_persistent_data->size / 2.0, planetoid_persistent_data->size / 2.0);
+    actual_radius = (entrance_pos - center_pos).get_magnitude();
     auto outward_dir = (entrance_pos - center_pos).normalize();
     auto spawn_point = entrance_pos + (outward_dir * (float)NG_PLANETOID_SCENE_SPAWN_DISTANCE);
 
@@ -54,7 +55,9 @@ void PlanetoidScene_EntryLogic::on_start() {
 
     auto transition_trigger = scene()->spawn_gameobject("TransitionTrigger");
     transition_trigger->transform()->set_local_position(center_pos);
-    transition_trigger->logichub()->attach_logic(new OuterSpaceTransitionTrigger(planetoid_persistent_data->size*2, planetoid_transition_handler_l));
+    transition_trigger->logichub()->attach_logic(new OuterSpaceTransitionTrigger(actual_radius+NG_PLANETOID_SCENE_DOOM_DISTANCE_FROM_SURFACE*2,
+                                                                                 planetoid_transition_handler_l, actual_radius+ NG_PLANETOID_SCENE_TELEPORT_DISTANCE_FROM_SURFACE,
+                                                                                 player_spawn_manager_l));
 
 
     auto minimap_go = scene()->spawn_gameobject("Minimap");
