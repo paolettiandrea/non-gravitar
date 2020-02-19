@@ -1,0 +1,579 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Non Gravitar</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2e653a11-0271-4f12-8f81-0c935626252e" class="page sans"><header><h1 class="page-title">Non Gravitar</h1></header><div class="page-body"><p id="96385170-09ae-48a1-98ec-aea1b87b1758" class="">Non Gravitar è un progetto realizzato nell&#x27;ambito di un corso di programmazione dell&#x27; Università di Bologna. Consiste nella realizzazione di un videogioco a grafica vettoriale 2D fortemente ispirato a <a href="https://en.wikipedia.org/wiki/Gravitar">Gravitar</a>.</p><p id="3d95a23d-3704-4a67-b1b1-9dcda12f8b3d" class="">Si è deciso di dividere il progetto in due parti:</p><ul id="fab2482a-da14-483e-b93c-4d60540653de" class="bulleted-list"><li><strong>SGE</strong>: una libreria con limitate funzionalità da game engine basate su <a href="https://www.sfml-dev.org/">SFML</a> e <a href="https://box2d.org/">Box2D</a></li></ul><ul id="1cb096c1-4487-4cf4-a99d-e099affbfe5f" class="bulleted-list"><li><strong>Non Gravitar</strong>: la vera e propria logica di gioco, che ovviamente poggia su SGE </li></ul><h1 id="1ba59009-7c56-4b21-bc44-b7b02f6b1913" class="">SGE</h1><p id="e5b0a547-901f-4a21-ac87-25cf44390108" class="">SGE (Simple Game Engine) è una libreria che offre alcune basilari funzionalità da game engine. Supporta un <strong>ambiente grafico vettoriale </strong>e una <strong>simulazione fisica 2D</strong>, una <strong>organizzazione in scene</strong> e una <strong>gerarchia ad albero di oggetti</strong> il cui comportamento è definito tramite l&#x27;aggiunta di <strong>componenti</strong> e <strong>logiche</strong> (si veda più avanti).</p><p id="7279821d-29e7-4dc1-94a1-23f3abb54397" class="">Per quanto questa libreria sia stata costruita ad-hoc per la realizzazione di <a href="https://github.com/paolettiandrea/non-gravitar">Non Gravitar</a>, si è cercato di mantenerla relativamente generale e il più riutilizzabile possibile, non tanto perchè debba essere effettivamente riutilizzata, quanto piuttosto come esercizio di buona pratica nella separazione tra engine e contenuto.</p><h2 id="f68cd36c-361b-4493-956d-a97b4c283bec" class="">Game loop</h2><p id="66060ca1-28cb-4151-953c-3583441ba480" class="">Il cuore della libreria è il game loop, sequenza di procedure ripetuta fino alla terminazione dell&#x27;esecuzione dell&#x27;engine. </p><figure id="df91dfa5-04f4-4f07-93b8-be9e7acee7de" class="image"><a href="../Non%20Gravitar/SGE-game-loop(7).png"><img style="width:912px" src="../Non%20Gravitar/SGE-game-loop(7).png"/></a><figcaption>Qui sono illustrati i momenti salienti del game loop. In verde i callback che una determinata logica di gioco riceverà nell&#x27;arco della sua vita, in grigio le routine interne dell&#x27;engine.</figcaption></figure><h2 id="8eb731e0-71a5-4600-9e2a-cecb855869a0" class="">Scene Stack</h2><p id="c28c35ba-484e-49ae-b545-e5ab42226cf9" class="">Il contenuto in SGE è innanzitutto organizzato in scene, che possono contenere un numero arbitrario di <code>GameObject</code>, organizzati in una gerarchia ad albero dove la scena funge da radice. Queste scene sono contenute in uno stack; solo la scena in cima sarà &quot;attiva&quot;, ovvero verrà disegnata, simulata e riceverà i callback dal game-loop. Ciò permette per esempio il mantenimento dello stato di una scena di gioco mentre un menu di pausa prende le redini del game-loop, con un semplice pop della scena menù l&#x27;esecuzione della scena di gioco riprende.</p><h3 id="8906371f-d71a-47c4-9454-b0c872f2a1f2" class="">Scenes</h3><p id="5549fd15-9d22-4033-ba24-0c49b176b845" class="">Una scena viene definita alla costruzione da un oggetto <code>Scene_ConstructionData</code> che ne specifica una serie di parametri. Di questi il più importante è l&#x27;<strong>entry logic</strong>, ovvero la logica che sarà attaccata al <em>GameObject</em> iniziale della scena. Questo è di fatto l&#x27;entry point di una scena, tipicamente l&#x27;utente utilizzerà <code>on_start()</code> per la definizione dei suoi contenuti (si veda in seguito).</p><h2 id="8c22d0ea-626c-4834-b953-99f6e2dc54d1" class="">Components</h2><p id="685f9352-a085-43b1-b6ed-d522eebf7300" class="">SGE si basa su una forma non particolarmente stretta di<em> </em><strong>Entity Component System</strong>, in cui un <em>GameObject</em> non è altro che un recipiente in grado di contenere alcuni <code>Component</code><strong> </strong>che ne specificano il comportamento. Un <em>GameObject</em> può contenere solo un <em>Component</em> di ogni tipo. Due di questi sono sempre presenti in un gameobject, dallo spawn alla distruzione:</p><ul id="c2f855dc-ddf9-4b3d-ad8b-af40c02066b7" class="bulleted-list"><li><code>Transform</code>: definisce le proprietà spaziali di un gameobject (<em>posizione</em>, <em>rotazione</em>, <em>scala</em>) e lo colloca in una gerarchia ad albero di gameobject che permette di applicare tali proprietà spaziali gerarchicamente</li></ul><ul id="f290d474-c395-478e-858f-c5acb305c6cb" class="bulleted-list"><li><code>LogicHub</code>: contiene gli oggetti <code>Logic</code> e ne media l&#x27;accesso</li></ul><p id="414e6d1b-75ad-41de-b35a-06d81c45591c" class="">Sono inoltre presenti alcuni <strong>component &quot;facoltativi&quot;</strong> che possono specificare ulteriormente alcuni aspetti del comportamento di un oggetto nell&#x27;ambiente di gioco:</p><ul id="080c94ee-c66e-4f32-bf0c-36b2a71652a7" class="bulleted-list"><li><code>VertArray</code>: permette di definire come l&#x27;oggetto viene disegnato in relazione allo spazio definito dalla gerarchia di <em>Transform</em></li></ul><ul id="45dce3a1-3746-46fe-a96e-35d4c5e3f4f5" class="bulleted-list"><li><code>UI</code>: permette di definire un UI tramite oggetti <code>UIContent</code> che a differenza dei <em>VertArray</em> sono disposti in <em>screen-space</em></li></ul><ul id="6495de31-61e5-443e-8253-f16bb37c92bd" class="bulleted-list"><li><code>Rigidbody</code>: rende un gameobject parte della simulazione fisica e media l&#x27;applicazione di forze a tale oggetto. È necessario che vi sia almeno un <em>Collider</em> nello stesso <em>GameObject</em> o nei <em>GameObject</em> del suo sottoalbero</li></ul><ul id="a991c661-1cc3-4f8d-ac73-e3e9d307b9b3" class="bulleted-list"><li><code>Collider</code>: definisce la geometria di un oggetto fisico (o di una sua parte) e alcune proprietà fisiche collegate ad essa quali <em>friction</em>, <em>restitution</em> e <em>density</em></li></ul><h2 id="3225307b-45b4-4ae1-913c-7d0d18c5bf3a" class="">Logic</h2><p id="beca3198-d8f3-44e9-a3cb-96c37fafafd5" class="">Questi sono gli oggetti gestiti dal componente <em>LogicHub</em> attraverso cui l&#x27;utente può specificare la propria logica. Ciò viene fatto tramite la creazione di classi che ereditano da <code>sge::Logic</code>, classe astratta che fornisce loro una serie di callback, caratterizzati per convenzione dal prefisso <code>on_</code>. Qui sta il cuore di questa architettura, poichè l&#x27;engine garantisce che questi callback verranno invocati in specifici momenti del game-loop per ogni Logic di ogni GameObject della scena attiva. </p><ul id="7b1d1b2b-bd6c-498b-8fb6-b7e9890bb316" class="bulleted-list"><li><code>on_start()</code>: invocato quando la logica viene aggiunta a un <em>LogicHub</em> (particolarmente utile per l&#x27;inizializzazione)</li></ul><ul id="63af787a-5d75-4364-a31d-8943cf34f232" class="bulleted-list"><li><code>on_destruction()</code>: invocato quando il GameObject a cui questa logica appartiene è distrutto</li></ul><ul id="cd6116cd-f0e6-44a8-922b-27b2da42bfd0" class="bulleted-list"><li><code>on_scene_destruction()</code>: invocato quando la scena a cui il <em>GameObject</em> di questa logica appartiene viene distrutta</li></ul><ul id="db600762-ba3b-4ebd-b08e-0068a8837610" class="bulleted-list"><li><code>on_update()</code>: invocato subito prima delle operazioni di render ad ogni iterazione del game-loop</li></ul><ul id="e0c258a0-e2a0-4dfe-802a-5906dc715d92" class="bulleted-list"><li><code>on_fixed_update()</code>: invocato ad ogni iterazione del loop fisico interno al game-loop, subito prima dell&#x27;avanzamento della simulazione. Può essere invocato 0, 1 o più volte in un iterazione del game-loop</li></ul><ul id="61380871-ff49-438c-81e3-b173fae201f5" class="bulleted-list"><li><code>on_scene_pause()</code>: invocato quando la scena a cui questa logica appartiene viene &quot;coperta&quot; da una nuova scena nello scene-stack</li></ul><ul id="d0e5d2f8-c464-45f8-8581-8fb9f1989d99" class="bulleted-list"><li><code>on_scene_resume()</code>: invocato quando la scena a cui questa logica appartiene viene &quot;scoperta&quot; dalla distruzione della scena che la copriva nello scene-stack, momento a partire dal quale ricomincerà a ricevere i callback dal game-loop</li></ul><ul id="1c9e52f0-7534-4a95-9764-88153a13a66e" class="bulleted-list"><li><code>on_collision_begin(CollisionInfo&amp; info)</code>: invocato quando inizia una collisione che coinvolge il <em>Collider</em> attaccato al <em>GameObject</em> di questa logica</li></ul><ul id="24cea4e3-4a1e-4835-bf21-b9c0b1511e1c" class="bulleted-list"><li><code>on_collision_end(CollisionInfo&amp; info)</code>:  invocato quando termina una collisione che coinvolge il <em>Collider</em> attaccato al <em>GameObject</em> di questa logica. Ciò può avvenire dopo multiple iterazioni del loop fisico o del game-loop rispetto all&#x27;inizio della collisione</li></ul><h2 id="37fc6a3f-2535-49ff-8243-e443a956a3e8" class="">Entry point</h2><p id="65c49157-61a2-4d73-9509-40010fd53d87" class="">Il constructor dell&#x27;engine utilizza un oggetto <code>Engine_ConstructionData</code>, che definisce una serie di impostazioni di esecuzione. Una volta costruito, l&#x27;engine deve anche essere inizializzato con un oggetto <code>Scene_ConstructionData</code>, che definirà la scena iniziale, ovvero l&#x27;unica presente nello scene stack alla prima iterazione del game loop.</p><pre id="5af104a5-cd80-4808-b7a6-2e05e838c811" class="code"><code>Engine_ConstructionData engine_cd();                                     // Object that holds engine settings
+// Set your engine options here
+Engine engine(engine_cd);
+
+auto entry_logic = new MyEntryLogic();                                   // Initialize the engine with an entry scene
+Scene_ConstructionData scene_cd(&quot;My Entry Scene&quot;, entry_logic);
+// Set your scene options here
+engine.initialize(scene_cd);
+
+while (engine.game_loop()) { }                                           // game_loop() returns false when the engine is done
+return 0;</code></pre><h2 id="6783661a-fb0c-4980-8b51-6d8e48d13823" class="">Note sull&#x27;implementazione</h2><h3 id="091daeb9-4c3e-4323-83a2-f075211cbd24" class="">Debug</h3><p id="0705ec48-3081-45b1-b98e-ae8e00cbe22d" class="">Quando SGE viene compilato con <code>CMAKE_BUILD_TYPE==&quot;Debug&quot;</code> (o direttamente con una direttiva al preprocessore <code>DEBUG</code>) sono disponibili alcune interfacce per il debug come una <strong>hierarchy view</strong> (<code>Ctrl+V</code>, navigabile con <code>Ctrl+&lt;arrowkeys&gt;</code>), <strong>transform</strong> (<code>Ctrl+T</code>), <strong>collider</strong> (<code>Ctrl+C</code>), <strong>names</strong> (<code>Ctrl+N</code>), oltre che un <strong>contatore fps</strong> in alto a destra.</p><h3 id="b3f4c6c5-3f10-4ac8-b212-40993f967024" class="">Cache awareness</h3><p id="0b3f4faf-7aba-42cb-8b9d-85a8d56af913" class="">L&#x27;accesso a gameobjects e components è mediato da <strong>handles</strong>. Questo perchè questi oggetti sono organizzati in memoria in un vettore e dunque possono essere riallocati se tale vettore si riempie. Ciò causa un leggero overhead nell&#x27;accesso a tali oggetti, ma rende anche le istanze di un dato <em>Component</em> contigue in memoria e minimizza dunque le cache-miss durante lo scorrimento del vettore. Se si considera che un game-loop è costituito di una serie di &quot;burst&quot; concentrati su uno specifico tipo di component ciò può essere molto rilevante. Detto questo, SGE avrà colli di bottiglia ben più significativi e banali non essendo particolarmente ottimizzato in alcune sue parti. Anche questo è più che altro un esercizio di esplorazione di una tecnica interessante.</p><h3 id="4d88a235-b517-45d1-ad67-b133ff2b1fe5" class="">Smesh e spath files</h3><p id="df35bcba-db61-497f-b5e6-880c7b28233f" class="">SGE utilizza due semplicissimi file per salvare geometrie di triangoli (<code>.smesh</code>) e sequenze di punti (<code>.spath</code>), utilizzati rispettivamente da <em>VertArray</em> per la dichiarazione di mesh di triangoli e da <em>Collider</em> per la dichiarazione di <em>chain_colliders</em> o <em>polygon_colliders</em>. Teoricamente questi file possono essere creati e modificati manualmente, ma per facilitare tali operazioni insieme a SGE è fornito uno script python che permette l&#x27;esportazione da Blender di tali geometrie, oltre che un wrapper in bash che permette l&#x27;esecuzione dell&#x27;esportazione ricorsivamente su cartelle.</p><p id="9abc6779-7282-4425-b444-d362d5d52582" class="">
+</p><hr id="583c1f06-1b10-443a-9cca-68513a97a32f"/><h1 id="d0bbfa9e-3c0d-4e2d-9805-f4425bc2d887" class="">Non Gravitar</h1><h2 id="32e3eb30-6817-496d-b3f9-5b5601d9cf56" class="">Flusso di gioco</h2><p id="18ce422d-cf39-4eed-b608-994baf214657" class="">All&#x27;apertura il giocatore si trova in una scena <code>SolarSystem</code> con delle versioni scalate dei pianeti. Durante l&#x27;inizializzazione di tale scena vengono generati i dati salienti dei pianeti, contenuti in degli oggetti <code>PlanetoidPersistentData</code> gestiti dal <code>PlanetoidManager</code>. Al contatto con un pianeta il giocatore entra nella vera e propria scena di gioco, dove può esplorare il pianeta, distruggendo i nemici e raccogliendo le casse. Alla distruzione di tutti i nemici di un pianeta quest&#x27;ultimo è considerato completato. Quando tutti i pianeti di un sistema solare sono completati può essere generato un nuovo sistema solare. Ciò dietro le quinte consiste nel pop della scena SolarSystem completata e nel push di una nuova scena sullo stack, di fatto una sostituzione.</p><h2 id="139fc38a-0164-4976-af60-6ffd85a8dd50" class="">Planetoids</h2><p id="f5fa883c-3413-4a12-8c78-40e145e39990" class="">Si è scelto di rendere i pianeti cavi e concentrare gran parte del gameplay al loro interno, poichè in un ambiente senza gravità la navigazione di uno spazio confinato tende a essere più interessante del mantenimento di orbite intorno a oggetti in uno spazio vuoto.</p><p id="3600bbd9-8ab9-48ed-b9f4-1ce5e4c46569" class="">I pianeti sono generati tramite la manipolazione di perlin noise bidimensionale e l&#x27;applicazione di un algoritmo <a href="https://en.wikipedia.org/wiki/Marching_squares">marching squares</a> alla matrice risultante. La manipolazione consiste nell&#x27;applicazione di gradienti per garantire per esempio la circolarità del pianeta o il collegamento tra le regioni interne. L&#x27;algoritmo marching squares genera poi una lista di triangoli che viene passata a un <em>VertArray</em> e una lista di <code>sge::Path</code> che generano una serie di <em>Collider </em>(di tipo chain), tutti figli di un <em>RigidBody</em> di tipo <em>static</em>.</p><figure id="f8e464e7-ec71-437a-87b0-6bd0913e87a9" class="image"><a href="../Non%20Gravitar/non-gravitar-planetoid-generation.png"><img style="width:1056px" src="../Non%20Gravitar/non-gravitar-planetoid-generation.png"/></a><figcaption>Qui è mostrato come in realtà la generazione del pianeta avvenga utilizzando due diverse matrici di perlin noise. La prima per le caverne interne e la seconda per la superficie.</figcaption></figure><h3 id="110968cb-f4ed-4af1-a8e8-1fde9d34e131" class="">Popolamento dei pianeti</h3><p id="501f1146-1877-40f7-8ffa-83ea5f0e0b5b" class="">In <code>src/GAME.hpp</code> è possibile trovare i principali parametri che definiscono il popolamento di un pianeta. Tali parametri sono complessati con un coefficiente di difficoltà che crescerà di pianeta in pianeta e di sistema in sistema. Un coefficiente di difficoltà maggiore per esempio porterà a una maggiore densità di nemici e una minore densità di casse.</p><h2 id="78d3148a-f99b-4e64-98c3-ed76581d1ec2" class="">Player</h2><p id="32d8f73b-ae8b-4609-8163-5932762ff82f" class="">Il giocatore controlla una navicella la cui inerzia è fisicamente simulata, ma la cui rotazione è gestita tramite rotazioni geometriche, generando una sorta di ibrido tra un <em>kinematic-rigidbody</em> e un <em>dynamic-rigidbody</em>. Questo garantisce un maggiore controllo sulla direzione della spinta del motore senza rinunciare alla simulazione fisica degli altri aspetti del movimento del giocatore. Ciò causa comportamenti poco realistici quando il giocatore ruota a contatto con altri oggetti, ma in virtù delle meccaniche di gioco questo accade raramente.</p><p id="91cbd55c-31bc-4c03-8a75-4564b11d5f34" class="">La navicella è dotata di un cannone che spara proiettili generando un piccolo contraccolpo sulla navicella. Sparare richiede una certa quantità di <strong>stamina</strong>, che si rigenera ad una velocità costante ed è rappresentata da una barra in basso, insieme alla quantità di <strong>fuel</strong>.</p><h2 id="a1f9ff07-828a-4d02-b317-4c0e4b1c6a9a" class="">Enemies</h2><p id="4291e29a-3528-4364-9334-660017d8054a" class="">I nemici hanno una struttura a torretta con una base poggiata su un bordo del pianeta e una testa, che contiene la logica specifica per ogni nemico. Ve ne sono tre tipi:</p><ul id="81f63d84-d05c-4aad-92d8-da973669a863" class="bulleted-list"><li><code>BasicEnemy</code>: ha un solo cannone, spara a intervalli regolari in direzioni casuali.</li></ul><ul id="eb1cc376-bdec-4c23-b0a5-1e077d304876" class="bulleted-list"><li><code>MultiShotEnemy</code>: ha 3 cannoni, una dimensione maggiore e un comportamento identico a quello di BasicEnemy. È un buon esempio di riutilizzo di codice, poichè la logica della testa eredita da quella del <em>BasicEnemy</em> e compie solo un paio di  override per aggiungere i cannoni laterali all&#x27;inizializzazione e per garantire che sparino insieme a quello centrale.</li></ul><ul id="d6e363a2-efb7-45e9-98b7-eebe3c1fe6da" class="bulleted-list"><li><code>SniperEnemy</code>: prima di sparare calcola approssimativamente la posizione in cui il giocatore sarà quando il proiettile raggiunge la sua area, proietta un laser (utilizzando un semplice raycasting) e spara un proiettile veloce.</li></ul><p id="e41134fd-e545-4346-a86b-25a6e73c0c46" class="">I costruttori di queste logiche richiedono un puntatore a un oggetto che eredita da <code>EnemyPersistentData</code>, una classe dati che definisce alcune caratteristiche del nemico e mantiene alcune variabili di stato (per esempio <code>destroyed</code>, boolean che mantiene lo stato di distruzione del nemico per tutta l&#x27;esistenza della scena SolarSystem, infatti questi oggetti sono contenuti in logiche appartenenti a questa scena).</p><h2 id="9101c47e-8813-4f18-94e3-3b4c8b0720bd" class="">Crates</h2><p id="9a094997-1a13-4b03-b7b2-4e3d4253e31b" class="">Nei pianeti sono disseminati contenitori che al contatto con la navicella del giocatore rigenerano una certa quantità di carburante e in certi casi applicano ulteriori effetti positivi:</p><ul id="dc804a7b-acda-4071-a528-fe9665b46609" class="bulleted-list"><li><code>FuelCrate</code>: rigenera una certa quantità di carburante</li></ul><ul id="ba277b0c-c508-495e-8b56-99ba089bffb0" class="bulleted-list"><li><code>ExtraLifeCrate</code>: rigenera una piccola quantità di carburante e aggiunge una vita al giocatore</li></ul><ul id="3f297913-5dc9-48d4-9763-e62f5856757a" class="bulleted-list"><li><code>MaxFuelCrate</code>: aumenta il carburante massimo e lo rigenera completamente</li></ul><ul id="da485f9a-dc15-4791-9fb2-22eb1158501a" class="bulleted-list"><li><code>MaxStaminaCrate</code>: rigenera una piccola quantità di carburante e aumenta la stamina massima</li></ul><p id="42803013-f3f7-4fc9-ae1e-2b07996e9765" class="">In maniera simile ai nemici, queste logiche richiedono puntatori a oggetti che ereditano da <code>CratePersistentData</code> e che risiedono nella scena SolarSystem. Definiscono caratteristiche come l&#x27;effetto applicato al giocatore e mantengono variabili di stato simili a quelle dei nemici.</p><h2 id="83d530d8-961d-443d-87fd-c0ca9a0e6301" class="">Breakable objects</h2><p id="04c085e0-7753-44f5-a8fc-95aea06b275f" class="">In Non Gravitar oggetti come i nemici, i proiettili e la navicella del giocatore sono resi distruttibili con l&#x27;aggiunta di alcune logiche (<code>BreakHandler</code>, <code>BreakTrigger</code> e <code>BreakGenerator</code>) che ne definiscono una causa di rottura e il comportamento quando questa rottura avviene. In generale la rottura di un oggetto comporta la generazione di aggregati di triangoli la cui geometria è recuperata da <em>VertArray</em> con <a href="https://www.sfml-dev.org/tutorials/2.5/graphics-vertex-array.php">primitive triangolari</a>, questi aggregati possono essere ulteriormente rotti, ovvero separati ulteriormente a un nuovo contatto. Quando un aggregato contiene solo un triangolo è applicata una logica <code>Fading</code> che anima appunto il fading dei <em>VertArray</em> dell&#x27;oggetto (ricorsivo nella sua gerarchia) fino alla sua distruzione, quando l&#x27;<em>alpha</em> raggiunge 0.</p><p id="e25dd211-e3cd-4ae8-951b-643e42267a35" class="">
+</p><p id="72ac7177-97ad-4bf7-b386-e01ac169e27a" class="">
+</p><p id="5d58eb1b-46db-4145-b7c0-333455441afe" class="">
+</p></div></article></body></html>
