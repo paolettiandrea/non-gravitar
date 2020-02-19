@@ -1,10 +1,13 @@
 Non Gravitar is a 2D retro game heavily inspired on [Gravitar](https://en.wikipedia.org/wiki/Gravitar).
 
 It shares with the original similar aesthetics and mechanics, with the main exception being the absence of gravity.
-git 
+
+If you want more information about this project you can find a brief report in italian [here](./doc/Relazione.pdf).
+
 ## Dependencies
     git
     cmake
+    
 Additional dependencies are handled as git submodules ([`SGE`](https://github.com/paolettiandrea/SGE) and consequently `SFML` and `Box2D`).
 
 ## Build
