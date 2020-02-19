@@ -6,8 +6,6 @@
 #include <SolarSystem_ConstructionData.hpp>
 #include "EnemyPersistentData.hpp"
 
-
-
 /*!
  * \brief Generates and manages the Planetoids persistent data
  */
@@ -19,7 +17,6 @@ public:
     virtual ~PlanetoidManager();
 
     [[nodiscard]] const std::vector<PlanetoidPersistentData *> &get_planetoid_data_vec() const;
-
 
 
 private:

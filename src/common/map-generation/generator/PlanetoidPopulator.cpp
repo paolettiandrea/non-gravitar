@@ -1,7 +1,6 @@
 #include <Perlin.hpp>
 #include "PlanetoidPopulator.hpp"
 #include "SGE/utils/interpolation/Interpolator.hpp"
-#include <bits/stdc++.h>
 #include "Crate.hpp"
 
 
@@ -39,10 +38,6 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
     }
     flooded_map.normalize(0.3,1);
 
-#ifdef DEBUG
-    flooded_map.save_as_image("../out/enemy_heat_map_contours.bmp", 0,1);
-#endif
-
 
     // Generate initial enemy heat map
     NoiseMap enemy_heat_map(flooded_map);
@@ -67,16 +62,6 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
         if (res>max_val) max_val = res;
         edge_spacing_map[edge_coord.x][edge_coord.y] = res;
     }
-
-
-#ifdef DEBUG
-    enemy_noise.save_as_image("../out/enemy_noise.bmp", 0,1);
-    enemy_heat_map.save_as_image("../out/enemy_heat_map.bmp", 0,1);
-    edge_spacing_map.save_as_image("../out/border_space.bmp", 0, max_val);
-#endif
-
-
-
 
     // Define crate location so that it can influence enemy spawn later
     NoiseMap crate_heat_map(flooded_map);
@@ -105,10 +90,6 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
 //                CircularGradient(40, 35, best_coords.x, best_coords.y, 1, 0.3, new LinearInterpolator));
 //        enemy_heat_map.normalize(0, 1);
     }
-
-#ifdef DEBUG
-    crate_heat_map.save_as_image("../out/crate_heat_map.bmp", 0,1);
-#endif
 
     // Get every different enemy size
     std::vector<float> enemy_sizes;
@@ -139,15 +120,6 @@ PlanetoidPopulator::PlanetoidPopulator(const MapGenInfo& map_gen_info, const Mar
         }
         spawn_enemies(target_size, this_pass_data_vector, enemy_heat_map, edge_spacing_map, edge_coords, planetoid_square_grid);
     }
-
-#ifdef DEBUG
-    enemy_heat_map.save_as_image("../out/enemy_heat_map_after_spawn.bmp", 0,1);
-#endif
-
-
-    // CRATES
-
-
 }
 
 sge::Vec2<int> PlanetoidPopulator::find_highest_edge_coord(NoiseMap& values_map, std::vector<sge::Vec2<int>>& edge_coords) {

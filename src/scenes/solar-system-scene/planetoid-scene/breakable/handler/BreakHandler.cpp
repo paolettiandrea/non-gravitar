@@ -76,7 +76,7 @@ void BreakHandler::on_update() {
             for (int k = 0; k < spawned_containers.size(); ++k) { prev_containers_count[k] = 0;};
             unsigned int already_spawned_this_layer = 0;
 
-            std::shuffle(collected_fragment_info[layer].begin(), collected_fragment_info[layer].end(), std::default_random_engine(random()));
+            std::shuffle(collected_fragment_info[layer].begin(), collected_fragment_info[layer].end(), std::default_random_engine(rand()));
 
             for (int pointed = 0; pointed < collected_fragment_info[layer].size(); ++pointed) {
                 auto target_info = collected_fragment_info[layer][pointed];

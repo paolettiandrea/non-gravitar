@@ -32,8 +32,10 @@ void SolarSystemScene_EntryLogic::on_start() {
 
     SolarSystem_ConstructionData solar_sys_construction_data;
     solar_sys_construction_data.planetoid_number = NG_GAME_PLANETOID_NUMBER;
-    solar_sys_construction_data.min_planetoid_size = NG_GAME_PLANETOID_MIN_SIZE;
-    solar_sys_construction_data.max_planetoid_size = NG_GAME_PLANETOID_MAX_SIZE;
+    solar_sys_construction_data.min_planetoid_size = NG_GAME_BASE_PLANETOID_MIN_SIZE * difficulty_multiplier;
+    solar_sys_construction_data.max_planetoid_size = NG_GAME_PLANETOID_MAX_SIZE * difficulty_multiplier;
+    solar_sys_construction_data.min_difficulty_factor = NG_GAME_BASE_MIN_DIFFICULTY_FACTOR * difficulty_multiplier;
+    solar_sys_construction_data.max_difficulty_factor = NG_GAME_BASE_MAX_DIFFICULTY_FACTOR * difficulty_multiplier;
 
     auto player_l = new Player(player_persistent_data);
 
@@ -49,6 +51,7 @@ void SolarSystemScene_EntryLogic::on_start() {
     player_l->get_body_gameobject()->logichub()->attach_logic(new PlanetoidSceneTransitionTrigger(scene_transition_handler_l));
 
     // Planetoid Manager
+    LOG_DEBUG(2) << "Generating Solar System based on the following data\n" << solar_sys_construction_data.to_string();
     GameObject_H planetoid_manager = scene()->spawn_gameobject("Planetoid Manager");
     planetoid_manager_l = new PlanetoidManager(solar_sys_construction_data);
     planetoid_manager->logichub()->attach_logic(planetoid_manager_l);
@@ -88,11 +91,14 @@ void SolarSystemScene_EntryLogic::on_scene_resume() {
     }
 }
 
-SolarSystemScene_EntryLogic::SolarSystemScene_EntryLogic(PlayerPersistentData *player_persistent_data) {
+SolarSystemScene_EntryLogic::SolarSystemScene_EntryLogic(PlayerPersistentData *player_persistent_data, float difficulty_multiplier) {
     this->player_persistent_data = player_persistent_data;
+    this->difficulty_multiplier = difficulty_multiplier;
 }
 
 void SolarSystemScene_EntryLogic::spawn_planets(const SolarSystem_ConstructionData& solar_sys_construction_data, float safe_radius) {
+
+    safe_radius = std::max(safe_radius, 20.f);
     auto planetoid_data_vec = planetoid_manager_l->get_planetoid_data_vec();
 
     std::random_device rd;  //Will be used to obtain a seed for the random number engine

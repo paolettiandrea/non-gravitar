@@ -65,7 +65,7 @@ void TractorBeam::on_collision_end(sge::CollisionInfo &collision_info) {
 
 
 void TractorBeam::on_fixed_update() {
-    if (env()->is_key_down(NG_TRACTOR_BEAM_KEY)) {
+    if (env()->is_key_down(NG_CONTROLS_TRACTOR_BEAM_KEY)) {
         std::list<Rigidbody_H> bodies_to_remove;
         for (auto body : colliding_bodies) {
             if (body.is_valid()) {
@@ -85,11 +85,11 @@ void TractorBeam::on_fixed_update() {
 }
 
 void TractorBeam::on_update() {
-    if (env()->is_key_pressed(NG_TRACTOR_BEAM_KEY)) {
+    if (env()->is_key_pressed(NG_CONTROLS_TRACTOR_BEAM_KEY)) {
         vert_array->set_active(true);
     }
 
-    if (env()->is_key_released(NG_TRACTOR_BEAM_KEY)) {
+    if (env()->is_key_released(NG_CONTROLS_TRACTOR_BEAM_KEY)) {
         vert_array->set_active(false);
     }
 }

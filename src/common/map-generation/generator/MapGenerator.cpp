@@ -279,10 +279,6 @@ void MapGenerator::find_entrances() {
 
 
     out_map[entrance_coords.x][entrance_coords.y] = 0.7;
-    out_map.save_as_image("../out/border-analysis.bmp", 0,1);
-
-
-
 }
 
 void MapGenerator::distance_flood_fill(NoiseMap &mask, sge::Vec2<int> starting_point) {

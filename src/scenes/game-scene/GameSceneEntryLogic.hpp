@@ -15,6 +15,7 @@ public:
 
 private:
     PlayerPersistentData player_persistent_data;
+    float difficulty_multiplier = 1.f;
 };
 
 

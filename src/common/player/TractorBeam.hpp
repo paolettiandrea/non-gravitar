@@ -4,6 +4,7 @@
 
 #include <SGE/logic/Logic.hpp>
 #include <SGE/components/graphics/VertArray.hpp>
+#include "CONTROLS.hpp"
 
 #define NG_TRACTOR_BEAM_LENGHT 15.0
 #define NG_TRACTOR_BEAM_ANGLE M_PI_4/2
@@ -11,7 +12,6 @@
 #define NG_TRACTOR_BEAM_FORCE 8.0
 #define NG_TRACTOR_BEAM_NUMBER_OF_SLICES 5
 
-#define NG_TRACTOR_BEAM_KEY sf::Keyboard::N
 
 class TractorBeam : public sge::Logic {
 public:

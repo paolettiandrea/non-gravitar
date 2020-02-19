@@ -2,6 +2,10 @@ Non Gravitar is a 2D retro game heavily inspired on [Gravitar](https://en.wikipe
 
 It shares with the original similar aesthetics and mechanics, with the main exception being the absence of gravity.
 
+## Dependencies
+- git
+- cmake
+
 ## Build
     git clone https://github.com/paolettiandrea/non-gravitar
     cd non-gravitar
@@ -12,3 +16,5 @@ It shares with the original similar aesthetics and mechanics, with the main exce
     make
     
     ./non-gravitar
+    
+Build was tested on Linux (Manjaro and Fedora) and Windows (minGW+gcc).

@@ -40,20 +40,21 @@ static const ColorPalette PLANETOID_EASY_PALETTE (
         sf::Color(128, 207, 128));
 
 static const ColorPalette PLANETOID_MEDIUM_PALETTE (
-        sf::Color(161, 107, 53),
-        sf::Color(136, 89, 42),
-        sf::Color(221, 158, 97),
-        sf::Color(111, 72, 32),
-        sf::Color(255, 214, 173));
+        sf::Color(101, 90, 37),
+        sf::Color(75, 65, 18),
+        sf::Color(117, 108, 64),
+        sf::Color(46, 39, 3),
+        sf::Color(169, 157, 100));
 
 static const ColorPalette PLANETOID_HARD_PALETTE (
-        sf::Color(98, 98, 101),
-        sf::Color(82, 82, 84),
-        sf::Color(139, 139, 144),
-        sf::Color(64, 64, 65),
-        sf::Color(174, 174, 177));
+        
+        sf::Color(34, 35, 38),
+        sf::Color(14, 16, 19),
+        sf::Color(58, 59, 60),
+        sf::Color(11, 13, 19),
+        sf::Color(84, 84, 84));
 
-#define NG_CRATE_BACKGROUND_COLOR                   sf::Color(200,200,200)
+#define NG_CRATE_BACKGROUND_COLOR                   sf::Color(180,180,200)
 # define NG_CRATE_PIN_COLOR                         PLAYER_PALETTE.dark
 
 #define NG_PLAYER_UI_FUEL_BAR_COLOR                 PLAYER_PALETTE.dark
