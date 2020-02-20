@@ -57,8 +57,6 @@ MarchingMap::MarchingMap(const NoiseMap &map, float threshold, bool invert): wid
             }
         }
     }
-
-
 }
 
 const std::vector<sge::Path> &MarchingMap::get_paths() const {
