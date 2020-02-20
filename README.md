@@ -7,6 +7,7 @@ If you want more information about this project you can find a brief report (in 
 ## Dependencies
     git
     cmake
+    make
     
 Additional dependencies are handled as git submodules ([`SGE`](https://github.com/paolettiandrea/SGE) and consequently `SFML` and `Box2D`).
 
